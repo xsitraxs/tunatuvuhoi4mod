@@ -163,8 +163,10 @@ tuva_center_of_asia/
 - все `add_state_claim` и `add_state_core` указывают на существующие штаты;
 - все иконки и картинки существуют в ванильных `.gfx`;
 - ключи локализации совпадают между EN и RU, дубликатов нет;
-- все использованные эффекты, триггеры и модификаторы найдены в официальной документации игры
-  (`documentation/effects_documentation.md`, `triggers_documentation.md` и др.);
+- эффекты и триггеры сверены с `documentation/effects_documentation.md` и
+  `triggers_documentation.md`; модификаторы — с `modifiers_documentation.md`
+  (`production_speed_infrastructure_factor` в docs отсутствует, но используется в ванильном
+  `common/ideas/DEN.txt`);
 - `exists = TAG` заменён на `country_exists = TAG` (в 1.19.3 `exists` принимает только `yes/no`);
 - структура мода из раздела «Технические детали» сверена с фактическими файлами репозитория.
 
