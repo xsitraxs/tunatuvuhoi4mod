@@ -21,8 +21,7 @@ focus_tree = {
 	continuous_focus_position = { x = 20 y = 1200 }
 
 	initial_show_position = {
-		x = 0
-		y = 0
+		focus = TT_center_of_asia
 	}
 
 	# ==================================================================
@@ -32,7 +31,7 @@ focus_tree = {
 	focus = {
 		id = TT_center_of_asia
 		icon = GFX_focus_generic_asia_liberation
-		x = 0
+		x = 10
 		y = 0
 		cost = 5
 
@@ -57,7 +56,8 @@ focus_tree = {
 		id = TT_the_great_khural
 		icon = GFX_focus_generic_freedom_council
 		prerequisite = { focus = TT_center_of_asia }
-		x = -2
+		relative_position_id = TT_center_of_asia
+		x = -6
 		y = 1
 		cost = 10
 
@@ -79,8 +79,9 @@ focus_tree = {
 		icon = GFX_focus_generic_soviet_politics
 		prerequisite = { focus = TT_the_great_khural }
 		mutually_exclusive = { focus = TT_tuvan_renaissance }
-		x = -4
-		y = 2
+		relative_position_id = TT_the_great_khural
+		x = -2
+		y = 1
 		cost = 10
 
 		ai_will_do = {
@@ -105,8 +106,9 @@ focus_tree = {
 		id = TT_the_soviet_arsenal
 		icon = GFX_focus_generic_stalinist_industry
 		prerequisite = { focus = TT_red_yurt }
-		x = -4
-		y = 3
+		relative_position_id = TT_red_yurt
+		x = 0
+		y = 1
 		cost = 10
 
 		ai_will_do = {
@@ -117,12 +119,15 @@ focus_tree = {
 
 		completion_reward = {
 			add_research_slot = 1
-			329 = {
-				add_extra_state_shared_building_slots = 1
-				add_building_construction = {
-					type = arms_factory
-					level = 1
-					instant_build = yes
+			if = {
+				limit = { controls_state = 329 }
+				329 = {
+					add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = arms_factory
+						level = 1
+						instant_build = yes
+					}
 				}
 			}
 			add_tech_bonus = {
@@ -138,8 +143,9 @@ focus_tree = {
 		id = TT_the_siberian_military_district
 		icon = GFX_focus_generic_total_war
 		prerequisite = { focus = TT_the_soviet_arsenal }
-		x = -4
-		y = 4
+		relative_position_id = TT_the_soviet_arsenal
+		x = 0
+		y = 1
 		cost = 10
 
 		ai_will_do = {
@@ -149,13 +155,25 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_MANPOWER FOCUS_FILTER_ARMY_XP }
 
 		completion_reward = {
-			add_ideas = TT_siberian_district
-			329 = {
-				add_extra_state_shared_building_slots = 1
-				add_building_construction = {
-					type = arms_factory
-					level = 1
-					instant_build = yes
+			if = {
+				limit = { has_idea = TT_soviet_friendship }
+				swap_ideas = {
+					remove_idea = TT_soviet_friendship
+					add_idea = TT_siberian_district
+				}
+			}
+			else = {
+				add_ideas = TT_siberian_district
+			}
+			if = {
+				limit = { controls_state = 329 }
+				329 = {
+					add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = arms_factory
+						level = 1
+						instant_build = yes
+					}
 				}
 			}
 			army_experience = 50
@@ -166,8 +184,9 @@ focus_tree = {
 		id = TT_the_red_banner_over_asia
 		icon = GFX_focus_generic_communist_asia
 		prerequisite = { focus = TT_the_siberian_military_district }
-		x = -4
-		y = 5
+		relative_position_id = TT_the_siberian_military_district
+		x = 0
+		y = 1
 		cost = 10
 
 		ai_will_do = {
@@ -177,7 +196,16 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_ANNEXATION FOCUS_FILTER_POLITICAL }
 
 		completion_reward = {
-			add_ideas = TT_red_banner
+			if = {
+				limit = { has_idea = TT_siberian_district }
+				swap_ideas = {
+					remove_idea = TT_siberian_district
+					add_idea = TT_red_banner
+				}
+			}
+			else = {
+				add_ideas = TT_red_banner
+			}
 			add_state_claim = 328
 			add_state_claim = 610
 			add_state_claim = 716
@@ -190,8 +218,9 @@ focus_tree = {
 		icon = GFX_focus_generic_printing_press
 		prerequisite = { focus = TT_the_great_khural }
 		mutually_exclusive = { focus = TT_red_yurt }
-		x = -2
-		y = 2
+		relative_position_id = TT_the_great_khural
+		x = 2
+		y = 1
 		cost = 10
 
 		ai_will_do = {
@@ -216,8 +245,9 @@ focus_tree = {
 		id = TT_the_second_khanate
 		icon = GFX_focus_generic_monarchy_2
 		prerequisite = { focus = TT_tuvan_renaissance }
-		x = -2
-		y = 3
+		relative_position_id = TT_tuvan_renaissance
+		x = 0
+		y = 1
 		cost = 10
 
 		ai_will_do = {
@@ -235,8 +265,16 @@ focus_tree = {
 				ideology = neutrality
 				popularity = 0.45
 			}
-			remove_ideas = TT_national_awakening
-			add_ideas = TT_khanate
+			if = {
+				limit = { has_idea = TT_national_awakening }
+				swap_ideas = {
+					remove_idea = TT_national_awakening
+					add_idea = TT_khanate
+				}
+			}
+			else = {
+				add_ideas = TT_khanate
+			}
 			set_cosmetic_tag = TT_tuvan_khanate
 			add_stability = -0.05
 			news_event = {
@@ -250,8 +288,9 @@ focus_tree = {
 		id = TT_the_great_khan
 		icon = GFX_focus_generic_army_attack
 		prerequisite = { focus = TT_the_second_khanate }
-		x = -2
-		y = 4
+		relative_position_id = TT_the_second_khanate
+		x = 0
+		y = 1
 		cost = 10
 
 		ai_will_do = {
@@ -261,7 +300,16 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_ANNEXATION FOCUS_FILTER_WAR_SUPPORT }
 
 		completion_reward = {
-			add_ideas = TT_great_khan
+			if = {
+				limit = { has_idea = TT_khanate }
+				swap_ideas = {
+					remove_idea = TT_khanate
+					add_idea = TT_great_khan
+				}
+			}
+			else = {
+				add_ideas = TT_great_khan
+			}
 			add_state_claim = 330
 			add_state_claim = 817
 			add_state_claim = 818
@@ -277,8 +325,9 @@ focus_tree = {
 		id = TT_the_empire_of_the_steppe
 		icon = GFX_focus_generic_military_dictatorship
 		prerequisite = { focus = TT_the_great_khan }
-		x = -2
-		y = 5
+		relative_position_id = TT_the_great_khan
+		x = 0
+		y = 1
 		cost = 10
 
 		ai_will_do = {
@@ -288,10 +337,26 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_ANNEXATION }
 
 		completion_reward = {
-			add_ideas = TT_steppe_empire
+			if = {
+				limit = { has_idea = TT_great_khan }
+				swap_ideas = {
+					remove_idea = TT_great_khan
+					add_idea = TT_steppe_empire
+				}
+			}
+			else = {
+				add_ideas = TT_steppe_empire
+			}
 			set_cosmetic_tag = TT_tuvan_empire
-			add_state_claim = 564
-			add_state_claim = 569
+			add_state_core = 330
+			add_state_core = 817
+			add_state_core = 818
+			add_state_core = 819
+			add_state_core = 820
+			add_state_core = 564
+			add_state_core = 569
+			add_state_core = 40
+			add_state_core = 654
 			add_war_support = 0.1
 			news_event = {
 				id = tt_tuva.4
@@ -308,6 +373,7 @@ focus_tree = {
 		id = TT_first_five_year_plan
 		icon = GFX_focus_generic_industry_1
 		prerequisite = { focus = TT_center_of_asia }
+		relative_position_id = TT_center_of_asia
 		x = 0
 		y = 1
 		cost = 10
@@ -320,12 +386,15 @@ focus_tree = {
 
 		completion_reward = {
 			add_ideas = TT_planned_economy
-			329 = {
-				add_extra_state_shared_building_slots = 1
-				add_building_construction = {
-					type = industrial_complex
-					level = 1
-					instant_build = yes
+			if = {
+				limit = { controls_state = 329 }
+				329 = {
+					add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = industrial_complex
+						level = 1
+						instant_build = yes
+					}
 				}
 			}
 		}
@@ -335,8 +404,9 @@ focus_tree = {
 		id = TT_collective_herds
 		icon = GFX_focus_generic_modernizing_agriculture
 		prerequisite = { focus = TT_first_five_year_plan }
+		relative_position_id = TT_first_five_year_plan
 		x = 0
-		y = 2
+		y = 1
 		cost = 10
 
 		ai_will_do = {
@@ -346,7 +416,16 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_MANPOWER FOCUS_FILTER_STABILITY }
 
 		completion_reward = {
-			add_ideas = TT_collective_farms
+			if = {
+				limit = { has_idea = TT_planned_economy }
+				swap_ideas = {
+					remove_idea = TT_planned_economy
+					add_idea = TT_collective_farms
+				}
+			}
+			else = {
+				add_ideas = TT_collective_farms
+			}
 			add_manpower = 5000
 		}
 	}
@@ -355,8 +434,9 @@ focus_tree = {
 		id = TT_kyzyl_industries
 		icon = GFX_focus_generic_industry_2
 		prerequisite = { focus = TT_collective_herds }
+		relative_position_id = TT_collective_herds
 		x = 0
-		y = 3
+		y = 1
 		cost = 10
 
 		ai_will_do = {
@@ -366,17 +446,20 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_INDUSTRY }
 
 		completion_reward = {
-			329 = {
-				add_extra_state_shared_building_slots = 2
-				add_building_construction = {
-					type = industrial_complex
-					level = 1
-					instant_build = yes
-				}
-				add_building_construction = {
-					type = arms_factory
-					level = 1
-					instant_build = yes
+			if = {
+				limit = { controls_state = 329 }
+				329 = {
+					add_extra_state_shared_building_slots = 2
+					add_building_construction = {
+						type = industrial_complex
+						level = 1
+						instant_build = yes
+					}
+					add_building_construction = {
+						type = arms_factory
+						level = 1
+						instant_build = yes
+					}
 				}
 			}
 		}
@@ -386,8 +469,9 @@ focus_tree = {
 		id = TT_mineral_prospecting
 		icon = GFX_focus_generic_mineral_prospecting
 		prerequisite = { focus = TT_kyzyl_industries }
+		relative_position_id = TT_kyzyl_industries
 		x = 0
-		y = 4
+		y = 1
 		cost = 10
 
 		ai_will_do = {
@@ -397,14 +481,17 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_INDUSTRY }
 
 		completion_reward = {
-			329 = {
-				add_resource = {
-					type = chromium
-					amount = 6
-				}
-				add_resource = {
-					type = steel
-					amount = 4
+			if = {
+				limit = { controls_state = 329 }
+				329 = {
+					add_resource = {
+						type = chromium
+						amount = 6
+					}
+					add_resource = {
+						type = steel
+						amount = 4
+					}
 				}
 			}
 		}
@@ -414,8 +501,9 @@ focus_tree = {
 		id = TT_the_kyzyl_railroad
 		icon = GFX_focus_generic_railroad
 		prerequisite = { focus = TT_mineral_prospecting }
+		relative_position_id = TT_mineral_prospecting
 		x = 0
-		y = 5
+		y = 1
 		cost = 10
 
 		ai_will_do = {
@@ -425,12 +513,24 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_INDUSTRY }
 
 		completion_reward = {
-			add_ideas = TT_kyzyl_railway
-			329 = {
-				add_building_construction = {
-					type = infrastructure
-					level = 2
-					instant_build = yes
+			if = {
+				limit = { has_idea = TT_collective_farms }
+				swap_ideas = {
+					remove_idea = TT_collective_farms
+					add_idea = TT_kyzyl_railway
+				}
+			}
+			else = {
+				add_ideas = TT_kyzyl_railway
+			}
+			if = {
+				limit = { controls_state = 329 }
+				329 = {
+					add_building_construction = {
+						type = infrastructure
+						level = 2
+						instant_build = yes
+					}
 				}
 			}
 		}
@@ -440,8 +540,9 @@ focus_tree = {
 		id = TT_the_yenisei_dam
 		icon = GFX_focus_generic_hydroelectric_energy
 		prerequisite = { focus = TT_the_kyzyl_railroad }
+		relative_position_id = TT_the_kyzyl_railroad
 		x = 0
-		y = 6
+		y = 1
 		cost = 10
 
 		ai_will_do = {
@@ -451,13 +552,25 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_RESEARCH }
 
 		completion_reward = {
-			add_ideas = TT_yenisei_dam
-			329 = {
-				add_extra_state_shared_building_slots = 1
-				add_building_construction = {
-					type = industrial_complex
-					level = 1
-					instant_build = yes
+			if = {
+				limit = { has_idea = TT_kyzyl_railway }
+				swap_ideas = {
+					remove_idea = TT_kyzyl_railway
+					add_idea = TT_yenisei_dam
+				}
+			}
+			else = {
+				add_ideas = TT_yenisei_dam
+			}
+			if = {
+				limit = { controls_state = 329 }
+				329 = {
+					add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = industrial_complex
+						level = 1
+						instant_build = yes
+					}
 				}
 			}
 			add_tech_bonus = {
@@ -473,8 +586,9 @@ focus_tree = {
 		id = TT_the_golden_hoard
 		icon = GFX_focus_generic_expand_gold_mining
 		prerequisite = { focus = TT_the_yenisei_dam }
+		relative_position_id = TT_the_yenisei_dam
 		x = 0
-		y = 7
+		y = 1
 		cost = 10
 
 		ai_will_do = {
@@ -484,7 +598,16 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_STABILITY }
 
 		completion_reward = {
-			add_ideas = TT_gold_reserve
+			if = {
+				limit = { has_idea = TT_yenisei_dam }
+				swap_ideas = {
+					remove_idea = TT_yenisei_dam
+					add_idea = TT_gold_reserve
+				}
+			}
+			else = {
+				add_ideas = TT_gold_reserve
+			}
 			add_political_power = 100
 			country_event = {
 				id = tt_tuva.5
@@ -501,7 +624,8 @@ focus_tree = {
 		id = TT_the_peoples_army
 		icon = GFX_focus_generic_military_academy
 		prerequisite = { focus = TT_center_of_asia }
-		x = 2
+		relative_position_id = TT_center_of_asia
+		x = 4
 		y = 1
 		cost = 10
 
@@ -522,8 +646,9 @@ focus_tree = {
 		id = TT_cavalry_of_the_steppe
 		icon = GFX_focus_generic_horse_studs
 		prerequisite = { focus = TT_the_peoples_army }
-		x = 2
-		y = 2
+		relative_position_id = TT_the_peoples_army
+		x = 0
+		y = 1
 		cost = 10
 
 		ai_will_do = {
@@ -533,7 +658,16 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_MANPOWER FOCUS_FILTER_ARMY_XP }
 
 		completion_reward = {
-			add_ideas = TT_steppe_cavalry
+			if = {
+				limit = { has_idea = TT_peoples_army }
+				swap_ideas = {
+					remove_idea = TT_peoples_army
+					add_idea = TT_steppe_cavalry
+				}
+			}
+			else = {
+				add_ideas = TT_steppe_cavalry
+			}
 			add_manpower = 3000
 		}
 	}
@@ -542,8 +676,9 @@ focus_tree = {
 		id = TT_soviet_advisors
 		icon = GFX_focus_generic_advisors
 		prerequisite = { focus = TT_cavalry_of_the_steppe }
-		x = 2
-		y = 3
+		relative_position_id = TT_cavalry_of_the_steppe
+		x = 0
+		y = 1
 		cost = 10
 
 		ai_will_do = {
@@ -553,7 +688,34 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_ARMY_XP FOCUS_FILTER_RESEARCH }
 
 		completion_reward = {
-			add_ideas = TT_soviet_military_mission
+			if = {
+				limit = { has_idea = TT_steppe_cavalry }
+				swap_ideas = {
+					remove_idea = TT_steppe_cavalry
+					add_idea = TT_soviet_military_mission
+				}
+			}
+			else = {
+				add_ideas = TT_soviet_military_mission
+			}
+			if = {
+				limit = {
+					has_country_flag = TT_soviet_path
+					NOT = { has_war_with = SOV }
+				}
+				add_equipment_to_stockpile = {
+					type = infantry_equipment
+					amount = 3000
+					producer = SOV
+				}
+			}
+			else = {
+				add_equipment_to_stockpile = {
+					type = infantry_equipment
+					amount = 3000
+					producer = TAN
+				}
+			}
 			add_tech_bonus = {
 				name = TT_land_doctrine_boost
 				bonus = 0.5
@@ -568,8 +730,9 @@ focus_tree = {
 		id = TT_mountain_warfare
 		icon = GFX_focus_generic_mountain_troops
 		prerequisite = { focus = TT_soviet_advisors }
-		x = 2
-		y = 4
+		relative_position_id = TT_soviet_advisors
+		x = 0
+		y = 1
 		cost = 10
 
 		ai_will_do = {
@@ -579,7 +742,16 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_ARMY_XP }
 
 		completion_reward = {
-			add_ideas = TT_mountain_troops
+			if = {
+				limit = { has_idea = TT_soviet_military_mission }
+				swap_ideas = {
+					remove_idea = TT_soviet_military_mission
+					add_idea = TT_mountain_troops
+				}
+			}
+			else = {
+				add_ideas = TT_mountain_troops
+			}
 			add_tech_bonus = {
 				name = TT_infantry_boost
 				bonus = 0.5
@@ -593,8 +765,9 @@ focus_tree = {
 		id = TT_the_tuvan_air_force
 		icon = GFX_focus_generic_air_bases
 		prerequisite = { focus = TT_mountain_warfare }
-		x = 2
-		y = 5
+		relative_position_id = TT_mountain_warfare
+		x = 0
+		y = 1
 		cost = 10
 
 		ai_will_do = {
@@ -604,17 +777,33 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_RESEARCH }
 
 		completion_reward = {
-			329 = {
-				add_building_construction = {
-					type = air_base
-					level = 1
-					instant_build = yes
+			if = {
+				limit = { controls_state = 329 }
+				329 = {
+					add_building_construction = {
+						type = air_base
+						level = 1
+						instant_build = yes
+					}
 				}
 			}
-			add_equipment_to_stockpile = {
-				type = fighter_equipment_1
-				amount = 20
-				producer = SOV
+			if = {
+				limit = {
+					has_country_flag = TT_soviet_path
+					NOT = { has_war_with = SOV }
+				}
+				add_equipment_to_stockpile = {
+					type = fighter_equipment_1
+					amount = 20
+					producer = SOV
+				}
+			}
+			else = {
+				add_equipment_to_stockpile = {
+					type = fighter_equipment_1
+					amount = 20
+					producer = TAN
+				}
 			}
 			air_experience = 25
 		}
@@ -624,8 +813,9 @@ focus_tree = {
 		id = TT_total_mobilization
 		icon = GFX_focus_generic_manpower
 		prerequisite = { focus = TT_the_tuvan_air_force }
-		x = 2
-		y = 6
+		relative_position_id = TT_the_tuvan_air_force
+		x = 0
+		y = 1
 		cost = 10
 
 		ai_will_do = {
@@ -635,7 +825,16 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_MANPOWER FOCUS_FILTER_WAR_SUPPORT }
 
 		completion_reward = {
-			add_ideas = TT_mobilization
+			if = {
+				limit = { has_idea = TT_mountain_troops }
+				swap_ideas = {
+					remove_idea = TT_mountain_troops
+					add_idea = TT_mobilization
+				}
+			}
+			else = {
+				add_ideas = TT_mobilization
+			}
 			add_war_support = 0.1
 			add_manpower = 10000
 		}
@@ -649,9 +848,14 @@ focus_tree = {
 		id = TT_claims_on_the_steppe
 		icon = GFX_focus_generic_annex_country
 		prerequisite = { focus = TT_center_of_asia }
-		x = 4
+		relative_position_id = TT_center_of_asia
+		x = 8
 		y = 1
 		cost = 10
+
+		available = {
+			has_country_flag = TT_national_path
+		}
 
 		ai_will_do = {
 			factor = 50
@@ -661,11 +865,8 @@ focus_tree = {
 
 		completion_reward = {
 			add_ideas = TT_steppe_claims
-			add_state_claim = 330
-			add_state_claim = 817
-			add_state_claim = 818
-			add_state_claim = 819
-			add_state_claim = 820
+			add_state_claim = 564
+			add_state_claim = 569
 		}
 	}
 
@@ -673,8 +874,9 @@ focus_tree = {
 		id = TT_the_mongolian_question
 		icon = GFX_focus_generic_diplomatic_treaty
 		prerequisite = { focus = TT_claims_on_the_steppe }
-		x = 4
-		y = 2
+		relative_position_id = TT_claims_on_the_steppe
+		x = 0
+		y = 1
 		cost = 10
 
 		available = {
@@ -709,8 +911,9 @@ focus_tree = {
 		id = TT_greater_tuva
 		icon = GFX_focus_generic_annex_country_2
 		prerequisite = { focus = TT_the_mongolian_question }
-		x = 4
-		y = 3
+		relative_position_id = TT_the_mongolian_question
+		x = 0
+		y = 1
 		cost = 10
 
 		available = {
@@ -724,8 +927,15 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_ANNEXATION FOCUS_FILTER_MANPOWER }
 
 		completion_reward = {
-			add_state_claim = 564
-			add_state_claim = 569
+			add_state_core = 330
+			add_state_core = 817
+			add_state_core = 818
+			add_state_core = 819
+			add_state_core = 820
+			add_state_core = 564
+			add_state_core = 569
+			add_state_core = 40
+			add_state_core = 654
 			add_war_support = 0.05
 		}
 	}
@@ -734,8 +944,9 @@ focus_tree = {
 		id = TT_the_siberian_gambit
 		icon = GFX_focus_generic_winter_warfare
 		prerequisite = { focus = TT_greater_tuva }
-		x = 4
-		y = 4
+		relative_position_id = TT_greater_tuva
+		x = 0
+		y = 1
 		cost = 10
 
 		available = {
@@ -752,10 +963,6 @@ focus_tree = {
 
 		completion_reward = {
 			add_ideas = TT_siberian_gambit
-			add_state_claim = 40
-			add_state_claim = 654
-			add_state_claim = 564
-			add_state_claim = 569
 			add_war_support = 0.1
 		}
 	}

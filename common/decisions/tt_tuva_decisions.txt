@@ -60,12 +60,16 @@ TT_tuva_category = {
 			base = 20
 		}
 
+		modifier = {
+			political_power_gain = -0.15
+		}
+
 		complete_effect = {
-			add_manpower = 8000
 			add_war_support = 0.03
 		}
 
 		remove_effect = {
+			add_manpower = 8000
 		}
 	}
 
@@ -104,7 +108,7 @@ TT_tuva_category = {
 	TT_radio_broadcast = {
 		icon = GFX_decision_eng_propaganda_campaigns
 		cost = 50
-		days_remove = 30
+		days_remove = 180
 		days_re_enable = 180
 
 		allowed = {
@@ -122,11 +126,12 @@ TT_tuva_category = {
 			base = 15
 		}
 
+		modifier = {
+			war_support_factor = 0.10
+			stability_factor = 0.05
+		}
+
 		complete_effect = {
-			add_timed_idea = {
-				idea = TT_throat_singing
-				days = 180
-			}
 		}
 
 		remove_effect = {
