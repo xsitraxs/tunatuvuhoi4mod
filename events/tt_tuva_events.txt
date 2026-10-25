@@ -1,0 +1,141 @@
+##########################################################################
+#  TUVA: THE CENTER OF ASIA - events
+##########################################################################
+
+add_namespace = tt_tuva
+
+# ----------------------------------------------------------------------
+#  Prologue
+# ----------------------------------------------------------------------
+country_event = {
+	id = tt_tuva.1
+	title = tt_tuva.1.t
+	desc = tt_tuva.1.desc
+	picture = GFX_report_event_generic_parliament
+
+	is_triggered_only = yes
+
+	option = {
+		name = tt_tuva.1.a
+		add_political_power = 25
+	}
+
+	option = {
+		name = tt_tuva.1.b
+		add_stability = 0.05
+	}
+}
+
+# ----------------------------------------------------------------------
+#  The voice of Moscow
+# ----------------------------------------------------------------------
+country_event = {
+	id = tt_tuva.2
+	title = tt_tuva.2.t
+	desc = tt_tuva.2.desc
+	picture = GFX_report_event_generic_communist_congress
+
+	is_triggered_only = yes
+
+	option = {
+		name = tt_tuva.2.a
+		add_stability = 0.05
+		add_political_power = 25
+
+		ai_chance = {
+			factor = 40
+		}
+	}
+
+	option = {
+		name = tt_tuva.2.b
+		add_war_support = 0.10
+		add_stability = -0.05
+
+		ai_chance = {
+			factor = 60
+		}
+	}
+}
+
+# ----------------------------------------------------------------------
+#  News: the Khanate is proclaimed
+# ----------------------------------------------------------------------
+news_event = {
+	id = tt_tuva.3
+	title = tt_tuva.3.t
+	desc = tt_tuva.3.desc
+	picture = GFX_news_event_generic_parliament
+
+	major = yes
+	is_triggered_only = yes
+
+	option = {
+		name = tt_tuva.3.a
+	}
+}
+
+# ----------------------------------------------------------------------
+#  News: the Empire of the Steppe
+# ----------------------------------------------------------------------
+news_event = {
+	id = tt_tuva.4
+	title = tt_tuva.4.t
+	desc = tt_tuva.4.desc
+	picture = GFX_news_event_generic_army
+
+	major = yes
+	is_triggered_only = yes
+
+	option = {
+		name = tt_tuva.4.a
+	}
+}
+
+# ----------------------------------------------------------------------
+#  The gold of Tuva
+# ----------------------------------------------------------------------
+country_event = {
+	id = tt_tuva.5
+	title = tt_tuva.5.t
+	desc = tt_tuva.5.desc
+	picture = GFX_report_event_generic_stock_traders
+
+	is_triggered_only = yes
+
+	option = {
+		name = tt_tuva.5.a
+		add_political_power = 100
+
+		ai_chance = {
+			factor = 50
+		}
+	}
+
+	option = {
+		name = tt_tuva.5.b
+		add_stability = 0.05
+		add_manpower = 5000
+
+		ai_chance = {
+			factor = 50
+		}
+	}
+}
+
+# ----------------------------------------------------------------------
+#  News: the steppe holds its breath
+# ----------------------------------------------------------------------
+news_event = {
+	id = tt_tuva.6
+	title = tt_tuva.6.t
+	desc = tt_tuva.6.desc
+	picture = GFX_news_event_generic_rally
+
+	major = yes
+	is_triggered_only = yes
+
+	option = {
+		name = tt_tuva.6.a
+	}
+}

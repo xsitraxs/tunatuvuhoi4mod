@@ -1,0 +1,17 @@
+##########################################################################
+#  TUVA: THE CENTER OF ASIA - decision category
+##########################################################################
+
+TT_tuva_category = {
+	icon = GFX_decision_category_generic_political_actions
+	priority = 50
+	visible_when_empty = no
+
+	allowed = {
+		original_tag = TAN
+	}
+
+	visible = {
+		has_completed_focus = TT_the_great_khural
+	}
+}

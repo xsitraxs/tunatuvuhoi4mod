@@ -1,0 +1,762 @@
+##########################################################################
+#  TUVA: THE CENTER OF ASIA
+#  National focus tree for Tannu Tuva (TAN)
+#  Hearts of Iron IV 1.19.3
+##########################################################################
+
+focus_tree = {
+	id = tt_tuva_focus_tree
+
+	country = {
+		factor = 0
+		modifier = {
+			add = 10
+			original_tag = TAN
+		}
+	}
+
+	default = no
+	reset_on_civilwar = no
+
+	continuous_focus_position = { x = 20 y = 1200 }
+
+	initial_show_position = {
+		x = 0
+		y = 0
+	}
+
+	# ==================================================================
+	#  ROOT
+	# ==================================================================
+
+	focus = {
+		id = TT_center_of_asia
+		icon = GFX_focus_generic_asia_liberation
+		x = 0
+		y = 0
+		cost = 5
+
+		ai_will_do = {
+			factor = 100
+		}
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		completion_reward = {
+			add_ideas = TT_center_of_asia_spirit
+			add_political_power = 25
+			add_stability = 0.05
+		}
+	}
+
+	# ==================================================================
+	#  POLITICAL BRANCH - THE GREAT KHURAL
+	# ==================================================================
+
+	focus = {
+		id = TT_the_great_khural
+		icon = GFX_focus_generic_freedom_council
+		prerequisite = { focus = TT_center_of_asia }
+		x = -2
+		y = 1
+		cost = 10
+
+		ai_will_do = {
+			factor = 50
+		}
+
+		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_STABILITY }
+
+		completion_reward = {
+			add_political_power = 50
+			add_stability = 0.05
+			set_country_flag = TT_khural_open
+		}
+	}
+
+	focus = {
+		id = TT_red_yurt
+		icon = GFX_focus_generic_soviet_politics
+		prerequisite = { focus = TT_the_great_khural }
+		mutually_exclusive = { focus = TT_tuvan_renaissance }
+		x = -4
+		y = 2
+		cost = 10
+
+		ai_will_do = {
+			factor = 20
+		}
+
+		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_INDUSTRY }
+
+		completion_reward = {
+			add_ideas = TT_soviet_friendship
+			add_political_power = 75
+			set_country_flag = TT_soviet_path
+			add_equipment_to_stockpile = {
+				type = infantry_equipment
+				amount = 3000
+				producer = SOV
+			}
+		}
+	}
+
+	focus = {
+		id = TT_the_soviet_arsenal
+		icon = GFX_focus_generic_stalinist_industry
+		prerequisite = { focus = TT_red_yurt }
+		x = -4
+		y = 3
+		cost = 10
+
+		ai_will_do = {
+			factor = 20
+		}
+
+		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_RESEARCH }
+
+		completion_reward = {
+			add_research_slot = 1
+			329 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+			add_tech_bonus = {
+				name = TT_industry_boost
+				bonus = 0.5
+				uses = 1
+				category = industry
+			}
+		}
+	}
+
+	focus = {
+		id = TT_the_siberian_military_district
+		icon = GFX_focus_generic_total_war
+		prerequisite = { focus = TT_the_soviet_arsenal }
+		x = -4
+		y = 4
+		cost = 10
+
+		ai_will_do = {
+			factor = 20
+		}
+
+		search_filters = { FOCUS_FILTER_MANPOWER FOCUS_FILTER_ARMY_XP }
+
+		completion_reward = {
+			add_ideas = TT_siberian_district
+			329 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+			army_experience = 50
+		}
+	}
+
+	focus = {
+		id = TT_the_red_banner_over_asia
+		icon = GFX_focus_generic_communist_asia
+		prerequisite = { focus = TT_the_siberian_military_district }
+		x = -4
+		y = 5
+		cost = 10
+
+		ai_will_do = {
+			factor = 20
+		}
+
+		search_filters = { FOCUS_FILTER_ANNEXATION FOCUS_FILTER_POLITICAL }
+
+		completion_reward = {
+			add_ideas = TT_red_banner
+			add_state_claim = 328
+			add_state_claim = 610
+			add_state_claim = 716
+			add_war_support = 0.05
+		}
+	}
+
+	focus = {
+		id = TT_tuvan_renaissance
+		icon = GFX_focus_generic_printing_press
+		prerequisite = { focus = TT_the_great_khural }
+		mutually_exclusive = { focus = TT_red_yurt }
+		x = -2
+		y = 2
+		cost = 10
+
+		ai_will_do = {
+			factor = 20
+		}
+
+		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_WAR_SUPPORT }
+
+		completion_reward = {
+			add_ideas = TT_national_awakening
+			add_political_power = 75
+			leave_faction = yes
+			set_country_flag = TT_national_path
+			country_event = {
+				id = tt_tuva.2
+				days = 3
+			}
+		}
+	}
+
+	focus = {
+		id = TT_the_second_khanate
+		icon = GFX_focus_generic_monarchy_2
+		prerequisite = { focus = TT_tuvan_renaissance }
+		x = -2
+		y = 3
+		cost = 10
+
+		ai_will_do = {
+			factor = 20
+		}
+
+		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_STABILITY }
+
+		completion_reward = {
+			set_politics = {
+				ruling_party = neutrality
+				elections_allowed = no
+			}
+			add_popularity = {
+				ideology = neutrality
+				popularity = 0.45
+			}
+			remove_ideas = TT_national_awakening
+			add_ideas = TT_khanate
+			set_cosmetic_tag = TT_tuvan_khanate
+			add_stability = -0.05
+			news_event = {
+				id = tt_tuva.3
+				days = 1
+			}
+		}
+	}
+
+	focus = {
+		id = TT_the_great_khan
+		icon = GFX_focus_generic_army_attack
+		prerequisite = { focus = TT_the_second_khanate }
+		x = -2
+		y = 4
+		cost = 10
+
+		ai_will_do = {
+			factor = 20
+		}
+
+		search_filters = { FOCUS_FILTER_ANNEXATION FOCUS_FILTER_WAR_SUPPORT }
+
+		completion_reward = {
+			add_ideas = TT_great_khan
+			add_state_claim = 330
+			add_state_claim = 817
+			add_state_claim = 818
+			add_state_claim = 819
+			add_state_claim = 820
+			add_state_claim = 40
+			add_state_claim = 654
+			add_war_support = 0.05
+		}
+	}
+
+	focus = {
+		id = TT_the_empire_of_the_steppe
+		icon = GFX_focus_generic_military_dictatorship
+		prerequisite = { focus = TT_the_great_khan }
+		x = -2
+		y = 5
+		cost = 10
+
+		ai_will_do = {
+			factor = 20
+		}
+
+		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_ANNEXATION }
+
+		completion_reward = {
+			add_ideas = TT_steppe_empire
+			set_cosmetic_tag = TT_tuvan_empire
+			add_state_claim = 564
+			add_state_claim = 569
+			add_war_support = 0.1
+			news_event = {
+				id = tt_tuva.4
+				days = 1
+			}
+		}
+	}
+
+	# ==================================================================
+	#  ECONOMIC BRANCH - THE STEPPE INDUSTRY
+	# ==================================================================
+
+	focus = {
+		id = TT_first_five_year_plan
+		icon = GFX_focus_generic_industry_1
+		prerequisite = { focus = TT_center_of_asia }
+		x = 0
+		y = 1
+		cost = 10
+
+		ai_will_do = {
+			factor = 100
+		}
+
+		search_filters = { FOCUS_FILTER_INDUSTRY }
+
+		completion_reward = {
+			add_ideas = TT_planned_economy
+			329 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+	}
+
+	focus = {
+		id = TT_collective_herds
+		icon = GFX_focus_generic_modernizing_agriculture
+		prerequisite = { focus = TT_first_five_year_plan }
+		x = 0
+		y = 2
+		cost = 10
+
+		ai_will_do = {
+			factor = 100
+		}
+
+		search_filters = { FOCUS_FILTER_MANPOWER FOCUS_FILTER_STABILITY }
+
+		completion_reward = {
+			add_ideas = TT_collective_farms
+			add_manpower = 5000
+		}
+	}
+
+	focus = {
+		id = TT_kyzyl_industries
+		icon = GFX_focus_generic_industry_2
+		prerequisite = { focus = TT_collective_herds }
+		x = 0
+		y = 3
+		cost = 10
+
+		ai_will_do = {
+			factor = 100
+		}
+
+		search_filters = { FOCUS_FILTER_INDUSTRY }
+
+		completion_reward = {
+			329 = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+	}
+
+	focus = {
+		id = TT_mineral_prospecting
+		icon = GFX_focus_generic_mineral_prospecting
+		prerequisite = { focus = TT_kyzyl_industries }
+		x = 0
+		y = 4
+		cost = 10
+
+		ai_will_do = {
+			factor = 100
+		}
+
+		search_filters = { FOCUS_FILTER_INDUSTRY }
+
+		completion_reward = {
+			329 = {
+				add_resource = {
+					type = chromium
+					amount = 6
+				}
+				add_resource = {
+					type = steel
+					amount = 4
+				}
+			}
+		}
+	}
+
+	focus = {
+		id = TT_the_kyzyl_railroad
+		icon = GFX_focus_generic_railroad
+		prerequisite = { focus = TT_mineral_prospecting }
+		x = 0
+		y = 5
+		cost = 10
+
+		ai_will_do = {
+			factor = 100
+		}
+
+		search_filters = { FOCUS_FILTER_INDUSTRY }
+
+		completion_reward = {
+			add_ideas = TT_kyzyl_railway
+			329 = {
+				add_building_construction = {
+					type = infrastructure
+					level = 2
+					instant_build = yes
+				}
+			}
+		}
+	}
+
+	focus = {
+		id = TT_the_yenisei_dam
+		icon = GFX_focus_generic_hydroelectric_energy
+		prerequisite = { focus = TT_the_kyzyl_railroad }
+		x = 0
+		y = 6
+		cost = 10
+
+		ai_will_do = {
+			factor = 100
+		}
+
+		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_RESEARCH }
+
+		completion_reward = {
+			add_ideas = TT_yenisei_dam
+			329 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+			add_tech_bonus = {
+				name = TT_industry_boost_2
+				bonus = 0.5
+				uses = 1
+				category = industry
+			}
+		}
+	}
+
+	focus = {
+		id = TT_the_golden_hoard
+		icon = GFX_focus_generic_expand_gold_mining
+		prerequisite = { focus = TT_the_yenisei_dam }
+		x = 0
+		y = 7
+		cost = 10
+
+		ai_will_do = {
+			factor = 100
+		}
+
+		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_STABILITY }
+
+		completion_reward = {
+			add_ideas = TT_gold_reserve
+			add_political_power = 100
+			country_event = {
+				id = tt_tuva.5
+				days = 1
+			}
+		}
+	}
+
+	# ==================================================================
+	#  MILITARY BRANCH - THE TUVAN ARMY
+	# ==================================================================
+
+	focus = {
+		id = TT_the_peoples_army
+		icon = GFX_focus_generic_military_academy
+		prerequisite = { focus = TT_center_of_asia }
+		x = 2
+		y = 1
+		cost = 10
+
+		ai_will_do = {
+			factor = 100
+		}
+
+		search_filters = { FOCUS_FILTER_ARMY_XP FOCUS_FILTER_WAR_SUPPORT }
+
+		completion_reward = {
+			add_ideas = TT_peoples_army
+			army_experience = 25
+			add_war_support = 0.05
+		}
+	}
+
+	focus = {
+		id = TT_cavalry_of_the_steppe
+		icon = GFX_focus_generic_horse_studs
+		prerequisite = { focus = TT_the_peoples_army }
+		x = 2
+		y = 2
+		cost = 10
+
+		ai_will_do = {
+			factor = 100
+		}
+
+		search_filters = { FOCUS_FILTER_MANPOWER FOCUS_FILTER_ARMY_XP }
+
+		completion_reward = {
+			add_ideas = TT_steppe_cavalry
+			add_manpower = 3000
+		}
+	}
+
+	focus = {
+		id = TT_soviet_advisors
+		icon = GFX_focus_generic_advisors
+		prerequisite = { focus = TT_cavalry_of_the_steppe }
+		x = 2
+		y = 3
+		cost = 10
+
+		ai_will_do = {
+			factor = 100
+		}
+
+		search_filters = { FOCUS_FILTER_ARMY_XP FOCUS_FILTER_RESEARCH }
+
+		completion_reward = {
+			add_ideas = TT_soviet_military_mission
+			add_tech_bonus = {
+				name = TT_land_doctrine_boost
+				bonus = 0.5
+				uses = 1
+				category = land_doctrine
+			}
+			add_command_power = 25
+		}
+	}
+
+	focus = {
+		id = TT_mountain_warfare
+		icon = GFX_focus_generic_mountain_troops
+		prerequisite = { focus = TT_soviet_advisors }
+		x = 2
+		y = 4
+		cost = 10
+
+		ai_will_do = {
+			factor = 100
+		}
+
+		search_filters = { FOCUS_FILTER_ARMY_XP }
+
+		completion_reward = {
+			add_ideas = TT_mountain_troops
+			add_tech_bonus = {
+				name = TT_infantry_boost
+				bonus = 0.5
+				uses = 1
+				category = infantry_tech
+			}
+		}
+	}
+
+	focus = {
+		id = TT_the_tuvan_air_force
+		icon = GFX_focus_generic_air_bases
+		prerequisite = { focus = TT_mountain_warfare }
+		x = 2
+		y = 5
+		cost = 10
+
+		ai_will_do = {
+			factor = 100
+		}
+
+		search_filters = { FOCUS_FILTER_RESEARCH }
+
+		completion_reward = {
+			329 = {
+				add_building_construction = {
+					type = air_base
+					level = 1
+					instant_build = yes
+				}
+			}
+			add_equipment_to_stockpile = {
+				type = fighter_equipment_1
+				amount = 20
+				producer = SOV
+			}
+			air_experience = 25
+		}
+	}
+
+	focus = {
+		id = TT_total_mobilization
+		icon = GFX_focus_generic_manpower
+		prerequisite = { focus = TT_the_tuvan_air_force }
+		x = 2
+		y = 6
+		cost = 10
+
+		ai_will_do = {
+			factor = 100
+		}
+
+		search_filters = { FOCUS_FILTER_MANPOWER FOCUS_FILTER_WAR_SUPPORT }
+
+		completion_reward = {
+			add_ideas = TT_mobilization
+			add_war_support = 0.1
+			add_manpower = 10000
+		}
+	}
+
+	# ==================================================================
+	#  EXPANSION BRANCH - THE STEPPE AND BEYOND
+	# ==================================================================
+
+	focus = {
+		id = TT_claims_on_the_steppe
+		icon = GFX_focus_generic_annex_country
+		prerequisite = { focus = TT_center_of_asia }
+		x = 4
+		y = 1
+		cost = 10
+
+		ai_will_do = {
+			factor = 50
+		}
+
+		search_filters = { FOCUS_FILTER_ANNEXATION }
+
+		completion_reward = {
+			add_ideas = TT_steppe_claims
+			add_state_claim = 330
+			add_state_claim = 817
+			add_state_claim = 818
+			add_state_claim = 819
+			add_state_claim = 820
+		}
+	}
+
+	focus = {
+		id = TT_the_mongolian_question
+		icon = GFX_focus_generic_diplomatic_treaty
+		prerequisite = { focus = TT_claims_on_the_steppe }
+		x = 4
+		y = 2
+		cost = 10
+
+		available = {
+			has_country_flag = TT_national_path
+		}
+
+		ai_will_do = {
+			factor = 50
+		}
+
+		search_filters = { FOCUS_FILTER_ANNEXATION FOCUS_FILTER_POLITICAL }
+
+		completion_reward = {
+			if = {
+				limit = {
+					exists = MON
+					NOT = { has_war_with = MON }
+				}
+				create_wargoal = {
+					type = annex_everything
+					target = MON
+				}
+			}
+			news_event = {
+				id = tt_tuva.6
+				days = 1
+			}
+		}
+	}
+
+	focus = {
+		id = TT_greater_tuva
+		icon = GFX_focus_generic_annex_country_2
+		prerequisite = { focus = TT_the_mongolian_question }
+		x = 4
+		y = 3
+		cost = 10
+
+		available = {
+			has_country_flag = TT_national_path
+		}
+
+		ai_will_do = {
+			factor = 50
+		}
+
+		search_filters = { FOCUS_FILTER_ANNEXATION FOCUS_FILTER_MANPOWER }
+
+		completion_reward = {
+			add_state_claim = 564
+			add_state_claim = 569
+			add_war_support = 0.05
+		}
+	}
+
+	focus = {
+		id = TT_the_siberian_gambit
+		icon = GFX_focus_generic_winter_warfare
+		prerequisite = { focus = TT_greater_tuva }
+		x = 4
+		y = 4
+		cost = 10
+
+		available = {
+			SOV = {
+				has_war = yes
+			}
+		}
+
+		ai_will_do = {
+			factor = 50
+		}
+
+		search_filters = { FOCUS_FILTER_ANNEXATION FOCUS_FILTER_WAR_SUPPORT }
+
+		completion_reward = {
+			add_ideas = TT_siberian_gambit
+			add_state_claim = 40
+			add_state_claim = 654
+			add_state_claim = 564
+			add_state_claim = 569
+			add_war_support = 0.1
+		}
+	}
+}

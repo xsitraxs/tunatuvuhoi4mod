@@ -1,0 +1,222 @@
+﻿l_english:
+
+ # ================================================================
+ #  FOCUS TREE
+ # ================================================================
+
+ TT_center_of_asia: "The Center of Asia"
+ TT_center_of_asia_desc: "The obelisk in Kyzyl marks the geographic centre of Asia. For centuries the Tuvan people have lived at the crossroads of empires. It is time to remind the world that the centre of Asia is not a place to be crossed, but a nation to be reckoned with."
+
+ TT_the_great_khural: "The Great Khural"
+ TT_the_great_khural_desc: "The Great Khural, the assembly of all clans and khoshuns, has not been convened for decades. Delegates from every corner of the steppe gather in Kyzyl to decide the future of the republic."
+
+ TT_red_yurt: "The Red Yurt"
+ TT_red_yurt_desc: "Moscow offers steel, machine tools and advisers. In return, Tuva will stand with the Soviet Union in the coming storm. The red yurt is warm, and its fire is bright."
+
+ TT_the_soviet_arsenal: "The Arsenal of Siberia"
+ TT_the_soviet_arsenal_desc: "A modern arms plant will rise on the banks of the Yenisei: Soviet machine tools, Soviet engineers, and Tuvan hands."
+
+ TT_the_siberian_military_district: "The Siberian Military District"
+ TT_the_siberian_military_district_desc: "Tuva becomes the southern shield of Siberia. Our army will be trained, equipped and drilled to Soviet standards."
+
+ TT_the_red_banner_over_asia: "The Red Banner over Asia"
+ TT_the_red_banner_over_asia_desc: "The revolution does not stop at the Sayan Mountains. From the Manchurian plains to the Pacific coast, the red banner will fly over Asia."
+
+ TT_tuvan_renaissance: "The Tuvan Renaissance"
+ TT_tuvan_renaissance_desc: "Enough of being a footnote in Moscow's ledgers. Tuvan language, Tuvan songs, Tuvan history. The nation awakens, and it will no longer be a puppet."
+
+ TT_the_second_khanate: "The Second Khanate"
+ TT_the_second_khanate_desc: "The descendants of the old khans are called home from exile. The people demand a Khan, and Kyzyl answers. The Second Khanate is proclaimed."
+
+ TT_the_great_khan: "The Great Khan"
+ TT_the_great_khan_desc: "The steppe remembers Genghis. From the Altai to the Gobi, the tribes look to Kyzyl. The Great Khan is not a memory. He is a promise."
+
+ TT_the_empire_of_the_steppe: "The Empire of the Steppe"
+ TT_the_empire_of_the_steppe_desc: "Not a khanate, not a republic: an empire. The Empire of the Steppe stretches from the Yenisei to the Pacific, and the world takes notice."
+
+ TT_first_five_year_plan: "The First Five-Year Plan"
+ TT_first_five_year_plan_desc: "Five years, five factories, one goal: to drag Tuva out of the age of the yurt and into the age of the machine."
+
+ TT_collective_herds: "Collective Herds"
+ TT_collective_herds_desc: "The herds of the steppe belong to the people. Collective farms will feed the workers and free the arats for the factories and the army."
+
+ TT_kyzyl_industries: "The Kyzyl Works"
+ TT_kyzyl_industries_desc: "Kyzyl gets its own industrial belt: a textile mill, a brickworks, an arms plant. The city of the obelisk becomes a city of smokestacks."
+
+ TT_mineral_prospecting: "Prospecting the Steppe"
+ TT_mineral_prospecting_desc: "Geologists report chromium, coal and iron in the Tuvan hills. The Soviet surveys were right: the steppe is rich."
+
+ TT_the_kyzyl_railroad: "The Kyzyl Railway"
+ TT_the_kyzyl_railroad_desc: "A railway from Abakan to Kyzyl will bind Tuva to the Trans-Siberian. Steel rails are stronger than any treaty."
+
+ TT_the_yenisei_dam: "The Yenisei Dam"
+ TT_the_yenisei_dam_desc: "The Yenisei is the great river of Siberia. A dam at Kyzyl will light the yurts and power the factories for a hundred years."
+
+ TT_the_golden_hoard: "The Golden Hoard"
+ TT_the_golden_hoard_desc: "The old khan's treasury was never found. Now Tuvan gold fills the state bank, and gold buys guns, factories and friends."
+
+ TT_the_peoples_army: "The People's Army"
+ TT_the_peoples_army_desc: "The Tuvan People's Revolutionary Army was founded in 1921. Now it becomes a real army, with schools, staffs and discipline."
+
+ TT_cavalry_of_the_steppe: "Cavalry of the Steppe"
+ TT_cavalry_of_the_steppe_desc: "The horse is the soul of the steppe. Tuvan cavalry will ride where no truck can follow."
+
+ TT_soviet_advisors: "Soviet Advisers"
+ TT_soviet_advisors_desc: "Soviet officers will teach our commanders the art of modern war, from the defence of the Sayan passes to the deep battle."
+
+ TT_mountain_warfare: "Mountain Warfare"
+ TT_mountain_warfare_desc: "Tuva is a land of mountains and forests. Our soldiers will fight where the roads end."
+
+ TT_the_tuvan_air_force: "The Tuvan Air Force"
+ TT_the_tuvan_air_force_desc: "A handful of Polikarpovs and a dirt strip at Kyzyl: the beginning of the Tuvan Air Force. The sky belongs to the brave."
+
+ TT_total_mobilization: "Total Mobilization"
+ TT_total_mobilization_desc: "Every arat a soldier, every yurt a barracks. The republic mobilizes for the war to come."
+
+ TT_claims_on_the_steppe: "Claims on the Steppe"
+ TT_claims_on_the_steppe_desc: "The Tuvan people live on both sides of the Sayan Mountains. Altai, Khakassia, Mongolia: ancient Tuvan lands, torn apart by empires."
+
+ TT_the_mongolian_question: "The Mongolian Question"
+ TT_the_mongolian_question_desc: "Mongolia is weak, torn between Moscow and Tokyo. The Kurultai of the steppe will decide: brotherhood or conquest."
+
+ TT_greater_tuva: "Greater Tuva"
+ TT_greater_tuva_desc: "Greater Tuva, from the Altai to Lake Baikal: the lands of the Turkic and Mongol peoples. A state worthy of the name."
+
+ TT_the_siberian_gambit: "The Siberian Gambit"
+ TT_the_siberian_gambit_desc: "The Soviet colossus is bleeding in the west. Now, while Moscow looks at Berlin, is the moment to strike for Siberia."
+
+ # ================================================================
+ #  NATIONAL SPIRITS
+ # ================================================================
+
+ TT_center_of_asia_spirit: "The Center of Asia"
+ TT_center_of_asia_spirit_desc: "Kyzyl is the centre of Asia, and its people know it."
+
+ TT_soviet_friendship: "Friendship with Moscow"
+ TT_soviet_friendship_desc: "Soviet advisers, Soviet machines, Soviet friendship."
+
+ TT_national_awakening: "National Awakening"
+ TT_national_awakening_desc: "The nation remembers who it is."
+
+ TT_khanate: "The Second Tuvan Khanate"
+ TT_khanate_desc: "The Khan has returned to Kyzyl."
+
+ TT_great_khan: "Legacy of the Great Khan"
+ TT_great_khan_desc: "The tribes of the steppe answer the call."
+
+ TT_steppe_empire: "The Empire of the Steppe"
+ TT_steppe_empire_desc: "An empire forged on horseback and steel."
+
+ TT_red_banner: "The Red Banner over Asia"
+ TT_red_banner_desc: "The revolution marches east."
+
+ TT_siberian_district: "The Siberian Military District"
+ TT_siberian_district_desc: "The southern shield of Siberia."
+
+ TT_siberian_gambit: "The Siberian Gambit"
+ TT_siberian_gambit_desc: "While the bear bleeds, the wolf hunts."
+
+ TT_planned_economy: "Planned Economy"
+ TT_planned_economy_desc: "Five-year plans, Tuvan style."
+
+ TT_collective_farms: "Collective Herds"
+ TT_collective_farms_desc: "The herds belong to the people."
+
+ TT_kyzyl_railway: "The Kyzyl Railway"
+ TT_kyzyl_railway_desc: "Steel rails bind the steppe to the world."
+
+ TT_yenisei_dam: "The Yenisei Dam"
+ TT_yenisei_dam_desc: "The great river powers the republic."
+
+ TT_gold_reserve: "The Golden Hoard"
+ TT_gold_reserve_desc: "Gold in the vaults of the state bank."
+
+ TT_steppe_claims: "Claims on the Steppe"
+ TT_steppe_claims_desc: "The old borders are an insult to the steppe."
+
+ TT_peoples_army: "The People's Army"
+ TT_peoples_army_desc: "An army of the people, for the people."
+
+ TT_steppe_cavalry: "Cavalry of the Steppe"
+ TT_steppe_cavalry_desc: "The horse is the soul of the steppe."
+
+ TT_soviet_military_mission: "Soviet Advisers"
+ TT_soviet_military_mission_desc: "The art of modern war, taught by the Red Army."
+
+ TT_mountain_troops: "Mountain Troops"
+ TT_mountain_troops_desc: "Masters of the Sayan passes."
+
+ TT_mobilization: "Total Mobilization"
+ TT_mobilization_desc: "Every arat a soldier."
+
+ TT_throat_singing: "Khoomei on the Airwaves"
+ TT_throat_singing_desc: "Khoomei carries the voice of the steppe across the airwaves."
+
+ # ================================================================
+ #  DECISIONS
+ # ================================================================
+
+ TT_tuva_category: "Tuvan Affairs"
+
+ TT_convene_the_khural: "Convene the Great Khural"
+ TT_convene_the_khural_desc: "Gather the delegates of the steppe in Kyzyl and let them speak for the nation."
+
+ TT_mobilize_the_arats: "Mobilize the Arats"
+ TT_mobilize_the_arats_desc: "Call the herdsmen to the colours. The steppe can spare a few thousand riders."
+
+ TT_gold_expedition: "The Golden Expedition"
+ TT_gold_expedition_desc: "Send prospectors into the Tuvan hills in search of the old khan's treasure."
+
+ TT_radio_broadcast: "Throat Singing on the Airwaves"
+ TT_radio_broadcast_desc: "Broadcast khoomei across the republic and beyond. The voice of the steppe is a weapon of its own."
+
+ TT_request_soviet_aid: "Request Soviet Aid"
+ TT_request_soviet_aid_desc: "Ask Moscow for rifles, machine guns and advisers. Friends help friends."
+
+ # ================================================================
+ #  EVENTS
+ # ================================================================
+
+ tt_tuva.1.t: "The Center of Asia"
+ tt_tuva.1.desc: "On the bank of the Yenisei, where the obelisk of Kyzyl marks the centre of Asia, the sun rises over the yurts. Tannu Tuva is small, poor and forgotten by the world. But the steppe remembers. The people remember.\n\nA new chapter begins."
+ tt_tuva.1.a: "The steppe will awaken."
+ tt_tuva.1.b: "Let the people decide."
+
+ tt_tuva.2.t: "The Voice of Moscow"
+ tt_tuva.2.desc: "A telegram arrives from Moscow. The Kremlin has learned of the Great Khural and is not pleased. Tuva is reminded of its place in the Soviet family, and of the fate of small nations that forget their friends."
+ tt_tuva.2.a: "We will not provoke Moscow."
+ tt_tuva.2.b: "Tuva will decide its own fate."
+
+ tt_tuva.3.t: "The Khanate Is Proclaimed"
+ tt_tuva.3.desc: "In Kyzyl, before the assembled delegates of the steppe, the banner of the Second Tuvan Khanate is raised. The old khans are remembered, and a new one is named. Moscow is silent. The world is not."
+ tt_tuva.3.a: "A new khan rises."
+
+ tt_tuva.4.t: "The Empire of the Steppe"
+ tt_tuva.4.desc: "From the Yenisei to the Pacific, the horsemen of Tuva ride under a new banner. The Empire of the Steppe has been proclaimed, and the chancelleries of the world scramble to understand what has happened in the heart of Asia."
+ tt_tuva.4.a: "The steppe has an emperor."
+
+ tt_tuva.5.t: "The Gold of Tuva"
+ tt_tuva.5.desc: "The expedition returns from the hills with wagons of gold and silver. The old khan's treasury is a legend no longer. The question is what to do with it."
+ tt_tuva.5.a: "Invest it in industry."
+ tt_tuva.5.b: "Give it to the people."
+
+ tt_tuva.6.t: "The Steppe Holds Its Breath"
+ tt_tuva.6.desc: "Tuva has made no secret of its ambitions. In Ulaanbaatar, the Mongol princes weigh their options. In Tokyo and Moscow, the maps are redrawn. The steppe holds its breath."
+ tt_tuva.6.a: "Let them watch."
+
+ # ================================================================
+ #  MISC
+ # ================================================================
+
+ TT_tuvan_khanate: "Tuvan Khanate"
+ TT_tuvan_khanate_DEF: "the Tuvan Khanate"
+ TT_tuvan_khanate_ADJ: "Tuvan"
+
+ TT_tuvan_empire: "Tuvan Empire"
+ TT_tuvan_empire_DEF: "the Tuvan Empire"
+ TT_tuvan_empire_ADJ: "Tuvan"
+
+ TT_industry_boost: "Industrial Research"
+ TT_industry_boost_2: "Industrial Research"
+ TT_land_doctrine_boost: "Land Doctrine Research"
+ TT_infantry_boost: "Infantry Research"
