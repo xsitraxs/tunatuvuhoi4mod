@@ -892,7 +892,7 @@ focus_tree = {
 		completion_reward = {
 			if = {
 				limit = {
-					exists = MON
+					country_exists = MON
 					NOT = { has_war_with = MON }
 				}
 				create_wargoal = {
