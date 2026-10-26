@@ -139,19 +139,6 @@ ideas = {
 			}
 		}
 
-		TT_siberian_gambit = {
-			allowed = { original_tag = TAN }
-			allowed_civil_war = { always = yes }
-			removal_cost = -1
-			picture = generic_armor
-
-			modifier = {
-				army_attack_factor = 0.15
-				army_org_factor = 0.10
-				war_support_factor = 0.05
-			}
-		}
-
 		# ------------------------------------------------------------------
 		#  Economic chain
 		# ------------------------------------------------------------------
@@ -224,7 +211,7 @@ ideas = {
 				recruitable_population_factor = 0.05
 				stability_factor = 0.15
 				production_speed_infrastructure_factor = 0.10
-				consumer_goods_factor = -0.10
+				consumer_goods_factor = -0.15
 			}
 		}
 
@@ -237,6 +224,40 @@ ideas = {
 			modifier = {
 				justify_war_goal_time = -0.25
 				war_support_factor = 0.05
+			}
+		}
+
+		# ------------------------------------------------------------------
+		#  Expansion / War spirits
+		# ------------------------------------------------------------------
+
+		TT_siberian_gambit = {
+			allowed = { original_tag = TAN }
+			allowed_civil_war = { always = yes }
+			removal_cost = -1
+			picture = generic_armor
+
+			modifier = {
+				army_attack_factor = 0.15
+				army_org_factor = 0.10
+				war_support_factor = 0.05
+			}
+		}
+		
+		TT_masters_of_siberia = {
+			allowed = { original_tag = TAN }
+			allowed_civil_war = { always = yes }
+			removal_cost = -1
+			picture = generic_victors_of_ww1
+
+			modifier = {
+				army_attack_factor = 0.15
+				army_defence_factor = 0.10
+				army_org_factor = 0.10
+				war_support_factor = 0.10
+				stability_factor = 0.10
+				non_core_manpower = 0.15
+				industrial_capacity_factory = 0.10
 			}
 		}
 
@@ -319,6 +340,51 @@ ideas = {
 				army_defence_factor = 0.10
 				conscription_factor = 0.05
 				training_time_factor = -0.10
+			}
+		}
+
+		# ------------------------------------------------------------------
+		#  Central Asian SSR / Manchurian campaign
+		# ------------------------------------------------------------------
+
+		TT_central_asian_ssr_spirit = {
+			allowed = { original_tag = TAN }
+			allowed_civil_war = { always = yes }
+			removal_cost = -1
+			picture = generic_political_support
+
+			modifier = {
+				political_power_factor = 0.10
+				stability_factor = 0.05
+				research_speed_factor = 0.05
+				industrial_capacity_factory = 0.05
+			}
+		}
+
+		TT_manchurian_campaign = {
+			allowed = { original_tag = TAN }
+			allowed_civil_war = { always = yes }
+			removal_cost = -1
+			picture = generic_armor
+
+			modifier = {
+				army_attack_factor = 0.10
+				army_org_factor = 0.05
+				war_support_factor = 0.05
+			}
+		}
+
+		TT_masters_of_manchuria = {
+			allowed = { original_tag = TAN }
+			allowed_civil_war = { always = yes }
+			removal_cost = -1
+			picture = generic_victors_of_ww1
+
+			modifier = {
+				army_attack_factor = 0.10
+				war_support_factor = 0.10
+				industrial_capacity_factory = 0.10
+				stability_factor = 0.05
 			}
 		}
 	}

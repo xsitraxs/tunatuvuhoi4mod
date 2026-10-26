@@ -209,7 +209,118 @@ focus_tree = {
 			add_state_claim = 328
 			add_state_claim = 610
 			add_state_claim = 716
+			add_state_core = 330
+			add_state_core = 817
+			add_state_core = 818
+			add_state_core = 819
+			add_state_core = 820
+			add_state_core = 618
+			add_state_core = 617
+			add_state_core = 287
 			add_war_support = 0.05
+		}
+	}
+
+	focus = {
+		id = TT_form_central_asian_ssr
+		icon = GFX_focus_generic_soviet_politics
+		prerequisite = { focus = TT_the_red_banner_over_asia }
+		relative_position_id = TT_the_red_banner_over_asia
+		x = 0
+		y = 1
+		cost = 10
+
+		ai_will_do = {
+			factor = 20
+		}
+
+		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_ANNEXATION }
+
+		completion_reward = {
+			set_cosmetic_tag = TT_central_asian_ssr
+			add_ideas = TT_central_asian_ssr_spirit
+			add_political_power = 100
+			add_stability = 0.05
+			add_state_core = 402
+			add_state_core = 404
+			add_state_core = 405
+			add_state_core = 406
+			add_state_core = 407
+			add_state_core = 583
+			add_state_core = 584
+			add_state_core = 585
+			add_state_core = 586
+			add_state_core = 587
+			add_state_core = 588
+			add_state_core = 589
+			add_state_core = 590
+			add_state_core = 732
+			add_state_core = 742
+			add_state_core = 823
+			add_state_core = 830
+			add_state_core = 831
+			add_state_core = 832
+			add_state_core = 881
+			add_state_core = 882
+			if = {
+				limit = { country_exists = SOV }
+				SOV = {
+					country_event = {
+						id = tt_tuva.12
+						days = 1
+					}
+				}
+			}
+			custom_effect_tooltip = TT_central_asian_ssr_tt
+		}
+	}
+
+	focus = {
+		id = TT_the_battle_for_manchuria
+		icon = GFX_focus_generic_attack_mongolia
+		prerequisite = { focus = TT_form_central_asian_ssr }
+		relative_position_id = TT_form_central_asian_ssr
+		x = 0
+		y = 1
+		cost = 10
+
+		ai_will_do = {
+			factor = 20
+		}
+
+		search_filters = { FOCUS_FILTER_ANNEXATION FOCUS_FILTER_WAR_SUPPORT }
+
+		completion_reward = {
+			add_ideas = TT_manchurian_campaign
+			add_war_support = 0.05
+			add_command_power = 25
+			if = {
+				limit = { country_exists = MAN }
+				if = {
+					limit = { NOT = { has_war_with = MAN } }
+					create_wargoal = {
+						type = take_state_focus
+						target = MAN
+						generator = { 328 610 716 }
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					country_exists = JAP
+					NOT = { has_war_with = JAP }
+				}
+				create_wargoal = {
+					type = take_state_focus
+					target = JAP
+					generator = { 328 610 716 }
+				}
+			}
+			news_event = {
+				id = tt_tuva.15
+				days = 1
+			}
+			custom_effect_tooltip = TT_manchurian_offensive_tt
 		}
 	}
 
@@ -232,7 +343,6 @@ focus_tree = {
 		completion_reward = {
 			add_ideas = TT_national_awakening
 			add_political_power = 75
-			leave_faction = yes
 			set_country_flag = TT_national_path
 			country_event = {
 				id = tt_tuva.2
@@ -257,6 +367,18 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_STABILITY }
 
 		completion_reward = {
+			create_country_leader = {
+				name = TT_khan_leader_name
+				desc = "TT_khan_leader_desc"
+				picture = "GFX_portrait_generic_asia_male_01"
+				expire = "1965.1.1"
+				ideology = despotism
+				traits = {
+					warmonger
+				}
+			}
+			leave_faction = yes
+			add_research_slot = 1
 			set_politics = {
 				ruling_party = neutrality
 				elections_allowed = no
@@ -315,8 +437,6 @@ focus_tree = {
 			add_state_claim = 818
 			add_state_claim = 819
 			add_state_claim = 820
-			add_state_claim = 40
-			add_state_claim = 654
 			add_war_support = 0.05
 		}
 	}
@@ -348,15 +468,27 @@ focus_tree = {
 				add_ideas = TT_steppe_empire
 			}
 			set_cosmetic_tag = TT_tuvan_empire
-			add_state_core = 330
-			add_state_core = 817
-			add_state_core = 818
-			add_state_core = 819
-			add_state_core = 820
+			add_state_core = 563
 			add_state_core = 564
+			add_state_core = 565
+			add_state_core = 566
+			add_state_core = 567
+			add_state_core = 568
 			add_state_core = 569
-			add_state_core = 40
-			add_state_core = 654
+			add_state_core = 570
+			add_state_core = 328
+			add_state_core = 610
+			add_state_core = 716
+			if = {
+				limit = { NOT = { has_completed_focus = TT_greater_tuva } }
+				add_state_core = 330
+				add_state_core = 817
+				add_state_core = 818
+				add_state_core = 819
+				add_state_core = 820
+				add_state_core = 40
+				add_state_core = 654
+			}
 			add_war_support = 0.1
 			news_event = {
 				id = tt_tuva.4
@@ -562,6 +694,7 @@ focus_tree = {
 			else = {
 				add_ideas = TT_yenisei_dam
 			}
+			add_research_slot = 1
 			if = {
 				limit = { controls_state = 329 }
 				329 = {
@@ -787,23 +920,10 @@ focus_tree = {
 					}
 				}
 			}
-			if = {
-				limit = {
-					has_country_flag = TT_soviet_path
-					NOT = { has_war_with = SOV }
-				}
-				add_equipment_to_stockpile = {
-					type = fighter_equipment_1
-					amount = 20
-					producer = SOV
-				}
-			}
-			else = {
-				add_equipment_to_stockpile = {
-					type = fighter_equipment_1
-					amount = 20
-					producer = TAN
-				}
+			add_equipment_to_stockpile = {
+				type = fighter_equipment_1
+				amount = 20
+				producer = SOV
 			}
 			air_experience = 25
 		}
@@ -854,7 +974,14 @@ focus_tree = {
 		cost = 10
 
 		available = {
-			has_country_flag = TT_national_path
+			custom_trigger_tooltip = {
+				tooltip = TT_requires_national_path
+				has_country_flag = TT_national_path
+			}
+			custom_trigger_tooltip = {
+				tooltip = TT_requires_left_comintern
+				NOT = { is_in_faction_with = SOV }
+			}
 		}
 
 		ai_will_do = {
@@ -865,6 +992,8 @@ focus_tree = {
 
 		completion_reward = {
 			add_ideas = TT_steppe_claims
+			add_state_claim = 40
+			add_state_claim = 654
 			add_state_claim = 564
 			add_state_claim = 569
 		}
@@ -880,7 +1009,14 @@ focus_tree = {
 		cost = 10
 
 		available = {
-			has_country_flag = TT_national_path
+			custom_trigger_tooltip = {
+				tooltip = TT_requires_national_path
+				has_country_flag = TT_national_path
+			}
+			custom_trigger_tooltip = {
+				tooltip = TT_requires_left_comintern
+				NOT = { is_in_faction_with = SOV }
+			}
 		}
 
 		ai_will_do = {
@@ -891,13 +1027,12 @@ focus_tree = {
 
 		completion_reward = {
 			if = {
-				limit = {
-					country_exists = MON
-					NOT = { has_war_with = MON }
-				}
-				create_wargoal = {
-					type = annex_everything
-					target = MON
+				limit = { country_exists = MON }
+				MON = {
+					country_event = {
+						id = tt_tuva.7
+						days = 1
+					}
 				}
 			}
 			news_event = {
@@ -917,7 +1052,10 @@ focus_tree = {
 		cost = 10
 
 		available = {
-			has_country_flag = TT_national_path
+			custom_trigger_tooltip = {
+				tooltip = TT_requires_national_path
+				has_country_flag = TT_national_path
+			}
 		}
 
 		ai_will_do = {
@@ -932,8 +1070,6 @@ focus_tree = {
 			add_state_core = 818
 			add_state_core = 819
 			add_state_core = 820
-			add_state_core = 564
-			add_state_core = 569
 			add_state_core = 40
 			add_state_core = 654
 			add_war_support = 0.05
@@ -950,6 +1086,14 @@ focus_tree = {
 		cost = 10
 
 		available = {
+			custom_trigger_tooltip = {
+				tooltip = TT_requires_national_path
+				has_country_flag = TT_national_path
+			}
+			custom_trigger_tooltip = {
+				tooltip = TT_requires_left_comintern
+				NOT = { is_in_faction_with = SOV }
+			}
 			SOV = {
 				has_war = yes
 			}
@@ -964,6 +1108,18 @@ focus_tree = {
 		completion_reward = {
 			add_ideas = TT_siberian_gambit
 			add_war_support = 0.1
+			if = {
+				limit = {
+					country_exists = SOV
+					NOT = { has_war_with = SOV }
+				}
+				create_wargoal = {
+					type = take_state_focus
+					target = SOV
+					generator = { 566 568 570 }
+				}
+			}
+			custom_effect_tooltip = TT_siberian_gambit_decision_tt
 		}
 	}
 }

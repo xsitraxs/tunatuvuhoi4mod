@@ -1,3 +1,5 @@
 *.yml -text
 *.png binary
+*.tga binary
+.vscode/ export-ignore
 

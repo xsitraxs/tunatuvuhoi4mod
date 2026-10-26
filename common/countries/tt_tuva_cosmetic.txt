@@ -1,0 +1,16 @@
+##########################################################################
+#  TUVA: THE CENTER OF ASIA - cosmetic tag colors
+#
+#  Kept in a separate file so the vanilla common/countries/cosmetic.txt
+#  is not overwritten.
+##########################################################################
+
+TT_tuvan_khanate = {
+	color = rgb { 74 155 216 }
+	color_ui = rgb { 74 155 216 }
+}
+
+TT_tuvan_empire = {
+	color = rgb { 26 26 26 }
+	color_ui = rgb { 26 26 26 }
+}

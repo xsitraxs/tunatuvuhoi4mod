@@ -14,6 +14,7 @@ country_event = {
 	picture = GFX_report_event_generic_parliament
 
 	is_triggered_only = yes
+	fire_only_once = yes
 
 	option = {
 		name = tt_tuva.1.a
@@ -145,5 +146,236 @@ news_event = {
 
 	option = {
 		name = tt_tuva.6.a
+	}
+}
+
+# ----------------------------------------------------------------------
+#  The Tuvan ultimatum to Mongolia
+# ----------------------------------------------------------------------
+country_event = {
+	id = tt_tuva.7
+	title = tt_tuva.7.t
+	desc = tt_tuva.7.desc
+	picture = GFX_report_event_generic_handshake
+
+	is_triggered_only = yes
+
+	option = {
+		name = tt_tuva.7.a
+
+		ai_chance = {
+			base = 25
+
+			modifier = {
+				factor = 1.5
+				TAN = { num_divisions > 5 }
+			}
+
+			modifier = {
+				factor = 1.5
+				TAN = { num_divisions > 10 }
+			}
+
+			modifier = {
+				factor = 2.0
+				TAN = { num_divisions > 20 }
+			}
+
+			modifier = {
+				factor = 2.0
+				TAN = { strength_ratio = { tag = MON ratio > 1.0 } }
+			}
+
+			modifier = {
+				factor = 0.5
+				strength_ratio = { tag = TAN ratio > 1.0 }
+			}
+		}
+
+		
+		MON = { leave_faction = yes }
+		TAN = {
+			annex_country = {
+				target = MON
+				transfer_troops = yes
+			}
+			news_event = {
+				id = tt_tuva.8
+				days = 1
+			}
+		}
+	}
+
+	option = {
+		name = tt_tuva.7.b
+
+		ai_chance = {
+			base = 85
+
+			modifier = {
+				factor = 0.66
+				TAN = { num_divisions > 5 }
+			}
+
+			modifier = {
+				factor = 0.66
+				TAN = { num_divisions > 10 }
+			}
+
+			modifier = {
+				factor = 0.5
+				TAN = { num_divisions > 20 }
+			}
+
+			modifier = {
+				factor = 0.5
+				TAN = { strength_ratio = { tag = MON ratio > 1.0 } }
+			}
+
+			modifier = {
+				factor = 2.0
+				strength_ratio = { tag = TAN ratio > 1.0 }
+			}
+		}
+
+		leave_faction = yes
+		TAN = {
+			create_wargoal = {
+				type = annex_everything
+				target = MON
+			}
+		}
+		news_event = {
+			id = tt_tuva.9
+			days = 1
+		}
+	}
+}
+
+# ----------------------------------------------------------------------
+#  News: Mongolia accepts the ultimatum
+# ----------------------------------------------------------------------
+news_event = {
+	id = tt_tuva.8
+	title = tt_tuva.8.t
+	desc = tt_tuva.8.desc
+	picture = GFX_news_event_generic_handshake
+
+	major = yes
+	is_triggered_only = yes
+
+	option = {
+		name = tt_tuva.8.a
+	}
+}
+
+# ----------------------------------------------------------------------
+#  News: Mongolia rejects the ultimatum
+# ----------------------------------------------------------------------
+news_event = {
+	id = tt_tuva.9
+	title = tt_tuva.9.t
+	desc = tt_tuva.9.desc
+	picture = GFX_news_event_generic_army
+
+	major = yes
+	is_triggered_only = yes
+
+	option = {
+		name = tt_tuva.9.a
+	}
+	}
+	# ----------------------------------------------------------------------
+#  The Taishet Peace: Tuvan peace offer to SOV
+# ----------------------------------------------------------------------
+country_event = {
+	id = tt_tuva.10
+	title = tt_tuva.10.t
+	desc = tt_tuva.10.desc
+	picture = GFX_report_event_generic_sign_treaty2
+
+	is_triggered_only = yes
+
+	# Option A: Moscow cedes Siberia
+	option = {
+		name = tt_tuva.10.a
+
+		ai_chance = {
+			base = 90
+		}
+
+		white_peace = TAN
+
+		every_state = {
+			limit = {
+				is_owned_by = SOV
+				OR = {
+					state = 40
+					state = 654
+					state = 563
+					state = 564
+					state = 565
+					state = 566
+					state = 567
+					state = 568
+					state = 569
+					state = 570
+				}
+			}
+			transfer_state_to = TAN
+		}
+
+		TAN = {
+			if = {
+				limit = { has_idea = TT_siberian_gambit }
+				swap_ideas = {
+					remove_idea = TT_siberian_gambit
+					add_idea = TT_masters_of_siberia
+				}
+			}
+			else = {
+				add_ideas = TT_masters_of_siberia
+			}
+			add_political_power = 150
+			add_stability = 0.10
+			news_event = {
+				id = tt_tuva.11
+				days = 1
+			}
+		}
+	}
+
+	# Option B: Fight to the bitter end (primarily for human SOV player)
+	option = {
+		name = tt_tuva.10.b
+
+		ai_chance = {
+			base = 10
+			modifier = {
+				factor = 0
+				surrender_progress > 0.15
+			}
+		}
+
+		add_stability = -0.10
+		add_war_support = -0.10
+	}
+}
+
+
+# ----------------------------------------------------------------------
+#  News: The Fall of Soviet Siberia (Taishet Peace)
+# ----------------------------------------------------------------------
+news_event = {
+	id = tt_tuva.11
+	title = tt_tuva.11.t
+	desc = tt_tuva.11.desc
+	picture = GFX_news_event_generic_sign_treaty1
+
+	major = yes
+	is_triggered_only = yes
+
+	option = {
+		name = tt_tuva.11.a
 	}
 }
