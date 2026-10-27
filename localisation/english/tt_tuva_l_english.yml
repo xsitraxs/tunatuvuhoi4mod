@@ -201,6 +201,20 @@
  tt_tuva.6.desc: "Tuva has made no secret of its ambitions. In Ulaanbaatar, the Mongol princes weigh their options. In Tokyo and Moscow, the maps are redrawn. The steppe holds its breath."
  tt_tuva.6.a: "Let them watch."
 
+ tt_tuva.7.t: "The Tuvan Ultimatum"
+ tt_tuva.7.desc: "A Tuvan delegation arrives in Ulaanbaatar with a simple demand: Mongolia must join the Second Tuvan Khanate. The envoys do not hide the alternative — the Tuvan cavalry is already massing on the border. The Kurultai waits for an answer."
+ tt_tuva.7.a: "Accept the ultimatum."
+ tt_tuva.7.b: "Reject the ultimatum."
+
+ tt_tuva.8.t: "Mongolia Joins the Khanate"
+ tt_tuva.8.desc: "Mongolia has accepted the Tuvan ultimatum. The banners of the Second Khanate rise over Ulaanbaatar, and the steppe is united under Kyzyl."
+ tt_tuva.8.a: "The steppe is one."
+
+ tt_tuva.9.t: "Mongolia Rejects the Ultimatum"
+ tt_tuva.9.desc: "Ulaanbaatar has refused the Tuvan demand. Mongolia leaves the Comintern, and the Tuvan army prepares to take the steppe by force."
+ tt_tuva.9.a: "War on the steppe."
+
+
  # ================================================================
  #  MISC
  # ================================================================
@@ -213,7 +227,25 @@
  TT_tuvan_empire_DEF: "the Tuvan Empire"
  TT_tuvan_empire_ADJ: "Tuvan"
 
+ TT_khan_leader_name: "Aldyn-ool Khan"
+ TT_khan_leader_desc: "A descendant of the old khans, raised in Kyzyl and sworn to restore the empire of the steppe."
+ TT_requires_national_path: "The Tuvan national path is chosen"
+ TT_requires_left_comintern: "Tuva has left the Comintern"
+
  TT_industry_boost: "Industrial Research"
  TT_industry_boost_2: "Industrial Research"
  TT_land_doctrine_boost: "Land Doctrine Research"
  TT_infantry_boost: "Infantry Research"
+ TT_masters_of_siberia: "Masters of the North"
+ TT_masters_of_siberia_desc: "The Trans-Siberian Railway is severed and the Red Army garrisons beyond the Urals have capitulated. Siberia now belongs to the steppe."
+ TT_dictate_peace_in_siberia: "Dictate the Taishet Peace"
+ TT_dictate_peace_in_siberia_desc: "By seizing Irkutsk, Chita, Krasnoyarsk and Novosibirsk, we have severed the Trans-Siberian Railway. The Kremlin will have no choice but to recognize Kyzyl's rule over Siberia."
+ TT_siberian_gambit_decision_tt: "Unlocks the §YDictate the Taishet Peace§! decision, allowing us to sign a separate peace and annex Siberia once key cities are captured."
+ TT_dictate_peace_in_siberia_tt: "We will demand that the §YSoviet Union§! formally cede Southern and Eastern Siberia and sign a peace treaty."
+ tt_tuva.10.t: "The Taishet Ultimatum"
+ tt_tuva.10.desc: "Tuvan forces have seized the vital hubs of the Trans-Siberian Railway — from Chita and Irkutsk to Krasnoyarsk and Novosibirsk. Contact with the Far East is lost, and reinforcing the east is impossible. Envoys from Kyzyl offer an armistice at Taishet in exchange for ceding Siberia."
+ tt_tuva.10.a: "Cede Siberia to save the motherland."
+ tt_tuva.10.b: "Not one step back! We will retake Siberia!"
+ tt_tuva.11.t: "The Peace of Taishet"
+ tt_tuva.11.desc: "Astonishing news arrives from Siberia: following the fall of Novosibirsk, Krasnoyarsk and Irkutsk, the Soviet government has signed a separate peace treaty with Tuva. Vast territories from the Altai to Transbaikalia have formally passed under Kyzyl's control."
+ tt_tuva.11.a: "Siberia bows to the horsemen of the steppe."
