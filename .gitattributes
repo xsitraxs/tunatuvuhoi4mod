@@ -1,5 +1,11 @@
+*.txt -text
+*.mod -text
 *.yml -text
+*.md -text
 *.png binary
 *.tga binary
 .vscode/ export-ignore
-
+docs/ export-ignore
+# .gitattributes patterns do not recurse into directories: this is the rule
+# that actually keeps docs/ out of `git archive` exports of the mod.
+docs/** export-ignore
