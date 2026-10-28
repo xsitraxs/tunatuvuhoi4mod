@@ -30,7 +30,7 @@ focus_tree = {
 
 	focus = {
 		id = TT_center_of_asia
-		icon = GFX_focus_generic_asia_liberation
+		icon = GFX_focus_generic_the_giant_wakes
 		x = 10
 		y = 0
 		cost = 5
@@ -104,7 +104,7 @@ focus_tree = {
 
 	focus = {
 		id = TT_the_soviet_arsenal
-		icon = GFX_focus_generic_stalinist_industry
+		icon = GFX_focus_generic_communist_industry
 		prerequisite = { focus = TT_red_yurt }
 		relative_position_id = TT_red_yurt
 		x = 0
@@ -182,7 +182,7 @@ focus_tree = {
 
 	focus = {
 		id = TT_the_red_banner_over_asia
-		icon = GFX_focus_generic_communist_asia
+		icon = GFX_focus_generic_workers_and_farmers_rise
 		prerequisite = { focus = TT_the_siberian_military_district }
 		relative_position_id = TT_the_siberian_military_district
 		x = 0
@@ -223,7 +223,7 @@ focus_tree = {
 
 	focus = {
 		id = TT_form_central_asian_ssr
-		icon = GFX_focus_generic_soviet_politics
+		icon = GFX_focus_generic_join_comintern
 		prerequisite = { focus = TT_the_red_banner_over_asia }
 		relative_position_id = TT_the_red_banner_over_asia
 		x = 0
@@ -263,7 +263,10 @@ focus_tree = {
 			add_state_core = 881
 			add_state_core = 882
 			if = {
-				limit = { country_exists = SOV }
+				limit = {
+					country_exists = SOV
+					NOT = { has_war_with = SOV }
+				}
 				SOV = {
 					country_event = {
 						id = tt_tuva.12
@@ -326,7 +329,7 @@ focus_tree = {
 
 	focus = {
 		id = TT_tuvan_renaissance
-		icon = GFX_focus_generic_printing_press
+		icon = GFX_focus_generic_support_the_left_right
 		prerequisite = { focus = TT_the_great_khural }
 		mutually_exclusive = { focus = TT_red_yurt }
 		relative_position_id = TT_the_great_khural
@@ -370,7 +373,7 @@ focus_tree = {
 			create_country_leader = {
 				name = TT_khan_leader_name
 				desc = "TT_khan_leader_desc"
-				picture = "GFX_portrait_generic_asia_male_01"
+				picture = "GFX_Portrait_Asia_Generic_land_1"
 				expire = "1965.1.1"
 				ideology = despotism
 				traits = {
@@ -408,7 +411,7 @@ focus_tree = {
 
 	focus = {
 		id = TT_the_great_khan
-		icon = GFX_focus_generic_army_attack
+		icon = GFX_focus_generic_provoke_border_clashes
 		prerequisite = { focus = TT_the_second_khanate }
 		relative_position_id = TT_the_second_khanate
 		x = 0
@@ -534,7 +537,7 @@ focus_tree = {
 
 	focus = {
 		id = TT_collective_herds
-		icon = GFX_focus_generic_modernizing_agriculture
+		icon = GFX_focus_generic_agricultural_subsidies
 		prerequisite = { focus = TT_first_five_year_plan }
 		relative_position_id = TT_first_five_year_plan
 		x = 0
@@ -599,7 +602,7 @@ focus_tree = {
 
 	focus = {
 		id = TT_mineral_prospecting
-		icon = GFX_focus_generic_mineral_prospecting
+		icon = GFX_focus_generic_mining_industry
 		prerequisite = { focus = TT_kyzyl_industries }
 		relative_position_id = TT_kyzyl_industries
 		x = 0
@@ -717,7 +720,7 @@ focus_tree = {
 
 	focus = {
 		id = TT_the_golden_hoard
-		icon = GFX_focus_generic_expand_gold_mining
+		icon = GFX_focus_generic_resource_extraction
 		prerequisite = { focus = TT_the_yenisei_dam }
 		relative_position_id = TT_the_yenisei_dam
 		x = 0
@@ -807,7 +810,7 @@ focus_tree = {
 
 	focus = {
 		id = TT_soviet_advisors
-		icon = GFX_focus_generic_advisors
+		icon = GFX_focus_generic_military_mission
 		prerequisite = { focus = TT_cavalry_of_the_steppe }
 		relative_position_id = TT_cavalry_of_the_steppe
 		x = 0
@@ -861,7 +864,7 @@ focus_tree = {
 
 	focus = {
 		id = TT_mountain_warfare
-		icon = GFX_focus_generic_mountain_troops
+		icon = GFX_focus_generic_commonwealth_build_infantry
 		prerequisite = { focus = TT_soviet_advisors }
 		relative_position_id = TT_soviet_advisors
 		x = 0
@@ -889,7 +892,7 @@ focus_tree = {
 				name = TT_infantry_boost
 				bonus = 0.5
 				uses = 1
-				category = infantry_tech
+				category = infantry_weapons
 			}
 		}
 	}
@@ -920,10 +923,46 @@ focus_tree = {
 					}
 				}
 			}
-			add_equipment_to_stockpile = {
-				type = fighter_equipment_1
-				amount = 20
-				producer = SOV
+			if = {
+				limit = { has_dlc = "By Blood Alone" }
+				if = {
+					limit = {
+						has_country_flag = TT_soviet_path
+						NOT = { has_war_with = SOV }
+					}
+					add_equipment_to_stockpile = {
+						type = small_plane_airframe_1
+						amount = 20
+						producer = SOV
+					}
+				}
+				else = {
+					add_equipment_to_stockpile = {
+						type = small_plane_airframe_1
+						amount = 20
+						producer = TAN
+					}
+				}
+			}
+			else = {
+				if = {
+					limit = {
+						has_country_flag = TT_soviet_path
+						NOT = { has_war_with = SOV }
+					}
+					add_equipment_to_stockpile = {
+						type = fighter_equipment_1
+						amount = 20
+						producer = SOV
+					}
+				}
+				else = {
+					add_equipment_to_stockpile = {
+						type = fighter_equipment_1
+						amount = 20
+						producer = TAN
+					}
+				}
 			}
 			air_experience = 25
 		}
@@ -1116,7 +1155,7 @@ focus_tree = {
 				create_wargoal = {
 					type = take_state_focus
 					target = SOV
-					generator = { 566 568 570 }
+					generator = { 563 566 568 570 }
 				}
 			}
 			custom_effect_tooltip = TT_siberian_gambit_decision_tt

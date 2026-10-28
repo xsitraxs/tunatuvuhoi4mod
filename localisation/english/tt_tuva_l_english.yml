@@ -22,6 +22,15 @@
  TT_the_red_banner_over_asia: "The Red Banner over Asia"
  TT_the_red_banner_over_asia_desc: "The revolution does not stop at the Sayan Mountains. From the Manchurian plains to the Pacific coast, the red banner will fly over Asia."
 
+ # ================================================================
+ #  SOVIET ENDGAME FOCUSES
+ # ================================================================
+
+ TT_form_central_asian_ssr: "Form the Central Asian SSR"
+ TT_form_central_asian_ssr_desc: "Kyzyl proposes a bold reorganization of the Soviet east: the republics of Central Asia, from the Caspian to the Tien Shan, united in a single union republic under the banner of the Center of Asia. Moscow must answer."
+ TT_the_battle_for_manchuria: "The Battle for Manchuria"
+ TT_the_battle_for_manchuria_desc: "The red banner does not stop at the Amur. Kirin, Jehol and Liaotung are claimed for the revolution; a wargoal against Manchukuo - or its Japanese masters - will open the road to the Pacific."
+
  TT_tuvan_renaissance: "The Tuvan Renaissance"
  TT_tuvan_renaissance_desc: "Enough of being a footnote in Moscow's ledgers. Tuvan language, Tuvan songs, Tuvan history. The nation awakens, and it will no longer be a puppet."
 
@@ -150,6 +159,17 @@
  TT_mobilization_desc: "Every arat a soldier."
 
  # ================================================================
+ #  CENTRAL ASIAN SSR / MANCHURIAN CAMPAIGN
+ # ================================================================
+
+ TT_central_asian_ssr_spirit: "The Central Asian SSR"
+ TT_central_asian_ssr_spirit_desc: "From the Aral Sea to the Tien Shan the Soviet republics of Central Asia now look to Kyzyl. Factories, laboratories and Party schools serve the whole union."
+ TT_manchurian_campaign: "The Manchurian Campaign"
+ TT_manchurian_campaign_desc: "Our armies are marching east. Every rifle and every horse is needed for the coming struggle for Manchuria."
+ TT_masters_of_manchuria: "Masters of Manchuria"
+ TT_masters_of_manchuria_desc: "Kirin, Jehol and Liaotung are ours. The industries of Manchuria work for the Center of Asia now."
+
+ # ================================================================
  #  DECISIONS
  # ================================================================
 
@@ -169,6 +189,15 @@
 
  TT_request_soviet_aid: "Request Soviet Aid"
  TT_request_soviet_aid_desc: "Ask Moscow for rifles, machine guns and advisers. Friends help friends."
+
+ # ================================================================
+ #  MANCHURIAN DECISIONS
+ # ================================================================
+
+ TT_launch_manchurian_offensive: "Launch the Manchurian Offensive"
+ TT_launch_manchurian_offensive_desc: "Commit the army to a full-scale offensive in Manchuria for six months: attack, organization and planning bonuses, followed by a hard-earned reserve of army experience."
+ TT_proclaim_manchurian_victory: "Proclaim Victory in Manchuria"
+ TT_proclaim_manchurian_victory_desc: "Once Kirin, Jehol and Liaotung are in our hands, we can proclaim victory, core the conquered lands and replace the campaign spirit with a lasting one."
 
  # ================================================================
  #  EVENTS
@@ -214,7 +243,6 @@
  tt_tuva.9.desc: "Ulaanbaatar has refused the Tuvan demand. Mongolia leaves the Comintern, and the Tuvan army prepares to take the steppe by force."
  tt_tuva.9.a: "War on the steppe."
 
-
  # ================================================================
  #  MISC
  # ================================================================
@@ -226,6 +254,10 @@
  TT_tuvan_empire: "Tuvan Empire"
  TT_tuvan_empire_DEF: "the Tuvan Empire"
  TT_tuvan_empire_ADJ: "Tuvan"
+
+ TT_central_asian_ssr: "Central Asian SSR"
+ TT_central_asian_ssr_DEF: "the Central Asian SSR"
+ TT_central_asian_ssr_ADJ: "Central Asian"
 
  TT_khan_leader_name: "Aldyn-ool Khan"
  TT_khan_leader_desc: "A descendant of the old khans, raised in Kyzyl and sworn to restore the empire of the steppe."
@@ -242,6 +274,10 @@
  TT_dictate_peace_in_siberia_desc: "By seizing Irkutsk, Chita, Krasnoyarsk and Novosibirsk, we have severed the Trans-Siberian Railway. The Kremlin will have no choice but to recognize Kyzyl's rule over Siberia."
  TT_siberian_gambit_decision_tt: "Unlocks the §YDictate the Taishet Peace§! decision, allowing us to sign a separate peace and annex Siberia once key cities are captured."
  TT_dictate_peace_in_siberia_tt: "We will demand that the §YSoviet Union§! formally cede Southern and Eastern Siberia and sign a peace treaty."
+
+ TT_central_asian_ssr_tt: "If §Ythe Soviet Union§! exists and we are not at war with it, Moscow will be asked to transfer the Central Asian republics to us."
+ TT_manchurian_offensive_tt: "Creates a wargoal for §YKirin, Jehol and Liaotung§! and unlocks the §YManchurian Offensive§! decision."
+
  tt_tuva.10.t: "The Taishet Ultimatum"
  tt_tuva.10.desc: "Tuvan forces have seized the vital hubs of the Trans-Siberian Railway — from Chita and Irkutsk to Krasnoyarsk and Novosibirsk. Contact with the Far East is lost, and reinforcing the east is impossible. Envoys from Kyzyl offer an armistice at Taishet in exchange for ceding Siberia."
  tt_tuva.10.a: "Cede Siberia to save the motherland."
@@ -249,3 +285,24 @@
  tt_tuva.11.t: "The Peace of Taishet"
  tt_tuva.11.desc: "Astonishing news arrives from Siberia: following the fall of Novosibirsk, Krasnoyarsk and Irkutsk, the Soviet government has signed a separate peace treaty with Tuva. Vast territories from the Altai to Transbaikalia have formally passed under Kyzyl's control."
  tt_tuva.11.a: "Siberia bows to the horsemen of the steppe."
+
+ # ================================================================
+ #  EVENTS: CENTRAL ASIAN SSR AND MANCHURIA
+ # ================================================================
+
+ tt_tuva.12.t: "The Kyzyl Initiative"
+ tt_tuva.12.desc: "A delegation from Kyzyl has arrived in the Kremlin with an extraordinary proposal: unite the Soviet republics of Central Asia into a single Central Asian SSR, tied to Tuva. Its supporters promise order, grain and a loyal east; its opponents call it the dismemberment of the Union. The decision belongs to Moscow."
+ tt_tuva.12.a: "Approve. Transfer the union republics to Kyzyl."
+ tt_tuva.12.b: "Refuse. The borders stay as they are."
+ tt_tuva.13.t: "Moscow Approves the Central Asian SSR"
+ tt_tuva.13.desc: "The Kremlin has signed the decree. From the Caspian to the Tien Shan twenty-one states pass under the administration of Kyzyl: a new Central Asian SSR is born, and the map of the Soviet east is redrawn without a single shot being fired."
+ tt_tuva.13.a: "A new republic takes its place on the map."
+ tt_tuva.14.t: "Moscow Refuses the Transfer"
+ tt_tuva.14.desc: "After long debates in the Kremlin the proposal from Kyzyl has been declined. The Central Asian union republics remain within the Soviet Union as before; Tuva receives only a modest compensation in political capital for its initiative."
+ tt_tuva.14.a: "The map stays the way it was."
+ tt_tuva.15.t: "The Battle for Manchuria Begins"
+ tt_tuva.15.desc: "The Center of Asia has claimed Kirin, Jehol and Liaotung. Columns of Tuvan troops are moving east, and both Manchukuo and Japan have been put on notice: the struggle for Manchuria has begun."
+ tt_tuva.15.a: "The banners turn to the east."
+ tt_tuva.16.t: "Victory in Manchuria"
+ tt_tuva.16.desc: "Kirin, Jehol and Liaotung have fallen. The Manchurian campaign is over: the conquered lands are integrated into the state, the army gains a lasting new spirit, and the world now speaks of Tuva as a Pacific power."
+ tt_tuva.16.a: "From Kyzyl to the Pacific."

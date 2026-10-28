@@ -14,3 +14,8 @@ TT_tuvan_empire = {
 	color = rgb { 26 26 26 }
 	color_ui = rgb { 26 26 26 }
 }
+
+TT_central_asian_ssr = {
+	color = rgb { 178 34 34 }
+	color_ui = rgb { 178 34 34 }
+}
