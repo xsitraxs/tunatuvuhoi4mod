@@ -1,5 +1,5 @@
 name="Tuva: The Center of Asia"
-version="1.0.2"
+version="1.1.0"
 tags={
 	"Alternative History"
 	"Gameplay"
