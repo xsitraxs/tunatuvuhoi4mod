@@ -95,6 +95,25 @@
  TT_the_siberian_gambit_desc: "The Soviet colossus is bleeding in the west. Now, while Moscow looks at Berlin, is the moment to strike for Siberia."
 
  # ================================================================
+ #  MILITARY FOCUSES 1.1.0: DOCTRINES, AIR FORCE, NAVY
+ # ================================================================
+
+ TT_infantry_and_artillery: "Infantry and Artillery"
+ TT_infantry_and_artillery_desc: "The steppe does not live by the horse alone. Disciplined infantry and batteries of field guns will hold the Sayans and crush the enemy under a rolling barrage."
+ TT_tanks_of_the_steppe: "Tanks of the Steppe"
+ TT_tanks_of_the_steppe_desc: "Steel horses of a new age. An armoured fist will cross the steppe faster than any cavalry - provided we have the fuel, the mechanics and the nerve."
+ TT_wings_of_the_steppe: "Wings of the Steppe"
+ TT_wings_of_the_steppe_desc: "Ground-attack planes over the Sayans: our aviation learns to support the troops from the air instead of merely decorating parades in Kyzyl."
+ TT_bombers_over_siberia: "Bombers over Siberia"
+ TT_bombers_over_siberia_desc: "Medium bombers in Tuvan markings can reach any junction of the Trans-Siberian. The Siberian sky is no longer safe."
+ TT_the_yenisei_flotilla: "The Yenisei Flotilla"
+ TT_the_yenisei_flotilla_desc: "Tuva has no sea, but it has a great river. Armed steamers and gunboats on the Yenisei are the first step towards a real navy."
+ TT_kyzyl_naval_school: "The Kyzyl Naval School"
+ TT_kyzyl_naval_school_desc: "Navigators, engineers and naval gunners are trained in the very centre of Asia, thousands of kilometres from the nearest ocean. The steppe knows how to wait."
+ TT_the_pacific_fleet: "The Pacific Fleet of the Steppe"
+ TT_the_pacific_fleet_desc: "Liaotung is in our hands, which means Tuva has its outlet to the ocean. The yards of Port Arthur will lay down ships under the banner of the steppe."
+
+ # ================================================================
  #  NATIONAL SPIRITS
  # ================================================================
 
@@ -158,6 +177,19 @@
  TT_mobilization: "Total Mobilization"
  TT_mobilization_desc: "Every arat a soldier."
 
+ TT_firepower_doctrine: "Firepower Doctrine"
+ TT_firepower_doctrine_desc: "The infantry holds the line, the artillery decides the battle."
+ TT_armored_fist: "The Armoured Fist"
+ TT_armored_fist_desc: "Tanks and motorized infantry break the front where cavalry cannot pass."
+ TT_steppe_aviation: "Aviation of the Steppe"
+ TT_steppe_aviation_desc: "The pilots of the steppe learn to make war in the sky."
+ TT_siberian_bombers: "Bombers over Siberia"
+ TT_siberian_bombers_desc: "The drone of engines over the Trans-Siberian is heard from Kyzyl to the ocean."
+ TT_river_flotilla: "The Yenisei Flotilla"
+ TT_river_flotilla_desc: "Gunboats of the great river - a school for the future admirals of the steppe."
+ TT_pacific_ambition: "Pacific Ambitions"
+ TT_pacific_ambition_desc: "The banner of the steppe over the ocean: the yards work day and night."
+
  # ================================================================
  #  CENTRAL ASIAN SSR / MANCHURIAN CAMPAIGN
  # ================================================================
@@ -198,6 +230,10 @@
  TT_launch_manchurian_offensive_desc: "Commit the army to a full-scale offensive in Manchuria for six months: attack, organization and planning bonuses, followed by a hard-earned reserve of army experience."
  TT_proclaim_manchurian_victory: "Proclaim Victory in Manchuria"
  TT_proclaim_manchurian_victory_desc: "Once Kirin, Jehol and Liaotung are in our hands, we can proclaim victory, core the conquered lands and replace the campaign spirit with a lasting one."
+ TT_develop_industrial_zones: "Develop the Industrial Zones"
+ TT_develop_industrial_zones_desc: "Set aside land and utilities for new factories around Kyzyl: +§Y1§! building slot in Tuva. This decision can be repeated every 90 days."
+ TT_rally_the_clans: "The Oath of the Khoshuns"
+ TT_rally_the_clans_desc: "Gather the elders of the clans and receive their oath to the Khan: support for neutrality will grow, and the communists will have no time for plots."
 
  # ================================================================
  #  EVENTS
@@ -268,6 +304,13 @@
  TT_industry_boost_2: "Industrial Research"
  TT_land_doctrine_boost: "Land Doctrine Research"
  TT_infantry_boost: "Infantry Research"
+ TT_artillery_boost: "Artillery Research"
+ TT_armor_boost: "Armour Research"
+ TT_air_doctrine_boost: "Air Doctrine Research"
+ TT_naval_doctrine_boost: "Naval Doctrine Research"
+ TT_war_declaration_tt: "The Khanate spirit removes the §YWorld Tension§! threshold for justifying war goals: the Khan may declare wars at any time, including against the §YSoviet Union§!."
+ TT_requires_liaotung: "We control Liaotung (access to the sea)"
+ TT_pacific_fleet_tt: "If we control §YLiaotung§!, §Y2 dockyards§! will be built there."
  TT_masters_of_siberia: "Masters of the North"
  TT_masters_of_siberia_desc: "The Trans-Siberian Railway is severed and the Red Army garrisons beyond the Urals have capitulated. Siberia now belongs to the steppe."
  TT_dictate_peace_in_siberia: "Dictate the Taishet Peace"

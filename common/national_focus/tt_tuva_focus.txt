@@ -122,7 +122,7 @@ focus_tree = {
 			if = {
 				limit = { controls_state = 329 }
 				329 = {
-					add_extra_state_shared_building_slots = 1
+					add_extra_state_shared_building_slots = 2
 					add_building_construction = {
 						type = arms_factory
 						level = 1
@@ -168,7 +168,7 @@ focus_tree = {
 			if = {
 				limit = { controls_state = 329 }
 				329 = {
-					add_extra_state_shared_building_slots = 1
+					add_extra_state_shared_building_slots = 2
 					add_building_construction = {
 						type = arms_factory
 						level = 1
@@ -237,42 +237,49 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_ANNEXATION }
 
 		completion_reward = {
-			set_cosmetic_tag = TT_central_asian_ssr
-			add_ideas = TT_central_asian_ssr_spirit
-			add_political_power = 100
-			add_stability = 0.05
-			add_state_core = 402
-			add_state_core = 404
-			add_state_core = 405
-			add_state_core = 406
-			add_state_core = 407
-			add_state_core = 583
-			add_state_core = 584
-			add_state_core = 585
-			add_state_core = 586
-			add_state_core = 587
-			add_state_core = 588
-			add_state_core = 589
-			add_state_core = 590
-			add_state_core = 732
-			add_state_core = 742
-			add_state_core = 823
-			add_state_core = 830
-			add_state_core = 831
-			add_state_core = 832
-			add_state_core = 881
-			add_state_core = 882
 			if = {
 				limit = {
 					country_exists = SOV
 					NOT = { has_war_with = SOV }
 				}
+				# The name, spirit and cores are granted by the approval
+				# option of tt_tuva.12, so a Soviet refusal cannot leave a
+				# Central Asian SSR that Moscow never agreed to create.
 				SOV = {
 					country_event = {
 						id = tt_tuva.12
 						days = 1
 					}
 				}
+			}
+			else = {
+				# No Moscow left to ask (or we are already at war with it):
+				# proclaim the republic unilaterally.
+				set_cosmetic_tag = TT_central_asian_ssr
+				add_ideas = TT_central_asian_ssr_spirit
+				add_political_power = 100
+				add_stability = 0.05
+				add_state_core = 402
+				add_state_core = 404
+				add_state_core = 405
+				add_state_core = 406
+				add_state_core = 407
+				add_state_core = 583
+				add_state_core = 584
+				add_state_core = 585
+				add_state_core = 586
+				add_state_core = 587
+				add_state_core = 588
+				add_state_core = 589
+				add_state_core = 590
+				add_state_core = 732
+				add_state_core = 742
+				add_state_core = 823
+				add_state_core = 830
+				add_state_core = 831
+				add_state_core = 832
+				add_state_core = 881
+				add_state_core = 882
 			}
 			custom_effect_tooltip = TT_central_asian_ssr_tt
 		}
@@ -346,6 +353,10 @@ focus_tree = {
 		completion_reward = {
 			add_ideas = TT_national_awakening
 			add_political_power = 75
+			add_popularity = {
+				ideology = neutrality
+				popularity = 0.30
+			}
 			set_country_flag = TT_national_path
 			country_event = {
 				id = tt_tuva.2
@@ -386,9 +397,9 @@ focus_tree = {
 				ruling_party = neutrality
 				elections_allowed = no
 			}
-			add_popularity = {
-				ideology = neutrality
-				popularity = 0.45
+			set_popularities = {
+				neutrality = 75
+				communism = 25
 			}
 			if = {
 				limit = { has_idea = TT_national_awakening }
@@ -402,6 +413,7 @@ focus_tree = {
 			}
 			set_cosmetic_tag = TT_tuvan_khanate
 			add_stability = -0.05
+			custom_effect_tooltip = TT_war_declaration_tt
 			news_event = {
 				id = tt_tuva.3
 				days = 1
@@ -440,6 +452,10 @@ focus_tree = {
 			add_state_claim = 818
 			add_state_claim = 819
 			add_state_claim = 820
+			add_popularity = {
+				ideology = neutrality
+				popularity = 0.10
+			}
 			add_war_support = 0.05
 		}
 	}
@@ -493,6 +509,10 @@ focus_tree = {
 				add_state_core = 654
 			}
 			add_war_support = 0.1
+			add_popularity = {
+				ideology = neutrality
+				popularity = 0.10
+			}
 			news_event = {
 				id = tt_tuva.4
 				days = 1
@@ -524,7 +544,7 @@ focus_tree = {
 			if = {
 				limit = { controls_state = 329 }
 				329 = {
-					add_extra_state_shared_building_slots = 1
+					add_extra_state_shared_building_slots = 2
 					add_building_construction = {
 						type = industrial_complex
 						level = 1
@@ -562,6 +582,12 @@ focus_tree = {
 				add_ideas = TT_collective_farms
 			}
 			add_manpower = 5000
+			if = {
+				limit = { controls_state = 329 }
+				329 = {
+					add_extra_state_shared_building_slots = 1
+				}
+			}
 		}
 	}
 
@@ -584,7 +610,7 @@ focus_tree = {
 			if = {
 				limit = { controls_state = 329 }
 				329 = {
-					add_extra_state_shared_building_slots = 2
+					add_extra_state_shared_building_slots = 3
 					add_building_construction = {
 						type = industrial_complex
 						level = 1
@@ -619,6 +645,7 @@ focus_tree = {
 			if = {
 				limit = { controls_state = 329 }
 				329 = {
+					add_extra_state_shared_building_slots = 2
 					add_resource = {
 						type = chromium
 						amount = 6
@@ -661,9 +688,21 @@ focus_tree = {
 			if = {
 				limit = { controls_state = 329 }
 				329 = {
+					add_extra_state_shared_building_slots = 1
 					add_building_construction = {
 						type = infrastructure
 						level = 2
+						instant_build = yes
+					}
+				}
+			}
+			if = {
+				limit = { controls_state = 330 }
+				330 = {
+					add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = infrastructure
+						level = 1
 						instant_build = yes
 					}
 				}
@@ -701,7 +740,7 @@ focus_tree = {
 			if = {
 				limit = { controls_state = 329 }
 				329 = {
-					add_extra_state_shared_building_slots = 1
+					add_extra_state_shared_building_slots = 2
 					add_building_construction = {
 						type = industrial_complex
 						level = 1
@@ -745,6 +784,17 @@ focus_tree = {
 				add_ideas = TT_gold_reserve
 			}
 			add_political_power = 100
+			if = {
+				limit = { controls_state = 329 }
+				329 = {
+					add_extra_state_shared_building_slots = 2
+					add_building_construction = {
+						type = industrial_complex
+						level = 1
+						instant_build = yes
+					}
+				}
+			}
 			country_event = {
 				id = tt_tuva.5
 				days = 1
@@ -761,7 +811,7 @@ focus_tree = {
 		icon = GFX_focus_generic_military_academy
 		prerequisite = { focus = TT_center_of_asia }
 		relative_position_id = TT_center_of_asia
-		x = 4
+		x = 6
 		y = 1
 		cost = 10
 
@@ -782,8 +832,9 @@ focus_tree = {
 		id = TT_cavalry_of_the_steppe
 		icon = GFX_focus_generic_horse_studs
 		prerequisite = { focus = TT_the_peoples_army }
+		mutually_exclusive = { focus = TT_infantry_and_artillery focus = TT_tanks_of_the_steppe }
 		relative_position_id = TT_the_peoples_army
-		x = 0
+		x = -3
 		y = 1
 		cost = 10
 
@@ -794,27 +845,19 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_MANPOWER FOCUS_FILTER_ARMY_XP }
 
 		completion_reward = {
-			if = {
-				limit = { has_idea = TT_peoples_army }
-				swap_ideas = {
-					remove_idea = TT_peoples_army
-					add_idea = TT_steppe_cavalry
-				}
-			}
-			else = {
-				add_ideas = TT_steppe_cavalry
-			}
+			add_ideas = TT_steppe_cavalry
 			add_manpower = 3000
+			army_experience = 25
 		}
 	}
 
 	focus = {
 		id = TT_soviet_advisors
 		icon = GFX_focus_generic_military_mission
-		prerequisite = { focus = TT_cavalry_of_the_steppe }
-		relative_position_id = TT_cavalry_of_the_steppe
-		x = 0
-		y = 1
+		prerequisite = { focus = TT_cavalry_of_the_steppe focus = TT_infantry_and_artillery focus = TT_tanks_of_the_steppe }
+		relative_position_id = TT_the_peoples_army
+		x = -3
+		y = 2
 		cost = 10
 
 		ai_will_do = {
@@ -824,16 +867,7 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_ARMY_XP FOCUS_FILTER_RESEARCH }
 
 		completion_reward = {
-			if = {
-				limit = { has_idea = TT_steppe_cavalry }
-				swap_ideas = {
-					remove_idea = TT_steppe_cavalry
-					add_idea = TT_soviet_military_mission
-				}
-			}
-			else = {
-				add_ideas = TT_soviet_military_mission
-			}
+			add_ideas = TT_soviet_military_mission
 			if = {
 				limit = {
 					has_country_flag = TT_soviet_path
@@ -878,16 +912,7 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_ARMY_XP }
 
 		completion_reward = {
-			if = {
-				limit = { has_idea = TT_soviet_military_mission }
-				swap_ideas = {
-					remove_idea = TT_soviet_military_mission
-					add_idea = TT_mountain_troops
-				}
-			}
-			else = {
-				add_ideas = TT_mountain_troops
-			}
+			add_ideas = TT_mountain_troops
 			add_tech_bonus = {
 				name = TT_infantry_boost
 				bonus = 0.5
@@ -900,10 +925,10 @@ focus_tree = {
 	focus = {
 		id = TT_the_tuvan_air_force
 		icon = GFX_focus_generic_air_bases
-		prerequisite = { focus = TT_mountain_warfare }
-		relative_position_id = TT_mountain_warfare
+		prerequisite = { focus = TT_cavalry_of_the_steppe focus = TT_infantry_and_artillery focus = TT_tanks_of_the_steppe }
+		relative_position_id = TT_the_peoples_army
 		x = 0
-		y = 1
+		y = 2
 		cost = 10
 
 		ai_will_do = {
@@ -927,7 +952,7 @@ focus_tree = {
 				limit = { has_dlc = "By Blood Alone" }
 				if = {
 					limit = {
-						has_country_flag = TT_soviet_path
+						country_exists = SOV
 						NOT = { has_war_with = SOV }
 					}
 					add_equipment_to_stockpile = {
@@ -947,7 +972,7 @@ focus_tree = {
 			else = {
 				if = {
 					limit = {
-						has_country_flag = TT_soviet_path
+						country_exists = SOV
 						NOT = { has_war_with = SOV }
 					}
 					add_equipment_to_stockpile = {
@@ -971,8 +996,8 @@ focus_tree = {
 	focus = {
 		id = TT_total_mobilization
 		icon = GFX_focus_generic_manpower
-		prerequisite = { focus = TT_the_tuvan_air_force }
-		relative_position_id = TT_the_tuvan_air_force
+		prerequisite = { focus = TT_mountain_warfare }
+		relative_position_id = TT_mountain_warfare
 		x = 0
 		y = 1
 		cost = 10
@@ -984,18 +1009,365 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_MANPOWER FOCUS_FILTER_WAR_SUPPORT }
 
 		completion_reward = {
+			add_ideas = TT_mobilization
+			add_war_support = 0.1
+			add_manpower = 10000
+		}
+	}
+
+	# ==================================================================
+	#  DOCTRINE CHOICE - CHOOSE ONE WAY OF WAR
+	# ==================================================================
+
+	focus = {
+		id = TT_infantry_and_artillery
+		icon = GFX_goal_generic_army_artillery
+		prerequisite = { focus = TT_the_peoples_army }
+		mutually_exclusive = { focus = TT_cavalry_of_the_steppe focus = TT_tanks_of_the_steppe }
+		relative_position_id = TT_the_peoples_army
+		x = 0
+		y = 1
+		cost = 10
+
+		ai_will_do = {
+			factor = 50
+		}
+
+		search_filters = { FOCUS_FILTER_ARMY_XP FOCUS_FILTER_RESEARCH }
+
+		completion_reward = {
+			add_ideas = TT_firepower_doctrine
 			if = {
-				limit = { has_idea = TT_mountain_troops }
-				swap_ideas = {
-					remove_idea = TT_mountain_troops
-					add_idea = TT_mobilization
+				limit = {
+					country_exists = SOV
+					NOT = { has_war_with = SOV }
+				}
+				add_equipment_to_stockpile = {
+					type = artillery_equipment
+					amount = 150
+					producer = SOV
 				}
 			}
 			else = {
-				add_ideas = TT_mobilization
+				add_equipment_to_stockpile = {
+					type = artillery_equipment
+					amount = 150
+					producer = TAN
+				}
 			}
-			add_war_support = 0.1
-			add_manpower = 10000
+			add_tech_bonus = {
+				name = TT_artillery_boost
+				bonus = 0.5
+				uses = 1
+				category = artillery
+			}
+			army_experience = 25
+		}
+	}
+
+	focus = {
+		id = TT_tanks_of_the_steppe
+		icon = GFX_goal_generic_army_tanks
+		prerequisite = { focus = TT_the_peoples_army }
+		mutually_exclusive = { focus = TT_cavalry_of_the_steppe focus = TT_infantry_and_artillery }
+		relative_position_id = TT_the_peoples_army
+		x = 3
+		y = 1
+		cost = 10
+
+		ai_will_do = {
+			factor = 50
+		}
+
+		search_filters = { FOCUS_FILTER_ARMY_XP FOCUS_FILTER_RESEARCH }
+
+		completion_reward = {
+			add_ideas = TT_armored_fist
+			if = {
+				limit = {
+					country_exists = SOV
+					NOT = { has_war_with = SOV }
+				}
+				add_equipment_to_stockpile = {
+					type = motorized_equipment
+					amount = 100
+					producer = SOV
+				}
+			}
+			else = {
+				add_equipment_to_stockpile = {
+					type = motorized_equipment
+					amount = 100
+					producer = TAN
+				}
+			}
+			add_tech_bonus = {
+				name = TT_armor_boost
+				bonus = 0.5
+				uses = 1
+				category = armor
+			}
+			army_experience = 25
+		}
+	}
+
+	# ==================================================================
+	#  AIR BRANCH - WINGS OF THE STEPPE
+	# ==================================================================
+
+	focus = {
+		id = TT_wings_of_the_steppe
+		icon = GFX_goal_generic_CAS
+		prerequisite = { focus = TT_the_tuvan_air_force }
+		relative_position_id = TT_the_tuvan_air_force
+		x = 0
+		y = 1
+		cost = 10
+
+		ai_will_do = {
+			factor = 100
+		}
+
+		search_filters = { FOCUS_FILTER_RESEARCH }
+
+		completion_reward = {
+			add_ideas = TT_steppe_aviation
+			if = {
+				limit = { controls_state = 329 }
+				329 = {
+					add_building_construction = {
+						type = air_base
+						level = 1
+						instant_build = yes
+					}
+				}
+			}
+			if = {
+				limit = { has_dlc = "By Blood Alone" }
+				if = {
+					limit = {
+						country_exists = SOV
+						NOT = { has_war_with = SOV }
+					}
+					add_equipment_to_stockpile = {
+						type = small_plane_airframe_1
+						amount = 20
+						producer = SOV
+					}
+				}
+				else = {
+					add_equipment_to_stockpile = {
+						type = small_plane_airframe_1
+						amount = 20
+						producer = TAN
+					}
+				}
+			}
+			else = {
+				# add_equipment_to_stockpile only works if the producer has
+				# unlocked the equipment. The USSR does not start with CAS I,
+				# so fall back to a starting CAS producer when necessary.
+				if = {
+					limit = {
+						country_exists = SOV
+						NOT = { has_war_with = SOV }
+						SOV = { has_tech = CAS1 }
+					}
+					add_equipment_to_stockpile = {
+						type = cas_equipment_1
+						amount = 20
+						producer = SOV
+					}
+				}
+				else_if = {
+					limit = { country_exists = GER }
+					add_equipment_to_stockpile = {
+						type = cas_equipment_1
+						amount = 20
+						producer = GER
+					}
+				}
+				else = {
+					add_equipment_to_stockpile = {
+						type = cas_equipment_1
+						amount = 20
+						producer = TAN
+					}
+				}
+			}
+			add_tech_bonus = {
+				name = TT_air_doctrine_boost
+				bonus = 0.5
+				uses = 1
+				category = air_doctrine
+			}
+			air_experience = 25
+		}
+	}
+
+	focus = {
+		id = TT_bombers_over_siberia
+		icon = GFX_goal_generic_air_bomber
+		prerequisite = { focus = TT_wings_of_the_steppe }
+		relative_position_id = TT_wings_of_the_steppe
+		x = 0
+		y = 1
+		cost = 10
+
+		ai_will_do = {
+			factor = 100
+		}
+
+		search_filters = { FOCUS_FILTER_RESEARCH }
+
+		completion_reward = {
+			add_ideas = TT_siberian_bombers
+			if = {
+				limit = { controls_state = 329 }
+				329 = {
+					add_building_construction = {
+						type = air_base
+						level = 1
+						instant_build = yes
+					}
+				}
+			}
+			if = {
+				limit = { has_dlc = "By Blood Alone" }
+				if = {
+					limit = {
+						country_exists = SOV
+						NOT = { has_war_with = SOV }
+					}
+					add_equipment_to_stockpile = {
+						type = medium_plane_airframe_1
+						amount = 20
+						producer = SOV
+					}
+				}
+				else = {
+					add_equipment_to_stockpile = {
+						type = medium_plane_airframe_1
+						amount = 20
+						producer = TAN
+					}
+				}
+			}
+			else = {
+				if = {
+					limit = {
+						country_exists = SOV
+						NOT = { has_war_with = SOV }
+					}
+					# The archetype resolves to the best tactical bomber the
+					# producer has unlocked (the USSR starts with interwar
+					# tactical bombers, but not Tactical Bomber I).
+					add_equipment_to_stockpile = {
+						type = tac_bomber_equipment
+						amount = 20
+						producer = SOV
+					}
+				}
+				else = {
+					add_equipment_to_stockpile = {
+						type = tac_bomber_equipment_1
+						amount = 20
+						producer = TAN
+					}
+				}
+			}
+			air_experience = 50
+		}
+	}
+
+	# ==================================================================
+	#  NAVY BRANCH - FROM THE YENISEI TO THE PACIFIC
+	# ==================================================================
+
+	focus = {
+		id = TT_the_yenisei_flotilla
+		icon = GFX_goal_generic_build_navy
+		prerequisite = { focus = TT_cavalry_of_the_steppe focus = TT_infantry_and_artillery focus = TT_tanks_of_the_steppe }
+		relative_position_id = TT_the_peoples_army
+		x = 3
+		y = 2
+		cost = 10
+
+		ai_will_do = {
+			factor = 100
+		}
+
+		search_filters = { FOCUS_FILTER_RESEARCH }
+
+		completion_reward = {
+			add_ideas = TT_river_flotilla
+			navy_experience = 25
+		}
+	}
+
+	focus = {
+		id = TT_kyzyl_naval_school
+		icon = GFX_goal_generic_navy_doctrines_tactics
+		prerequisite = { focus = TT_the_yenisei_flotilla }
+		relative_position_id = TT_the_yenisei_flotilla
+		x = 0
+		y = 1
+		cost = 10
+
+		ai_will_do = {
+			factor = 100
+		}
+
+		search_filters = { FOCUS_FILTER_RESEARCH }
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = TT_naval_doctrine_boost
+				bonus = 0.5
+				uses = 1
+				category = naval_doctrine
+			}
+			navy_experience = 25
+		}
+	}
+
+	focus = {
+		id = TT_the_pacific_fleet
+		icon = GFX_goal_generic_navy_battleship
+		prerequisite = { focus = TT_kyzyl_naval_school }
+		relative_position_id = TT_kyzyl_naval_school
+		x = 0
+		y = 1
+		cost = 10
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = TT_requires_liaotung
+				controls_state = 716
+			}
+		}
+
+		ai_will_do = {
+			factor = 100
+		}
+
+		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_RESEARCH }
+
+		completion_reward = {
+			add_ideas = TT_pacific_ambition
+			navy_experience = 50
+			if = {
+				limit = { controls_state = 716 }
+				716 = {
+					add_extra_state_shared_building_slots = 2
+					add_building_construction = {
+						type = dockyard
+						level = 2
+						instant_build = yes
+					}
+				}
+			}
+			custom_effect_tooltip = TT_pacific_fleet_tt
 		}
 	}
 
@@ -1008,7 +1380,7 @@ focus_tree = {
 		icon = GFX_focus_generic_annex_country
 		prerequisite = { focus = TT_center_of_asia }
 		relative_position_id = TT_center_of_asia
-		x = 8
+		x = 14
 		y = 1
 		cost = 10
 

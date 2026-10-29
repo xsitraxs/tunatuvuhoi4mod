@@ -338,4 +338,68 @@ TT_tuva_category = {
 			}
 		}
 	}
+
+	# ------------------------------------------------------------------
+	#  Develop the industrial zones of Kyzyl (repeatable building slot)
+	# ------------------------------------------------------------------
+	TT_develop_industrial_zones = {
+		icon = GFX_decision_generic_industry
+		cost = 50
+		days_re_enable = 90
+
+		allowed = {
+			original_tag = TAN
+		}
+
+		visible = {
+			has_completed_focus = TT_first_five_year_plan
+		}
+
+		available = {
+			controls_state = 329
+		}
+
+		ai_will_do = {
+			base = 10
+		}
+
+		complete_effect = {
+			329 = {
+				add_extra_state_shared_building_slots = 1
+			}
+		}
+	}
+
+	# ------------------------------------------------------------------
+	#  The oath of the khoshuns (neutrality support on the khanate path)
+	# ------------------------------------------------------------------
+	TT_rally_the_clans = {
+		icon = GFX_decision_generic_nationalism
+		cost = 50
+		days_re_enable = 90
+
+		allowed = {
+			original_tag = TAN
+		}
+
+		visible = {
+			has_country_flag = TT_national_path
+		}
+
+		available = {
+			has_government = neutrality
+		}
+
+		ai_will_do = {
+			base = 15
+		}
+
+		complete_effect = {
+			add_popularity = {
+				ideology = neutrality
+				popularity = 0.10
+			}
+			add_stability = 0.02
+		}
+	}
 }

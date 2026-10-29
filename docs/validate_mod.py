@@ -121,7 +121,7 @@ def check_localisation() -> None:
         keys = [k for k in keys if k not in ('l_english', 'l_russian')]
         ok(text.startswith('l_english:' if lang == 'EN' else 'l_russian:'),
            f'{lang}: wrong localisation header')
-        ok(len(keys) == 198, f'{lang}: expected 198 keys, found {len(keys)}')
+        ok(len(keys) == 235, f'{lang}: expected 235 keys, found {len(keys)}')
         ok(len(set(keys)) == len(keys),
            f'{lang}: duplicate keys: {sorted({k for k in keys if keys.count(k) > 1})}')
         data[lang] = set(keys)
@@ -142,7 +142,7 @@ def check_localisation() -> None:
            f'EN/RU key mismatch: EN-only={sorted(data["EN"] - data["RU"])}, '
            f'RU-only={sorted(data["RU"] - data["EN"])}')
         exp = expected_keys()
-        ok(len(exp) == 198, f'script-implied key set has {len(exp)} keys (expected 198)')
+        ok(len(exp) == 235, f'script-implied key set has {len(exp)} keys (expected 235)')
         ok(not (exp - data['EN']), f'missing localisation keys: {sorted(exp - data["EN"])}')
         ok(not (data['EN'] - exp), f'orphan localisation keys: {sorted(data["EN"] - exp)}')
 
@@ -166,14 +166,26 @@ VANILLA_ICONS = {
     'GFX_focus_generic_air_bases', 'GFX_focus_generic_manpower',
     'GFX_focus_generic_annex_country', 'GFX_focus_generic_diplomatic_treaty',
     'GFX_focus_generic_annex_country_2', 'GFX_focus_generic_winter_warfare',
+    # 1.1.0 doctrine / air / navy focuses use the legacy generic goal sprites.
+    # The GFX_focus_generic_* spellings of these seven do not exist in vanilla;
+    # the GFX_goal_generic_* sprites (and their _shine counterparts) do.
+    'GFX_goal_generic_army_artillery', 'GFX_goal_generic_army_tanks',
+    'GFX_goal_generic_CAS', 'GFX_goal_generic_air_bomber',
+    'GFX_goal_generic_build_navy', 'GFX_goal_generic_navy_doctrines_tactics',
+    'GFX_goal_generic_navy_battleship',
 }
-# Sprites that are known not to exist (or to have no _shine counterpart) in vanilla.
+# Sprites that are known not to exist in vanilla.
 BAD_ICONS = {
     'GFX_focus_generic_asia_liberation', 'GFX_focus_generic_stalinist_industry',
     'GFX_focus_generic_communist_asia', 'GFX_focus_generic_printing_press',
     'GFX_focus_generic_army_attack', 'GFX_focus_generic_modernizing_agriculture',
     'GFX_focus_generic_mineral_prospecting', 'GFX_focus_generic_expand_gold_mining',
     'GFX_focus_generic_advisors', 'GFX_focus_generic_mountain_troops',
+    # Invented 1.1.0 spellings replaced by the GFX_goal_generic_* sprites above.
+    'GFX_focus_generic_army_artillery', 'GFX_focus_generic_army_tanks',
+    'GFX_focus_generic_CAS', 'GFX_focus_generic_air_bomber',
+    'GFX_focus_generic_build_navy', 'GFX_focus_generic_navy_doctrines_tactics',
+    'GFX_focus_generic_navy_battleship',
 }
 
 
@@ -181,18 +193,18 @@ def check_focuses() -> None:
     text = (ROOT / 'common/national_focus/tt_tuva_focus.txt').read_text(encoding='utf-8')
     icons = re.findall(r'^\t\ticon = (\S+)', text, re.M)
     ids = re.findall(r'^\tfocus = \{\n\t\tid = (\S+)', text, re.M)
-    ok(len(ids) == 29, f'expected 29 focuses, found {len(ids)}')
+    ok(len(ids) == 36, f'expected 36 focuses, found {len(ids)}')
     ok(len(set(ids)) == len(ids), 'duplicate focus ids')
-    ok(len(icons) == 29, f'expected 29 focus icons, found {len(icons)}')
-    ok(len(set(icons)) == 29,
+    ok(len(icons) == 36, f'expected 36 focus icons, found {len(icons)}')
+    ok(len(set(icons)) == 36,
        f'focus icons are not unique: {sorted({i for i in icons if icons.count(i) > 1})}')
     ok(set(icons) == VANILLA_ICONS,
        f'focus icons differ from the validated vanilla set: '
        f'unknown={sorted(set(icons) - VANILLA_ICONS)}, '
        f'missing={sorted(VANILLA_ICONS - set(icons))}')
     ok(not (set(icons) & BAD_ICONS), f'known-invalid icons still used: {sorted(set(icons) & BAD_ICONS)}')
-    ok(all(i.startswith('GFX_focus_generic_') for i in icons),
-       'every icon must be a GFX_focus_generic_* sprite (with a _shine counterpart)')
+    ok(all(i.startswith(('GFX_focus_generic_', 'GFX_goal_generic_')) for i in icons),
+       'every icon must be a validated generic focus/goal sprite')
     # Specific regression fixes.
     ok('category = infantry_weapons' in text and 'category = infantry_tech' not in text,
        'TT_mountain_warfare: research category is not infantry_weapons')
@@ -204,6 +216,174 @@ def check_focuses() -> None:
        'TT_the_second_khanate: portrait is not the vanilla Asian general portrait')
     ok(re.search(r'country_exists = SOV\s*\n\s*NOT = \{ has_war_with = SOV \}', text) is not None,
        'TT_form_central_asian_ssr: country_exists / peace check is missing')
+
+    # 1.1.0 layout and branch regressions.
+    by_id: dict[str, str] = {}
+    for chunk in text.split('\n\tfocus = {'):
+        m = re.match(r'\n\t\tid = (\S+)', chunk)
+        if m:
+            by_id[m.group(1)] = chunk
+    # Every economic focus (plus the Soviet arsenal chain) grants building slots,
+    # so the player always has room left to build manually (329 = Tuva).
+    for fid in ('TT_the_soviet_arsenal', 'TT_the_siberian_military_district',
+                'TT_first_five_year_plan', 'TT_collective_herds',
+                'TT_kyzyl_industries', 'TT_mineral_prospecting',
+                'TT_the_kyzyl_railroad', 'TT_the_yenisei_dam', 'TT_the_golden_hoard'):
+        ok('add_extra_state_shared_building_slots' in by_id.get(fid, ''),
+           f'{fid}: economic focus grants no building slots')
+    # The three army doctrines are mutually exclusive ways of war.
+    ok('mutually_exclusive = { focus = TT_infantry_and_artillery focus = TT_tanks_of_the_steppe }'
+       in by_id.get('TT_cavalry_of_the_steppe', ''),
+       'doctrine focuses are not mutually exclusive (cavalry)')
+    ok('mutually_exclusive = { focus = TT_cavalry_of_the_steppe focus = TT_tanks_of_the_steppe }'
+       in by_id.get('TT_infantry_and_artillery', ''),
+       'doctrine focuses are not mutually exclusive (infantry/artillery)')
+    ok('mutually_exclusive = { focus = TT_cavalry_of_the_steppe focus = TT_infantry_and_artillery }'
+       in by_id.get('TT_tanks_of_the_steppe', ''),
+       'doctrine focuses are not mutually exclusive (tanks)')
+    # Land/air/navy branch roots accept any of the three doctrines. HoI4 treats
+    # several focus entries inside ONE prerequisite block as OR, but several
+    # separate prerequisite blocks as AND -- with mutually exclusive doctrines
+    # the latter would make the whole military subtree unreachable.
+    doctrines = ('TT_cavalry_of_the_steppe', 'TT_infantry_and_artillery',
+                 'TT_tanks_of_the_steppe')
+    prerequisites: dict[str, list[list[str]]] = {}
+    for fid, body in by_id.items():
+        prerequisites[fid] = [
+            re.findall(r'focus = (\S+)', group)
+            for group in re.findall(r'prerequisite = \{([^}]*)\}', body)
+        ]
+    for root in ('TT_soviet_advisors', 'TT_the_tuvan_air_force',
+                 'TT_the_yenisei_flotilla'):
+        ok(prerequisites.get(root) == [list(doctrines)],
+           f'{root}: doctrines must be alternatives in one prerequisite block, '
+           f'got {prerequisites.get(root)}')
+    # Logical reachability of the focus graph for every doctrine choice:
+    # each prerequisite block (AND) needs one completed focus from it (OR).
+    def reachable(blocked: set[str]) -> set[str]:
+        done: set[str] = set()
+        changed = True
+        while changed:
+            changed = False
+            for fid in ids:
+                if fid in done or fid in blocked:
+                    continue
+                if all(any(req in done for req in group)
+                       for group in prerequisites.get(fid, [])):
+                    done.add(fid)
+                    changed = True
+        return done
+
+    for chosen in doctrines:
+        blocked = set(doctrines) - {chosen}
+        missing = set(ids) - blocked - reachable(blocked)
+        ok(not missing,
+           f'focuses unreachable with doctrine {chosen}: {sorted(missing)}')
+    # No two focuses share an absolute tree position.
+    seen: dict[tuple[int, int], str] = {}
+    abspos: dict[str, tuple[int, int]] = {}
+
+    def resolve(fid: str) -> tuple[int, int]:
+        if fid in abspos:
+            return abspos[fid]
+        body = by_id.get(fid, '')
+        x = int(re.search(r'^\t\tx = (-?\d+)', body, re.M).group(1))
+        y = int(re.search(r'^\t\ty = (-?\d+)', body, re.M).group(1))
+        rel = re.search(r'relative_position_id = (\S+)', body)
+        if rel:
+            ax, ay = resolve(rel.group(1))
+            x, y = x + ax, y + ay
+        abspos[fid] = (x, y)
+        return abspos[fid]
+
+    for fid in ids:
+        p = resolve(fid)
+        ok(p not in seen, f'{fid}: tree position {p} collides with {seen.get(p)}')
+        seen[p] = fid
+    # Neutrality popularity is built up along the national path (no civil war).
+    ok('popularity = 0.30' in by_id.get('TT_tuvan_renaissance', ''),
+       'TT_tuvan_renaissance: neutrality popularity boost is missing')
+    khanate = by_id.get('TT_the_second_khanate', '')
+    ok('set_popularities' in khanate and 'neutrality = 75' in khanate and
+       'communism = 25' in khanate and 'popularity = 0.45' not in khanate,
+       'TT_the_second_khanate: popularity split must be set to 75/25 exactly')
+    ok('leave_faction = yes' in khanate,
+       'TT_the_second_khanate: Tuva must leave the Comintern before it can fight SOV')
+    ok('custom_effect_tooltip = TT_war_declaration_tt' in khanate,
+       'TT_the_second_khanate: war-declaration tooltip is missing')
+    # Equipment gifts only work if the producer has unlocked the equipment.
+    # TAN starts with nothing but basic infantry equipment, so the doctrine
+    # and air gifts must prefer a producer that has the kit (SOV, with a GER
+    # fallback for legacy CAS I, which the USSR does not start with).
+    for fid in ('TT_infantry_and_artillery', 'TT_tanks_of_the_steppe',
+                'TT_the_tuvan_air_force', 'TT_wings_of_the_steppe',
+                'TT_bombers_over_siberia'):
+        ok('producer = SOV' in by_id.get(fid, ''),
+           f'{fid}: equipment gift has no producer with the equipment unlocked')
+    ok('producer = GER' in by_id.get('TT_wings_of_the_steppe', ''),
+       'TT_wings_of_the_steppe: legacy CAS gift lacks its GER producer fallback')
+    ok('type = tac_bomber_equipment\n' in by_id.get('TT_bombers_over_siberia', ''),
+       'TT_bombers_over_siberia: legacy gift must use the tactical bomber archetype')
+    # Navy branch endpoint builds dockyards on the coast.
+    pac = by_id.get('TT_the_pacific_fleet', '')
+    ok('type = dockyard' in pac and 'controls_state = 716' in pac and 'navy_experience' in text,
+       'TT_the_pacific_fleet: dockyards in Liaotung / navy XP are missing')
+
+
+# ------------------------------------------------- 3b. other vanilla graphics
+# Exact sprite names verified against the vanilla interface indexes
+# (ideas are referenced without the GFX_idea_ prefix in script).
+VANILLA_IDEA_PICTURES = {
+    'generic_agrarian_society', 'generic_armor', 'generic_army_war_college',
+    'generic_build_infrastructure', 'generic_communism_drift_bonus',
+    'generic_communist_army', 'generic_economic_increase',
+    'generic_exploit_mines', 'generic_fortify_the_borders',
+    'generic_infantry_bonus', 'generic_manpower_bonus',
+    'generic_monarchist_uprising', 'generic_morale_bonus',
+    'generic_political_support', 'generic_production_bonus',
+    'generic_reserve_divisions', 'generic_victors_of_ww1',
+}
+VANILLA_DECISION_ICONS = {
+    'GFX_decision_category_generic_political_actions',
+    'GFX_decision_eng_propaganda_campaigns',
+    'GFX_decision_generic_army_support', 'GFX_decision_generic_cavalry',
+    'GFX_decision_generic_civil_support', 'GFX_decision_generic_fundraising',
+    'GFX_decision_generic_industry', 'GFX_decision_generic_nationalism',
+}
+VANILLA_EVENT_PICTURES = {
+    'GFX_news_event_generic_army', 'GFX_news_event_generic_parliament',
+    'GFX_news_event_generic_rally', 'GFX_news_event_generic_sign_treaty1',
+    'GFX_news_event_generic_sign_treaty2',
+    'GFX_report_event_generic_communist_congress',
+    'GFX_report_event_generic_handshake',
+    'GFX_report_event_generic_parliament',
+    'GFX_report_event_generic_sign_treaty2',
+    'GFX_report_event_generic_stock_traders',
+}
+
+
+def check_graphics() -> None:
+    ideas = (ROOT / 'common/ideas/tt_tuva_ideas.txt').read_text(encoding='utf-8')
+    found = set(re.findall(r'^\s*picture = (\S+)', ideas, re.M))
+    ok(found == VANILLA_IDEA_PICTURES,
+       f'idea pictures differ from the validated vanilla set: '
+       f'unknown={sorted(found - VANILLA_IDEA_PICTURES)}, '
+       f'missing={sorted(VANILLA_IDEA_PICTURES - found)}')
+    dec_text = ''.join(
+        (ROOT / p).read_text(encoding='utf-8')
+        for p in ('common/decisions/tt_tuva_decisions.txt',
+                  'common/decisions/categories/tt_tuva_categories.txt'))
+    found = set(re.findall(r'^\s*icon = (\S+)', dec_text, re.M))
+    ok(found == VANILLA_DECISION_ICONS,
+       f'decision icons differ from the validated vanilla set: '
+       f'unknown={sorted(found - VANILLA_DECISION_ICONS)}, '
+       f'missing={sorted(VANILLA_DECISION_ICONS - found)}')
+    events = (ROOT / 'events/tt_tuva_events.txt').read_text(encoding='utf-8')
+    found = set(re.findall(r'^\s*picture = (\S+)', events, re.M))
+    ok(found == VANILLA_EVENT_PICTURES,
+       f'event pictures differ from the validated vanilla set: '
+       f'unknown={sorted(found - VANILLA_EVENT_PICTURES)}, '
+       f'missing={sorted(VANILLA_EVENT_PICTURES - found)}')
 
 
 # ------------------------------------------------------------------- 4. events
@@ -272,6 +452,24 @@ def check_events() -> None:
     block12 = text.split('id = tt_tuva.12')[1].split('id = tt_tuva.13')[0]
     found12 = [int(s) for s in re.findall(r'^\s*state = (\d+)', block12, re.M)]
     ok(found12 == states12, f'tt_tuva.12: Central Asian state list mismatch: {found12}')
+    # The Central Asian SSR must not exist before Moscow answers: the focus
+    # only self-proclaims it when there is no USSR to ask, and the approval
+    # option of tt_tuva.12 grants the same name/spirit/cores on acceptance.
+    approve12 = block12.split('# Option B')[0]
+    focus_text = (ROOT / 'common/national_focus/tt_tuva_focus.txt').read_text(
+        encoding='utf-8')
+    ca_focus = focus_text.split('id = TT_form_central_asian_ssr')[1].split(
+        '\n\tfocus = {')[0]
+    ok(ca_focus.index('id = tt_tuva.12') < ca_focus.index('set_cosmetic_tag'),
+       'TT_form_central_asian_ssr: rewards must not precede the request to Moscow')
+    ok('set_cosmetic_tag = TT_central_asian_ssr' in approve12 and
+       'add_ideas = TT_central_asian_ssr_spirit' in approve12,
+       'tt_tuva.12 approval: Central Asian SSR rewards are missing')
+    cores = lambda txt: [int(s) for s in re.findall(r'add_state_core = (\d+)', txt)]
+    ok(cores(ca_focus) == states12,
+       f'TT_form_central_asian_ssr: core list mismatch: {cores(ca_focus)}')
+    ok(cores(approve12) == states12,
+       f'tt_tuva.12 approval: core list mismatch: {cores(approve12)}')
 
 
 # --------------------------------------------------------------------- 5. flags
@@ -328,6 +526,34 @@ def check_misc() -> None:
        'ideas: expected two generic_morale_bonus icons')
     mm = ideas.split('TT_masters_of_manchuria = {')[1].split('\n\t\t}')[0]
     ok('army_org_factor = 0.05' in mm, 'TT_masters_of_manchuria: army_org_factor missing')
+    # 1.1.0: the khanate chain keeps neutrality growing daily and removes the
+    # non-aligned 50% world-tension threshold for justifying war goals.
+    ok('neutrality_drift = 0.03' in ideas and 'neutrality_drift = 0.08' in ideas,
+       'khanate chain: neutrality drift is missing')
+    ok(ideas.count('generate_wargoal_tension = -0.5') == 3,
+       'khanate chain: expected generate_wargoal_tension = -0.5 on three spirits')
+    sc = ideas.split('TT_steppe_cavalry = {')[1].split('\n\t\t}')[0]
+    ok('army_org_factor' not in sc,
+       'TT_steppe_cavalry: doctrine spirit must not duplicate the army base spirit')
+    # Country-scope unit-category modifiers need the army_ prefix (unlike
+    # cavalry_*): the bare infantry_/artillery_/armor_ names are not modifiers
+    # and would be silently ignored by the game.
+    for wrong in ('\n\t\t\t\tinfantry_attack_factor', '\n\t\t\t\tinfantry_defence_factor',
+                  '\n\t\t\t\tartillery_attack_factor', '\n\t\t\t\tarmor_attack_factor',
+                  '\n\t\t\t\tarmor_defence_factor'):
+        ok(wrong not in ideas, f'ideas: invalid modifier name {wrong.strip()}')
+    for right in ('army_infantry_attack_factor = 0.10',
+                  'army_infantry_defence_factor = 0.10',
+                  'army_artillery_attack_factor = 0.15',
+                  'army_armor_attack_factor = 0.15',
+                  'army_armor_defence_factor = 0.10'):
+        ok(right in ideas, f'ideas: missing modifier {right}')
+    # The stacking military spirits must reproduce the old cumulative chain:
+    # organisation +15% in total (5% army + 5% mission + 5% mountain troops),
+    # so the mobilization spirit itself adds no organisation.
+    mob = ideas.split('TT_mobilization = {')[1].split('\n\t\t}')[0]
+    ok('army_org_factor' not in mob,
+       'TT_mobilization: stacking spirits would exceed the old +15% organisation')
 
     dec = (ROOT / 'common/decisions/tt_tuva_decisions.txt').read_text(encoding='utf-8')
     kh = dec.split('TT_convene_the_khural = {')[1].split('\n\t}')[0]
@@ -340,6 +566,13 @@ def check_misc() -> None:
     vic = dec.split('TT_proclaim_manchurian_victory = {')[1].split('\n\t}')[0]
     ok('highlight_states' in vic and all(f'state = {s}' in vic for s in (328, 610, 716)),
        'TT_proclaim_manchurian_victory: target states are not highlighted')
+    # 1.1.0 decisions: repeatable building slot and repeatable neutrality support.
+    zones = dec.split('TT_develop_industrial_zones = {')[1].split('\n\t}')[0]
+    ok('add_extra_state_shared_building_slots = 1' in zones and 'days_re_enable = 90' in zones,
+       'TT_develop_industrial_zones: repeatable slot effect is missing')
+    rally = dec.split('TT_rally_the_clans = {')[1].split('\n\t}')[0]
+    ok('has_government = neutrality' in rally and 'ideology = neutrality' in rally,
+       'TT_rally_the_clans: neutrality popularity decision is missing')
 
     ext = ROOT / 'tuva_center_of_asia.mod'
     ok(ext.exists(), 'tuva_center_of_asia.mod: external descriptor missing')
@@ -357,6 +590,7 @@ def main() -> int:
     check_encodings()
     check_localisation()
     check_focuses()
+    check_graphics()
     check_events()
     check_flags()
     check_misc()
