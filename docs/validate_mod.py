@@ -362,6 +362,115 @@ VANILLA_EVENT_PICTURES = {
 }
 
 
+
+# --------------------------------------------------------------- 4. commanders
+EXPECTED_COMMANDERS = {
+    'TT_the_peoples_army': {
+        'role': 'corps_commander',
+        'name': 'Soyan Choodu',
+        'skill': 2,
+        'attack_skill': 2,
+        'defense_skill': 2,
+        'planning_skill': 2,
+        'logistics_skill': 2,
+        'gfx': 'GFX_Portrait_Asia_Generic_land_2',
+        'traits': {'career_officer', 'organizer'},
+    },
+    'TT_cavalry_of_the_steppe': {
+        'role': 'corps_commander',
+        'name': 'Kyrgys Ezir',
+        'skill': 3,
+        'attack_skill': 4,
+        'defense_skill': 2,
+        'planning_skill': 3,
+        'logistics_skill': 1,
+        'gfx': 'GFX_Portrait_Asia_Generic_land_3',
+        'traits': {'cavalry_officer', 'cavalry_leader'},
+    },
+    'TT_infantry_and_artillery': {
+        'role': 'corps_commander',
+        'name': 'Mongush Dash',
+        'skill': 3,
+        'attack_skill': 2,
+        'defense_skill': 4,
+        'planning_skill': 2,
+        'logistics_skill': 3,
+        'gfx': 'GFX_Portrait_Asia_Generic_land_4',
+        'traits': {'infantry_officer', 'infantry_leader'},
+    },
+    'TT_tanks_of_the_steppe': {
+        'role': 'corps_commander',
+        'name': 'Kuzhuget Arslan',
+        'skill': 3,
+        'attack_skill': 4,
+        'defense_skill': 2,
+        'planning_skill': 3,
+        'logistics_skill': 2,
+        'gfx': 'GFX_Portrait_Asia_Generic_land_5',
+        'traits': {'armor_officer', 'panzer_leader'},
+    },
+    'TT_total_mobilization': {
+        'role': 'field_marshal',
+        'name': 'Sat Mergen',
+        'skill': 2,
+        'attack_skill': 2,
+        'defense_skill': 2,
+        'planning_skill': 3,
+        'logistics_skill': 3,
+        'gfx': 'GFX_Portrait_Asia_Generic_land_1',
+        'traits': {'fast_planner', 'organizer'},
+    },
+}
+
+
+def check_commanders() -> None:
+    text = (ROOT / 'common/national_focus/tt_tuva_focus.txt').read_text(encoding='utf-8')
+    corps_commanders = re.findall(r'create_corps_commander\s*=\s*\{([^{}]*(?:\{[^{}]*\}[^{}]*)*)\}', text)
+    field_marshals = re.findall(r'create_field_marshal\s*=\s*\{([^{}]*(?:\{[^{}]*\}[^{}]*)*)\}', text)
+    ok(len(corps_commanders) == 4, f'expected exactly 4 corps commanders, found {len(corps_commanders)}')
+    ok(len(field_marshals) == 1, f'expected exactly 1 field marshal, found {len(field_marshals)}')
+
+    names: list[str] = []
+    portraits: list[str] = []
+
+    for fid, exp in EXPECTED_COMMANDERS.items():
+        m = re.search(rf'id\s*=\s*{fid}\b.*?(?=focus\s*=\s*\{{|\Z)', text, re.S)
+        ok(m is not None, f'{fid}: focus not found')
+        if not m:
+            continue
+        ftext = m.group(0)
+        role = exp['role']
+        cmd_match = re.search(rf'create_{role}\s*=\s*\{{([^{{}}]*(?:\{{[^{{}}]*\}}[^{{}}]*)*)\}}', ftext)
+        ok(cmd_match is not None, f'{fid}: create_{role} effect not found in focus')
+        if not cmd_match:
+            continue
+        block = cmd_match.group(1)
+
+        name_m = re.search(r'name\s*=\s*"([^"]+)"', block)
+        name = name_m.group(1) if name_m else None
+        ok(name == exp['name'], f'{fid}: expected commander name {exp["name"]}, got {name}')
+        if name:
+            names.append(name)
+
+        gfx_m = re.search(r'gfx\s*=\s*(\S+)', block)
+        gfx = gfx_m.group(1) if gfx_m else None
+        ok(gfx == exp['gfx'], f'{fid}: expected portrait {exp["gfx"]}, got {gfx}')
+        if gfx:
+            portraits.append(gfx)
+
+        for s in ['skill', 'attack_skill', 'defense_skill', 'planning_skill', 'logistics_skill']:
+            sm = re.search(rf'{s}\s*=\s*(\d+)', block)
+            val = int(sm.group(1)) if sm else None
+            ok(val == exp[s], f'{fid}: expected {s}={exp[s]}, got {val}')
+
+        tr_m = re.search(r'traits\s*=\s*\{([^}]*)\}', block)
+        traits = set(tr_m.group(1).split()) if tr_m else set()
+        ok(traits == exp['traits'], f'{fid}: expected traits {exp["traits"]}, got {traits}')
+
+    ok(len(set(names)) == len(names) == 5, f'commander names must be unique without duplicates: {names}')
+    ok(len(set(portraits)) == len(portraits) == 5, f'commander portraits must be unique: {portraits}')
+
+
 def check_graphics() -> None:
     ideas = (ROOT / 'common/ideas/tt_tuva_ideas.txt').read_text(encoding='utf-8')
     found = set(re.findall(r'^\s*picture = (\S+)', ideas, re.M))
@@ -575,10 +684,17 @@ def check_misc() -> None:
        'TT_rally_the_clans: neutrality popularity decision is missing')
 
     ext = ROOT / 'tuva_center_of_asia.mod'
-    ok(ext.exists(), 'tuva_center_of_asia.mod: external descriptor missing')
-    if ext.exists():
-        ok('path="mod/tuva_center_of_asia"' in ext.read_text(encoding='utf-8'),
-           'tuva_center_of_asia.mod: wrong path')
+    ext_parent = ROOT.parent / 'tuva_center_of_asia.mod'
+    ok(ext.exists() or ext_parent.exists(), 'tuva_center_of_asia.mod: external descriptor missing')
+    for p in (ext, ext_parent):
+        if p.exists():
+            mod_text = p.read_text(encoding='utf-8')
+            ok('path=' in mod_text, f'{p.name}: path missing')
+            ok('version="1.1.1"' in mod_text, f'{p.name}: version is not 1.1.1')
+    desc = ROOT / 'descriptor.mod'
+    ok(desc.exists(), 'descriptor.mod: missing')
+    if desc.exists():
+        ok('version="1.1.1"' in desc.read_text(encoding='utf-8'), 'descriptor.mod: version is not 1.1.1')
     ok((ROOT / 'docs/focus_tree_preview.png').exists() and
        not (ROOT / 'focus_tree_preview.png').exists(),
        'focus_tree_preview.png must live in docs/')
@@ -590,6 +706,7 @@ def main() -> int:
     check_encodings()
     check_localisation()
     check_focuses()
+    check_commanders()
     check_graphics()
     check_events()
     check_flags()
