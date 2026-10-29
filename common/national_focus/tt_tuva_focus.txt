@@ -237,42 +237,49 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_ANNEXATION }
 
 		completion_reward = {
-			set_cosmetic_tag = TT_central_asian_ssr
-			add_ideas = TT_central_asian_ssr_spirit
-			add_political_power = 100
-			add_stability = 0.05
-			add_state_core = 402
-			add_state_core = 404
-			add_state_core = 405
-			add_state_core = 406
-			add_state_core = 407
-			add_state_core = 583
-			add_state_core = 584
-			add_state_core = 585
-			add_state_core = 586
-			add_state_core = 587
-			add_state_core = 588
-			add_state_core = 589
-			add_state_core = 590
-			add_state_core = 732
-			add_state_core = 742
-			add_state_core = 823
-			add_state_core = 830
-			add_state_core = 831
-			add_state_core = 832
-			add_state_core = 881
-			add_state_core = 882
 			if = {
 				limit = {
 					country_exists = SOV
 					NOT = { has_war_with = SOV }
 				}
+				# The name, spirit and cores are granted by the approval
+				# option of tt_tuva.12, so a Soviet refusal cannot leave a
+				# Central Asian SSR that Moscow never agreed to create.
 				SOV = {
 					country_event = {
 						id = tt_tuva.12
 						days = 1
 					}
 				}
+			}
+			else = {
+				# No Moscow left to ask (or we are already at war with it):
+				# proclaim the republic unilaterally.
+				set_cosmetic_tag = TT_central_asian_ssr
+				add_ideas = TT_central_asian_ssr_spirit
+				add_political_power = 100
+				add_stability = 0.05
+				add_state_core = 402
+				add_state_core = 404
+				add_state_core = 405
+				add_state_core = 406
+				add_state_core = 407
+				add_state_core = 583
+				add_state_core = 584
+				add_state_core = 585
+				add_state_core = 586
+				add_state_core = 587
+				add_state_core = 588
+				add_state_core = 589
+				add_state_core = 590
+				add_state_core = 732
+				add_state_core = 742
+				add_state_core = 823
+				add_state_core = 830
+				add_state_core = 831
+				add_state_core = 832
+				add_state_core = 881
+				add_state_core = 882
 			}
 			custom_effect_tooltip = TT_central_asian_ssr_tt
 		}
@@ -390,9 +397,9 @@ focus_tree = {
 				ruling_party = neutrality
 				elections_allowed = no
 			}
-			add_popularity = {
-				ideology = neutrality
-				popularity = 0.45
+			set_popularities = {
+				neutrality = 75
+				communism = 25
 			}
 			if = {
 				limit = { has_idea = TT_national_awakening }
@@ -847,9 +854,7 @@ focus_tree = {
 	focus = {
 		id = TT_soviet_advisors
 		icon = GFX_focus_generic_military_mission
-		prerequisite = { focus = TT_cavalry_of_the_steppe }
-		prerequisite = { focus = TT_infantry_and_artillery }
-		prerequisite = { focus = TT_tanks_of_the_steppe }
+		prerequisite = { focus = TT_cavalry_of_the_steppe focus = TT_infantry_and_artillery focus = TT_tanks_of_the_steppe }
 		relative_position_id = TT_the_peoples_army
 		x = -3
 		y = 2
@@ -920,9 +925,7 @@ focus_tree = {
 	focus = {
 		id = TT_the_tuvan_air_force
 		icon = GFX_focus_generic_air_bases
-		prerequisite = { focus = TT_cavalry_of_the_steppe }
-		prerequisite = { focus = TT_infantry_and_artillery }
-		prerequisite = { focus = TT_tanks_of_the_steppe }
+		prerequisite = { focus = TT_cavalry_of_the_steppe focus = TT_infantry_and_artillery focus = TT_tanks_of_the_steppe }
 		relative_position_id = TT_the_peoples_army
 		x = 0
 		y = 2
@@ -949,7 +952,7 @@ focus_tree = {
 				limit = { has_dlc = "By Blood Alone" }
 				if = {
 					limit = {
-						has_country_flag = TT_soviet_path
+						country_exists = SOV
 						NOT = { has_war_with = SOV }
 					}
 					add_equipment_to_stockpile = {
@@ -969,7 +972,7 @@ focus_tree = {
 			else = {
 				if = {
 					limit = {
-						has_country_flag = TT_soviet_path
+						country_exists = SOV
 						NOT = { has_war_with = SOV }
 					}
 					add_equipment_to_stockpile = {
@@ -1018,7 +1021,7 @@ focus_tree = {
 
 	focus = {
 		id = TT_infantry_and_artillery
-		icon = GFX_focus_generic_army_artillery
+		icon = GFX_goal_generic_army_artillery
 		prerequisite = { focus = TT_the_peoples_army }
 		mutually_exclusive = { focus = TT_cavalry_of_the_steppe focus = TT_tanks_of_the_steppe }
 		relative_position_id = TT_the_peoples_army
@@ -1034,10 +1037,23 @@ focus_tree = {
 
 		completion_reward = {
 			add_ideas = TT_firepower_doctrine
-			add_equipment_to_stockpile = {
-				type = artillery_equipment
-				amount = 150
-				producer = TAN
+			if = {
+				limit = {
+					country_exists = SOV
+					NOT = { has_war_with = SOV }
+				}
+				add_equipment_to_stockpile = {
+					type = artillery_equipment
+					amount = 150
+					producer = SOV
+				}
+			}
+			else = {
+				add_equipment_to_stockpile = {
+					type = artillery_equipment
+					amount = 150
+					producer = TAN
+				}
 			}
 			add_tech_bonus = {
 				name = TT_artillery_boost
@@ -1051,7 +1067,7 @@ focus_tree = {
 
 	focus = {
 		id = TT_tanks_of_the_steppe
-		icon = GFX_focus_generic_army_tanks
+		icon = GFX_goal_generic_army_tanks
 		prerequisite = { focus = TT_the_peoples_army }
 		mutually_exclusive = { focus = TT_cavalry_of_the_steppe focus = TT_infantry_and_artillery }
 		relative_position_id = TT_the_peoples_army
@@ -1067,10 +1083,23 @@ focus_tree = {
 
 		completion_reward = {
 			add_ideas = TT_armored_fist
-			add_equipment_to_stockpile = {
-				type = motorized_equipment
-				amount = 100
-				producer = TAN
+			if = {
+				limit = {
+					country_exists = SOV
+					NOT = { has_war_with = SOV }
+				}
+				add_equipment_to_stockpile = {
+					type = motorized_equipment
+					amount = 100
+					producer = SOV
+				}
+			}
+			else = {
+				add_equipment_to_stockpile = {
+					type = motorized_equipment
+					amount = 100
+					producer = TAN
+				}
 			}
 			add_tech_bonus = {
 				name = TT_armor_boost
@@ -1088,7 +1117,7 @@ focus_tree = {
 
 	focus = {
 		id = TT_wings_of_the_steppe
-		icon = GFX_focus_generic_CAS
+		icon = GFX_goal_generic_CAS
 		prerequisite = { focus = TT_the_tuvan_air_force }
 		relative_position_id = TT_the_tuvan_air_force
 		x = 0
@@ -1115,17 +1144,55 @@ focus_tree = {
 			}
 			if = {
 				limit = { has_dlc = "By Blood Alone" }
-				add_equipment_to_stockpile = {
-					type = small_plane_airframe_1
-					amount = 20
-					producer = TAN
+				if = {
+					limit = {
+						country_exists = SOV
+						NOT = { has_war_with = SOV }
+					}
+					add_equipment_to_stockpile = {
+						type = small_plane_airframe_1
+						amount = 20
+						producer = SOV
+					}
+				}
+				else = {
+					add_equipment_to_stockpile = {
+						type = small_plane_airframe_1
+						amount = 20
+						producer = TAN
+					}
 				}
 			}
 			else = {
-				add_equipment_to_stockpile = {
-					type = cas_equipment_1
-					amount = 20
-					producer = TAN
+				# add_equipment_to_stockpile only works if the producer has
+				# unlocked the equipment. The USSR does not start with CAS I,
+				# so fall back to a starting CAS producer when necessary.
+				if = {
+					limit = {
+						country_exists = SOV
+						NOT = { has_war_with = SOV }
+						SOV = { has_tech = CAS1 }
+					}
+					add_equipment_to_stockpile = {
+						type = cas_equipment_1
+						amount = 20
+						producer = SOV
+					}
+				}
+				else_if = {
+					limit = { country_exists = GER }
+					add_equipment_to_stockpile = {
+						type = cas_equipment_1
+						amount = 20
+						producer = GER
+					}
+				}
+				else = {
+					add_equipment_to_stockpile = {
+						type = cas_equipment_1
+						amount = 20
+						producer = TAN
+					}
 				}
 			}
 			add_tech_bonus = {
@@ -1140,7 +1207,7 @@ focus_tree = {
 
 	focus = {
 		id = TT_bombers_over_siberia
-		icon = GFX_focus_generic_air_bomber
+		icon = GFX_goal_generic_air_bomber
 		prerequisite = { focus = TT_wings_of_the_steppe }
 		relative_position_id = TT_wings_of_the_steppe
 		x = 0
@@ -1167,17 +1234,46 @@ focus_tree = {
 			}
 			if = {
 				limit = { has_dlc = "By Blood Alone" }
-				add_equipment_to_stockpile = {
-					type = medium_plane_airframe_1
-					amount = 20
-					producer = TAN
+				if = {
+					limit = {
+						country_exists = SOV
+						NOT = { has_war_with = SOV }
+					}
+					add_equipment_to_stockpile = {
+						type = medium_plane_airframe_1
+						amount = 20
+						producer = SOV
+					}
+				}
+				else = {
+					add_equipment_to_stockpile = {
+						type = medium_plane_airframe_1
+						amount = 20
+						producer = TAN
+					}
 				}
 			}
 			else = {
-				add_equipment_to_stockpile = {
-					type = tac_bomber_equipment_1
-					amount = 20
-					producer = TAN
+				if = {
+					limit = {
+						country_exists = SOV
+						NOT = { has_war_with = SOV }
+					}
+					# The archetype resolves to the best tactical bomber the
+					# producer has unlocked (the USSR starts with interwar
+					# tactical bombers, but not Tactical Bomber I).
+					add_equipment_to_stockpile = {
+						type = tac_bomber_equipment
+						amount = 20
+						producer = SOV
+					}
+				}
+				else = {
+					add_equipment_to_stockpile = {
+						type = tac_bomber_equipment_1
+						amount = 20
+						producer = TAN
+					}
 				}
 			}
 			air_experience = 50
@@ -1190,10 +1286,8 @@ focus_tree = {
 
 	focus = {
 		id = TT_the_yenisei_flotilla
-		icon = GFX_focus_generic_build_navy
-		prerequisite = { focus = TT_cavalry_of_the_steppe }
-		prerequisite = { focus = TT_infantry_and_artillery }
-		prerequisite = { focus = TT_tanks_of_the_steppe }
+		icon = GFX_goal_generic_build_navy
+		prerequisite = { focus = TT_cavalry_of_the_steppe focus = TT_infantry_and_artillery focus = TT_tanks_of_the_steppe }
 		relative_position_id = TT_the_peoples_army
 		x = 3
 		y = 2
@@ -1213,7 +1307,7 @@ focus_tree = {
 
 	focus = {
 		id = TT_kyzyl_naval_school
-		icon = GFX_focus_generic_navy_doctrines_tactics
+		icon = GFX_goal_generic_navy_doctrines_tactics
 		prerequisite = { focus = TT_the_yenisei_flotilla }
 		relative_position_id = TT_the_yenisei_flotilla
 		x = 0
@@ -1239,7 +1333,7 @@ focus_tree = {
 
 	focus = {
 		id = TT_the_pacific_fleet
-		icon = GFX_focus_generic_navy_battleship
+		icon = GFX_goal_generic_navy_battleship
 		prerequisite = { focus = TT_kyzyl_naval_school }
 		relative_position_id = TT_kyzyl_naval_school
 		x = 0
