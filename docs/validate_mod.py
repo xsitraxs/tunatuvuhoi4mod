@@ -361,9 +361,7 @@ VANILLA_EVENT_PICTURES = {
     'GFX_report_event_generic_stock_traders',
 }
 
-
-
-# --------------------------------------------------------------- 4. commanders
+# -------------------------------------------------------------- 3c. commanders
 EXPECTED_COMMANDERS = {
     'TT_the_peoples_army': {
         'role': 'corps_commander',
@@ -418,7 +416,7 @@ EXPECTED_COMMANDERS = {
         'planning_skill': 3,
         'logistics_skill': 3,
         'gfx': 'GFX_Portrait_Asia_Generic_land_1',
-        'traits': {'fast_planner', 'organizer'},
+        'traits': {'fast_planner', 'logistics_wizard'},
     },
 }
 
@@ -683,18 +681,20 @@ def check_misc() -> None:
     ok('has_government = neutrality' in rally and 'ideology = neutrality' in rally,
        'TT_rally_the_clans: neutrality popularity decision is missing')
 
+    # Descriptors live inside the repository: the launcher descriptor at the
+    # root (with the mod/ path) and the internal descriptor.mod. Both must
+    # carry the current release version.
     ext = ROOT / 'tuva_center_of_asia.mod'
-    ext_parent = ROOT.parent / 'tuva_center_of_asia.mod'
-    ok(ext.exists() or ext_parent.exists(), 'tuva_center_of_asia.mod: external descriptor missing')
-    for p in (ext, ext_parent):
-        if p.exists():
-            mod_text = p.read_text(encoding='utf-8')
-            ok('path=' in mod_text, f'{p.name}: path missing')
-            ok('version="1.1.1"' in mod_text, f'{p.name}: version is not 1.1.1')
+    ok(ext.exists(), 'tuva_center_of_asia.mod: external descriptor missing')
+    if ext.exists():
+        mod_text = ext.read_text(encoding='utf-8')
+        ok('path="mod/tuva_center_of_asia"' in mod_text,
+           'tuva_center_of_asia.mod: wrong path')
+        ok('version="1.1.2"' in mod_text, 'tuva_center_of_asia.mod: version is not 1.1.2')
     desc = ROOT / 'descriptor.mod'
     ok(desc.exists(), 'descriptor.mod: missing')
     if desc.exists():
-        ok('version="1.1.1"' in desc.read_text(encoding='utf-8'), 'descriptor.mod: version is not 1.1.1')
+        ok('version="1.1.2"' in desc.read_text(encoding='utf-8'), 'descriptor.mod: version is not 1.1.2')
     ok((ROOT / 'docs/focus_tree_preview.png').exists() and
        not (ROOT / 'focus_tree_preview.png').exists(),
        'focus_tree_preview.png must live in docs/')
