@@ -92,7 +92,7 @@
  TT_greater_tuva_desc: "Greater Tuva, from the Altai to Lake Baikal: the lands of the Turkic and Mongol peoples. A state worthy of the name."
 
  TT_the_siberian_gambit: "The Siberian Gambit"
- TT_the_siberian_gambit_desc: "The Soviet colossus is bleeding in the west. Now, while Moscow looks at Berlin, is the moment to strike for Siberia."
+ TT_the_siberian_gambit_desc: "Siberia must become part of our state. We need not wait for another war: we will choose our own moment to challenge Moscow."
 
  # ================================================================
  #  MILITARY FOCUSES 1.1.0: DOCTRINES, AIR FORCE, NAVY
@@ -142,7 +142,7 @@
  TT_siberian_district_desc: "The southern shield of Siberia."
 
  TT_siberian_gambit: "The Siberian Gambit"
- TT_siberian_gambit_desc: "While the bear bleeds, the wolf hunts."
+ TT_siberian_gambit_desc: "We choose our own moment to march into Siberia."
 
  TT_planned_economy: "Planned Economy"
  TT_planned_economy_desc: "Five-year plans, Tuvan style."
@@ -349,3 +349,11 @@
  tt_tuva.16.t: "Victory in Manchuria"
  tt_tuva.16.desc: "Kirin, Jehol and Liaotung have fallen. The Manchurian campaign is over: the conquered lands are integrated into the state, the army gains a lasting new spirit, and the world now speaks of Tuva as a Pacific power."
  tt_tuva.16.a: "From Kyzyl to the Pacific."
+
+# Localised commanders and legacy CAS research compensation
+ TT_commander_soyan_choodu: "Soyan Choodu"
+ TT_commander_kyrgys_ezir: "Kyrgys Ezir"
+ TT_commander_mongush_dash: "Mongush Dash"
+ TT_commander_kuzhuget_arslan: "Kuzhuget Arslan"
+ TT_commander_sat_mergen: "Sat Mergen"
+ TT_cas_research_boost: "Close Air Support Research"

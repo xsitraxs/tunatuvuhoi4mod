@@ -837,7 +837,7 @@ focus_tree = {
 			army_experience = 25
 			add_war_support = 0.05
 			create_corps_commander = {
-				name = "Soyan Choodu"
+				name = TT_commander_soyan_choodu
 				gfx = GFX_Portrait_Asia_Generic_land_2
 				traits = { career_officer organizer }
 				skill = 2
@@ -870,7 +870,7 @@ focus_tree = {
 			add_manpower = 3000
 			army_experience = 25
 			create_corps_commander = {
-				name = "Kyrgys Ezir"
+				name = TT_commander_kyrgys_ezir
 				gfx = GFX_Portrait_Asia_Generic_land_3
 				traits = { cavalry_officer cavalry_leader }
 				skill = 3
@@ -1044,7 +1044,7 @@ focus_tree = {
 			add_war_support = 0.1
 			add_manpower = 10000
 			create_field_marshal = {
-				name = "Sat Mergen"
+				name = TT_commander_sat_mergen
 				gfx = GFX_Portrait_Asia_Generic_land_1
 				traits = { fast_planner logistics_wizard }
 				skill = 2
@@ -1104,7 +1104,7 @@ focus_tree = {
 			}
 			army_experience = 25
 			create_corps_commander = {
-				name = "Mongush Dash"
+				name = TT_commander_mongush_dash
 				gfx = GFX_Portrait_Asia_Generic_land_4
 				traits = { infantry_officer infantry_leader }
 				skill = 3
@@ -1160,7 +1160,7 @@ focus_tree = {
 			}
 			army_experience = 25
 			create_corps_commander = {
-				name = "Kuzhuget Arslan"
+				name = TT_commander_kuzhuget_arslan
 				gfx = GFX_Portrait_Asia_Generic_land_5
 				traits = { armor_officer panzer_leader }
 				skill = 3
@@ -1299,7 +1299,7 @@ focus_tree = {
 						# cannot place CAS_equipment_1 into stockpile. Compensate
 						# with a 100% research bonus to CAS1 rather than failing silently.
 						add_tech_bonus = {
-							name = TT_air_doctrine_boost
+							name = TT_cas_research_boost
 							bonus = 1.0
 							uses = 1
 							technology = CAS1
@@ -1620,9 +1620,7 @@ focus_tree = {
 				tooltip = TT_requires_left_comintern
 				NOT = { is_in_faction_with = SOV }
 			}
-			SOV = {
-				has_war = yes
-			}
+			country_exists = SOV
 		}
 
 		ai_will_do = {

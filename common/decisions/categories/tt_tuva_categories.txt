@@ -12,6 +12,9 @@ TT_tuva_category = {
 	}
 
 	visible = {
-		has_completed_focus = TT_the_great_khural
+		OR = {
+			has_completed_focus = TT_the_great_khural
+			has_completed_focus = TT_first_five_year_plan
+		}
 	}
 }
