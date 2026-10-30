@@ -160,6 +160,14 @@ country_event = {
 
 	is_triggered_only = yes
 
+	trigger = {
+		country_exists = TAN
+		country_exists = MON
+		TAN = { has_capitulated = no }
+		has_capitulated = no
+		NOT = { has_war_with = TAN }
+	}
+
 	option = {
 		name = tt_tuva.7.a
 
@@ -193,15 +201,23 @@ country_event = {
 		}
 
 		
-		MON = { leave_faction = yes }
-		TAN = {
-			annex_country = {
-				target = MON
-				transfer_troops = yes
+		if = {
+			limit = {
+				country_exists = TAN
+				TAN = { has_capitulated = no }
+				has_capitulated = no
+				NOT = { has_war_with = TAN }
 			}
-			news_event = {
-				id = tt_tuva.8
-				days = 1
+			leave_faction = yes
+			TAN = {
+				annex_country = {
+					target = MON
+					transfer_troops = yes
+				}
+				news_event = {
+					id = tt_tuva.8
+					days = 1
+				}
 			}
 		}
 	}
@@ -238,16 +254,24 @@ country_event = {
 			}
 		}
 
-		leave_faction = yes
-		TAN = {
-			create_wargoal = {
-				type = annex_everything
-				target = MON
+		if = {
+			limit = {
+				country_exists = TAN
+				TAN = { has_capitulated = no }
+				has_capitulated = no
+				NOT = { has_war_with = TAN }
 			}
-		}
-		news_event = {
-			id = tt_tuva.9
-			days = 1
+			leave_faction = yes
+			TAN = {
+				create_wargoal = {
+					type = annex_everything
+					target = MON
+				}
+			}
+			news_event = {
+				id = tt_tuva.9
+				days = 1
+			}
 		}
 	}
 }
