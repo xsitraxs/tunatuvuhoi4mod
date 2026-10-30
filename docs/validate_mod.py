@@ -322,8 +322,13 @@ def check_focuses() -> None:
            f'{fid}: equipment gift has no producer with the equipment unlocked')
     ok('producer = GER' in by_id.get('TT_wings_of_the_steppe', ''),
        'TT_wings_of_the_steppe: legacy CAS gift lacks its GER producer fallback')
-    ok('type = tac_bomber_equipment_1\n' in by_id.get('TT_bombers_over_siberia', ''),
-       'TT_bombers_over_siberia: legacy gift must use tactical bomber I equipment')
+    bombers = by_id.get('TT_bombers_over_siberia', '')
+    ok('SOV = { has_tech = tactical_bomber1 }' in bombers and
+       'type = tac_bomber_equipment_1\n' in bombers,
+       'TT_bombers_over_siberia: Soviet TAC I gift must require tactical_bomber1')
+    ok('type = tac_bomber_equipment_0\n' in bombers and
+       bombers.count('producer = SOV') >= 3,
+       'TT_bombers_over_siberia: interwar bomber fallback from SOV is missing')
     # Navy branch endpoint builds dockyards on the coast.
     pac = by_id.get('TT_the_pacific_fleet', '')
     ok('type = dockyard' in pac and 'controls_state = 716' in pac and 'navy_experience' in text,
@@ -690,11 +695,11 @@ def check_misc() -> None:
         mod_text = ext.read_text(encoding='utf-8')
         ok('path="mod/tuva_center_of_asia"' in mod_text,
            'tuva_center_of_asia.mod: wrong path')
-        ok('version="1.1.3"' in mod_text, 'tuva_center_of_asia.mod: version is not 1.1.3')
+        ok('version="1.1.4"' in mod_text, 'tuva_center_of_asia.mod: version is not 1.1.4')
     desc = ROOT / 'descriptor.mod'
     ok(desc.exists(), 'descriptor.mod: missing')
     if desc.exists():
-        ok('version="1.1.3"' in desc.read_text(encoding='utf-8'), 'descriptor.mod: version is not 1.1.3')
+        ok('version="1.1.4"' in desc.read_text(encoding='utf-8'), 'descriptor.mod: version is not 1.1.4')
     ok((ROOT / 'docs/focus_tree_preview.png').exists() and
        not (ROOT / 'focus_tree_preview.png').exists(),
        'focus_tree_preview.png must live in docs/')
