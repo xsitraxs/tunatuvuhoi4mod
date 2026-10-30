@@ -1309,11 +1309,10 @@ focus_tree = {
 						country_exists = SOV
 						NOT = { has_war_with = SOV }
 					}
-					# The archetype resolves to the best tactical bomber the
-					# producer has unlocked (the USSR starts with interwar
-					# tactical bombers, but not Tactical Bomber I).
+					# Pre-BBA air equipment: the USSR starts 1936 with tactical_bomber1
+					# unlocked, producing Tactical Bomber I (tac_bomber_equipment_1).
 					add_equipment_to_stockpile = {
-						type = tac_bomber_equipment
+						type = tac_bomber_equipment_1
 						amount = 20
 						producer = SOV
 					}

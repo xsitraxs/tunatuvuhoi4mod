@@ -109,7 +109,7 @@
 
    ```txt
    name="Tuva: The Center of Asia"
-   version="1.1.2"
+   version="1.1.3"
    tags={
        "Alternative History"
        "Gameplay"
@@ -268,6 +268,13 @@ python3 docs/validate_mod.py
 Проверка статическая: внутриигровой прогон в рамках этой правки не выполнялся.
 
 ### История изменений
+
+**1.1.3**
+
+- Исправлен идентификатор тактического бомбардировщика в фокусе ВВС «Бомбардировщики над Сибирью» (`TT_bombers_over_siberia`):
+  в HoI4 1.19 pre-BBA тактические бомбардировщики не имеют активного архетипа `tac_bomber_equipment` в базе данных (вызывало ошибку `invalid database object for effect/trigger: tac_bomber_equipment`),
+  а СССР со старта имеет изученную технологию `tactical_bomber1`. Поле `type` обновлено на `tac_bomber_equipment_1`.
+- `docs/validate_mod.py`: обновлены проверки оборудования тактических бомбардировщиков и версии дескрипторов (1.1.3).
 
 **1.1.2**
 
