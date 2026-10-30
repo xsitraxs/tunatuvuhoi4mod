@@ -417,6 +417,12 @@ def check_focuses(custom_focus_text: str | None = None) -> None:
     # Parse focus file AST for structural block and modifier inspection
     focus_root = parse_clausewitz(text)
     foci_by_id = {f.get_assignment('id'): f for f in focus_root.find_all_blocks('focus')}
+    renaissance_focus = foci_by_id.get('TT_tuvan_renaissance')
+    renaissance_reward = (renaissance_focus.get_block('completion_reward')
+                          if renaissance_focus is not None else None)
+    ok(renaissance_reward is not None and
+       renaissance_reward.has_assignment('leave_faction', 'yes'),
+       'TT_tuvan_renaissance: national independence must leave the faction immediately')
 
     # Historical AI branch tuning: exact AST parsing of ai_will_do blocks and factors.
     ry_focus = foci_by_id.get('TT_red_yurt')
@@ -1129,6 +1135,15 @@ def run_mutation_tests(verbose: bool = True) -> bool:
         check_focuses,
         focus_txt.replace(target_d, mut_d),
         "TT_wings_of_the_steppe: legacy CAS gift lacks its GER producer fallback"
+    )
+
+    # Removing the early exit must be caught even though the khanate still exits.
+    target_exit = "\t\t\tleave_faction = yes\n\t\t\tset_country_flag = TT_national_path"
+    test_mutation(
+        "Mutation E (national-path faction exit removed)",
+        check_focuses,
+        focus_txt.replace(target_exit, "\t\t\tset_country_flag = TT_national_path"),
+        "TT_tuvan_renaissance: national independence must leave the faction immediately"
     )
 
     # Restore globals

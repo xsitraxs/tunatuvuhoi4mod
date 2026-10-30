@@ -365,6 +365,9 @@ focus_tree = {
 				ideology = neutrality
 				popularity = 0.30
 			}
+			# Independence starts with the national path, not the later khanate.
+			# Faction war-declaration rules otherwise still apply to minor TAN.
+			leave_faction = yes
 			set_country_flag = TT_national_path
 			country_event = {
 				id = tt_tuva.2
