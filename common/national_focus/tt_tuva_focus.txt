@@ -1,7 +1,7 @@
 ##########################################################################
 #  TUVA: THE CENTER OF ASIA
 #  National focus tree for Tannu Tuva (TAN)
-#  Hearts of Iron IV 1.19.3
+#  Hearts of Iron IV 1.19.4
 ##########################################################################
 
 focus_tree = {
@@ -86,6 +86,10 @@ focus_tree = {
 
 		ai_will_do = {
 			factor = 20
+			modifier = {
+				factor = 3
+				is_historical_focus_on = yes
+			}
 		}
 
 		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_INDUSTRY }
@@ -346,6 +350,10 @@ focus_tree = {
 
 		ai_will_do = {
 			factor = 20
+			modifier = {
+				factor = 0
+				is_historical_focus_on = yes
+			}
 		}
 
 		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_WAR_SUPPORT }
@@ -1224,24 +1232,75 @@ focus_tree = {
 						SOV = { has_tech = CAS1 }
 					}
 					add_equipment_to_stockpile = {
-						type = cas_equipment_1
+						type = CAS_equipment_1
 						amount = 20
 						producer = SOV
 					}
 				}
 				else_if = {
-					limit = { country_exists = GER }
+					limit = {
+						country_exists = GER
+						GER = { has_tech = CAS1 }
+					}
 					add_equipment_to_stockpile = {
-						type = cas_equipment_1
+						type = CAS_equipment_1
 						amount = 20
 						producer = GER
 					}
 				}
-				else = {
+				else_if = {
+					limit = {
+						country_exists = USA
+						USA = { has_tech = CAS1 }
+					}
 					add_equipment_to_stockpile = {
-						type = cas_equipment_1
+						type = CAS_equipment_1
 						amount = 20
-						producer = TAN
+						producer = USA
+					}
+				}
+				else_if = {
+					limit = {
+						country_exists = ENG
+						ENG = { has_tech = CAS1 }
+					}
+					add_equipment_to_stockpile = {
+						type = CAS_equipment_1
+						amount = 20
+						producer = ENG
+					}
+				}
+				else_if = {
+					limit = {
+						country_exists = JAP
+						JAP = { has_tech = CAS1 }
+					}
+					add_equipment_to_stockpile = {
+						type = CAS_equipment_1
+						amount = 20
+						producer = JAP
+					}
+				}
+				else = {
+					if = {
+						limit = { has_tech = CAS1 }
+						add_equipment_to_stockpile = {
+							type = CAS_equipment_1
+							amount = 20
+							producer = TAN
+						}
+					}
+					else = {
+						# When all foreign producers (SOV, GER, USA, ENG, JAP)
+						# are eliminated and TAN has not unlocked CAS1, the engine
+						# cannot place CAS_equipment_1 into stockpile. Compensate
+						# with a 100% research bonus to CAS1 rather than failing silently.
+						add_tech_bonus = {
+							name = TT_air_doctrine_boost
+							bonus = 1.0
+							uses = 1
+							technology = CAS1
+						}
 					}
 				}
 			}
@@ -1469,6 +1528,7 @@ focus_tree = {
 		cost = 10
 
 		available = {
+			has_capitulated = no
 			custom_trigger_tooltip = {
 				tooltip = TT_requires_national_path
 				has_country_flag = TT_national_path
@@ -1487,17 +1547,20 @@ focus_tree = {
 
 		completion_reward = {
 			if = {
-				limit = { country_exists = MON }
+				limit = {
+					country_exists = MON
+					NOT = { has_war_with = MON }
+				}
 				MON = {
 					country_event = {
 						id = tt_tuva.7
 						days = 1
 					}
 				}
-			}
-			news_event = {
-				id = tt_tuva.6
-				days = 1
+				news_event = {
+					id = tt_tuva.6
+					days = 1
+				}
 			}
 		}
 	}

@@ -37,6 +37,109 @@ def strip_noise(text: str) -> str:
     return '\n'.join(line.split('#', 1)[0] for line in text.split('\n'))
 
 
+# --------------------------------------------------- Clausewitz Block AST Parser
+CW_TOKEN_RE = re.compile(
+    r'#.*|'                        # comments (discarded)
+    r'"(?:\\.|[^"\\])*"|'          # quoted strings
+    r'[{}]|'                       # block braces
+    r'<=|>=|!=|==|[=!<>]|'         # comparison / assignment operators
+    r'[^\s#{}<>=!"]+'              # identifiers, numbers, tokens
+)
+
+
+class CWBlock:
+    """A parsed Clausewitz syntax block or node tree."""
+
+    def __init__(self, key: str = '', op: str = '='):
+        self.key: str = key
+        self.op: str = op
+        self.assignments: list[tuple[str, str, str]] = []  # (key, op, val)
+        self.blocks: list[CWBlock] = []
+        self.values: list[str] = []
+
+    def get_assignment(self, key: str) -> str | None:
+        """Return the value of the first direct assignment with key, or None."""
+        for k, _, v in self.assignments:
+            if k == key:
+                return v
+        return None
+
+    def find_assignments(self, key: str) -> list[tuple[str, str]]:
+        """Return all (op, val) pairs for direct assignments with key."""
+        return [(op, v) for k, op, v in self.assignments if k == key]
+
+    def has_assignment(self, key: str, val: str | None = None) -> bool:
+        """Return True if this block directly has assignment key (and optionally val)."""
+        for k, _, v in self.assignments:
+            if k == key and (val is None or v == val):
+                return True
+        return False
+
+    def get_block(self, key: str) -> CWBlock | None:
+        """Return the first direct child block with key, or None."""
+        for b in self.blocks:
+            if b.key == key:
+                return b
+        return None
+
+    def find_blocks(self, key: str) -> list[CWBlock]:
+        """Return all direct child blocks with key."""
+        return [b for b in self.blocks if b.key == key]
+
+    def find_all_blocks(self, key: str) -> list[CWBlock]:
+        """Recursively find all descendant blocks with key."""
+        res: list[CWBlock] = []
+        for b in self.blocks:
+            if b.key == key:
+                res.append(b)
+            res.extend(b.find_all_blocks(key))
+        return res
+
+    def has_recursive(self, key: str, val: str | None = None) -> bool:
+        """Return True if key exists anywhere in tree as an assignment or block."""
+        for k, _, v in self.assignments:
+            if k == key and (val is None or v == val):
+                return True
+        for b in self.blocks:
+            if b.key == key and val is None:
+                return True
+            if b.has_recursive(key, val):
+                return True
+        return False
+
+
+def parse_clausewitz(text: str) -> CWBlock:
+    """Parse Clausewitz script into a tree of CWBlock nodes using brace depth tracking."""
+    tokens = [t for t in CW_TOKEN_RE.findall(text) if not t.startswith('#')]
+    root = CWBlock('<root>')
+    stack: list[CWBlock] = [root]
+    i = 0
+    n = len(tokens)
+    while i < n:
+        tok = tokens[i]
+        if tok == '}':
+            if len(stack) > 1:
+                stack.pop()
+            i += 1
+        elif tok == '{':
+            block = CWBlock('', '=')
+            stack[-1].blocks.append(block)
+            stack.append(block)
+            i += 1
+        elif i + 2 < n and tokens[i + 1] in ('=', '<', '>', '<=', '>=', '!=') and tokens[i + 2] == '{':
+            block = CWBlock(tok, tokens[i + 1])
+            stack[-1].blocks.append(block)
+            stack.append(block)
+            i += 3
+        elif i + 2 < n and tokens[i + 1] in ('=', '<', '>', '<=', '>=', '!=') and tokens[i + 2] != '{':
+            stack[-1].assignments.append((tok, tokens[i + 1], tokens[i + 2]))
+            i += 3
+        else:
+            stack[-1].values.append(tok)
+            i += 1
+    return root
+
+
 # ------------------------------------------------------------------ 1. encodings
 def check_encodings() -> None:
     files = script_files()
@@ -189,8 +292,8 @@ BAD_ICONS = {
 }
 
 
-def check_focuses() -> None:
-    text = (ROOT / 'common/national_focus/tt_tuva_focus.txt').read_text(encoding='utf-8')
+def check_focuses(custom_focus_text: str | None = None) -> None:
+    text = custom_focus_text if custom_focus_text is not None else (ROOT / 'common/national_focus/tt_tuva_focus.txt').read_text(encoding='utf-8')
     icons = re.findall(r'^\t\ticon = (\S+)', text, re.M)
     ids = re.findall(r'^\tfocus = \{\n\t\tid = (\S+)', text, re.M)
     ok(len(ids) == 36, f'expected 36 focuses, found {len(ids)}')
@@ -311,6 +414,43 @@ def check_focuses() -> None:
        'TT_the_second_khanate: Tuva must leave the Comintern before it can fight SOV')
     ok('custom_effect_tooltip = TT_war_declaration_tt' in khanate,
        'TT_the_second_khanate: war-declaration tooltip is missing')
+    # Parse focus file AST for structural block and modifier inspection
+    focus_root = parse_clausewitz(text)
+    foci_by_id = {f.get_assignment('id'): f for f in focus_root.find_all_blocks('focus')}
+
+    # Historical AI branch tuning: exact AST parsing of ai_will_do blocks and factors.
+    ry_focus = foci_by_id.get('TT_red_yurt')
+    ok(ry_focus is not None, 'TT_red_yurt: focus not found in AST')
+    if ry_focus:
+        ry_ai = ry_focus.get_block('ai_will_do')
+        ok(ry_ai is not None, 'TT_red_yurt: missing ai_will_do block')
+        if ry_ai:
+            ok(ry_ai.get_assignment('factor') == '20',
+               f"TT_red_yurt: unexpected ai_will_do base factor: {ry_ai.get_assignment('factor')} (expected 20)")
+            ry_mods = ry_ai.find_blocks('modifier')
+            ok(len(ry_mods) == 1, f'TT_red_yurt: expected 1 ai_will_do modifier, found {len(ry_mods)}')
+            if ry_mods:
+                ok(ry_mods[0].get_assignment('factor') == '3',
+                   f"TT_red_yurt: expected modifier factor = 3, got {ry_mods[0].get_assignment('factor')}")
+                ok(ry_mods[0].get_assignment('is_historical_focus_on') == 'yes',
+                   f"TT_red_yurt: expected is_historical_focus_on = yes in modifier, got {ry_mods[0].get_assignment('is_historical_focus_on')}")
+
+    tr_focus = foci_by_id.get('TT_tuvan_renaissance')
+    ok(tr_focus is not None, 'TT_tuvan_renaissance: focus not found in AST')
+    if tr_focus:
+        tr_ai = tr_focus.get_block('ai_will_do')
+        ok(tr_ai is not None, 'TT_tuvan_renaissance: missing ai_will_do block')
+        if tr_ai:
+            ok(tr_ai.get_assignment('factor') == '20',
+               f"TT_tuvan_renaissance: unexpected ai_will_do base factor: {tr_ai.get_assignment('factor')} (expected 20)")
+            tr_mods = tr_ai.find_blocks('modifier')
+            ok(len(tr_mods) == 1, f'TT_tuvan_renaissance: expected 1 ai_will_do modifier, found {len(tr_mods)}')
+            if tr_mods:
+                ok(tr_mods[0].get_assignment('factor') == '0',
+                   f"TT_tuvan_renaissance: expected modifier factor = 0, got {tr_mods[0].get_assignment('factor')}")
+                ok(tr_mods[0].get_assignment('is_historical_focus_on') == 'yes',
+                   f"TT_tuvan_renaissance: expected is_historical_focus_on = yes in modifier, got {tr_mods[0].get_assignment('is_historical_focus_on')}")
+
     # Equipment gifts only work if the producer has unlocked the equipment.
     # TAN starts with nothing but basic infantry equipment, so the doctrine
     # and air gifts must prefer a producer that has the kit (SOV, with a GER
@@ -322,8 +462,35 @@ def check_focuses() -> None:
            f'{fid}: equipment gift has no producer with the equipment unlocked')
     ok('producer = GER' in by_id.get('TT_wings_of_the_steppe', ''),
        'TT_wings_of_the_steppe: legacy CAS gift lacks its GER producer fallback')
+    ok('type = CAS_equipment_1\n' in by_id.get('TT_wings_of_the_steppe', ''),
+       'TT_wings_of_the_steppe: legacy gift must use CAS I equipment (case-sensitive CAS_equipment_1)')
+    ok('type = cas_equipment_1' not in text,
+       'tt_tuva_focus.txt: invalid lowercase cas_equipment_1 found (must be CAS_equipment_1)')
     ok('type = tac_bomber_equipment_1\n' in by_id.get('TT_bombers_over_siberia', ''),
        'TT_bombers_over_siberia: legacy gift must use tactical bomber I equipment')
+
+    # Structural AST verification of TT_wings_of_the_steppe CAS gifts and producer chain
+    wings_focus = foci_by_id.get('TT_wings_of_the_steppe')
+    ok(wings_focus is not None, 'TT_wings_of_the_steppe: focus not found in AST')
+    if wings_focus:
+        stockpiles = wings_focus.find_all_blocks('add_equipment_to_stockpile')
+        cas_blocks = [eq for eq in stockpiles if eq.get_assignment('type') == 'CAS_equipment_1']
+        ok(len(cas_blocks) == 6,
+           f'TT_wings_of_the_steppe: expected 6 CAS_equipment_1 stockpile blocks, found {len(cas_blocks)}')
+        cas_producers = [b.get_assignment('producer') for b in cas_blocks]
+        ok('SOV' in cas_producers, 'TT_wings_of_the_steppe: CAS_equipment_1 lacks SOV producer')
+        ok('GER' in cas_producers, 'TT_wings_of_the_steppe: legacy CAS gift lacks its GER producer fallback')
+        ok(set(cas_producers) == {'SOV', 'GER', 'USA', 'ENG', 'JAP', 'TAN'},
+           f'TT_wings_of_the_steppe: unexpected CAS producer set: {cas_producers}')
+        ok(all(b.get_assignment('amount') == '20' for b in cas_blocks),
+           'TT_wings_of_the_steppe: all CAS gifts must deliver amount = 20')
+        ok(not wings_focus.has_recursive('type', 'cas_equipment_1'),
+           'TT_wings_of_the_steppe: invalid lowercase cas_equipment_1 found in AST (must be CAS_equipment_1)')
+        bba_blocks = [eq for eq in stockpiles if eq.get_assignment('type') == 'small_plane_airframe_1']
+        ok(len(bba_blocks) == 2,
+           f'TT_wings_of_the_steppe: expected 2 BBA small plane blocks, found {len(bba_blocks)}')
+        ok({b.get_assignment('producer') for b in bba_blocks} == {'SOV', 'TAN'},
+           'TT_wings_of_the_steppe: BBA small plane gifts must use SOV and TAN producers')
     # Navy branch endpoint builds dockyards on the coast.
     pac = by_id.get('TT_the_pacific_fleet', '')
     ok('type = dockyard' in pac and 'controls_state = 716' in pac and 'navy_experience' in text,
@@ -494,9 +661,10 @@ def check_graphics() -> None:
 
 
 # ------------------------------------------------------------------- 4. events
-def check_events() -> None:
+def check_events(custom_events_text: str | None = None) -> None:
     events_file = ROOT / 'events/tt_tuva_events.txt'
-    lines = events_file.read_text(encoding='utf-8').split('\n')
+    text = custom_events_text if custom_events_text is not None else events_file.read_text(encoding='utf-8')
+    lines = text.split('\n')
     defs: dict[str, str] = {}
     calls: list[tuple[str, str, str]] = []
 
@@ -546,9 +714,101 @@ def check_events() -> None:
     for eid, typ, where in calls:
         ok(eid in defs, f'{where}: triggers undefined event {eid}')
 
-    text = events_file.read_text(encoding='utf-8')
     ok('GFX_news_event_generic_handshake' not in text,
        'tt_tuva.8: GFX_news_event_generic_handshake does not exist in vanilla')
+    # 1.1.4: tt_tuva.7 response-moment safeguards:
+    # All game effects in both option A and option B must be inside an outer
+    # if = { limit = { country_exists = TAN, TAN = { has_capitulated = no },
+    #                  has_capitulated = no, NOT = { has_war_with = TAN } } }.
+    ev_root = parse_clausewitz(text)
+    ev7_list = [e for e in ev_root.find_blocks('country_event') if e.get_assignment('id') == 'tt_tuva.7']
+    ok(len(ev7_list) == 1, 'tt_tuva.7: event definition not found in AST')
+    if ev7_list:
+        ev7 = ev7_list[0]
+
+        # Verify root trigger of tt_tuva.7
+        trig = ev7.get_block('trigger')
+        ok(trig is not None, 'tt_tuva.7: root trigger block missing')
+        if trig:
+            exists_tags = [val for key, op, val in trig.assignments if key == 'country_exists']
+            ok('TAN' in exists_tags, 'tt_tuva.7 trigger: missing country_exists = TAN')
+            ok('MON' in exists_tags, 'tt_tuva.7 trigger: missing country_exists = MON')
+            ok(trig.has_assignment('has_capitulated', 'no'), 'tt_tuva.7 trigger: missing has_capitulated = no')
+            tan_t = trig.get_block('TAN')
+            ok(tan_t is not None and tan_t.has_assignment('has_capitulated', 'no'),
+               'tt_tuva.7 trigger: missing TAN = { has_capitulated = no }')
+            not_t = trig.get_block('NOT')
+            ok(not_t is not None and not_t.has_assignment('has_war_with', 'TAN'),
+               'tt_tuva.7 trigger: missing NOT = { has_war_with = TAN }')
+
+        # Helper to verify full set of response safeguards in limit block
+        def verify_option_guard(opt: CWBlock, opt_name: str) -> CWBlock | None:
+            if_blocks = opt.find_blocks('if')
+            ok(len(if_blocks) == 1, f'{opt_name}: expected exactly 1 outer if guard block, found {len(if_blocks)}')
+            if not if_blocks:
+                return None
+            guard = if_blocks[0]
+            lim = guard.get_block('limit')
+            ok(lim is not None, f'{opt_name}: missing limit block inside guarded if')
+            if lim:
+                ok(lim.get_assignment('country_exists') == 'TAN',
+                   f'{opt_name}: limit missing country_exists = TAN')
+                tan_b = lim.get_block('TAN')
+                ok(tan_b is not None and tan_b.get_assignment('has_capitulated') == 'no',
+                   f'{opt_name}: limit missing TAN = {{ has_capitulated = no }}')
+                ok(lim.get_assignment('has_capitulated') == 'no',
+                   f'{opt_name}: limit missing has_capitulated = no')
+                not_b = lim.get_block('NOT')
+                ok(not_b is not None and not_b.get_assignment('has_war_with') == 'TAN',
+                   f'{opt_name}: limit missing NOT = {{ has_war_with = TAN }}')
+            return guard
+
+        # Option A checks: leave_faction, annex_country and news_event inside guarded if block
+        opt_a_list = [o for o in ev7.find_blocks('option') if o.get_assignment('name') == 'tt_tuva.7.a']
+        ok(len(opt_a_list) == 1, 'tt_tuva.7.a: option A not found in AST')
+        if opt_a_list:
+            opt_a = opt_a_list[0]
+            ga = verify_option_guard(opt_a, 'tt_tuva.7.a')
+            if ga:
+                ok(ga.has_assignment('leave_faction', 'yes'),
+                   'tt_tuva.7.a: leave_faction = yes must be nested inside guarded if')
+                ok(ga.has_recursive('annex_country'),
+                   'tt_tuva.7.a: annex_country must be nested inside guarded if')
+                news_a = [b for b in ga.find_all_blocks('news_event') if b.get_assignment('id') == 'tt_tuva.8']
+                ok(len(news_a) == 1,
+                   'tt_tuva.7.a: news_event tt_tuva.8 must be nested inside guarded if')
+                ok(not opt_a.has_assignment('leave_faction'),
+                   'tt_tuva.7.a: leave_faction must not appear outside the guard block')
+                ok(not any(b.key == 'annex_country' or b.has_recursive('annex_country') for b in opt_a.blocks if b is not ga),
+                   'tt_tuva.7.a: annex_country must not appear outside the guard block')
+                ok(not any(b.key == 'news_event' or b.has_recursive('news_event') for b in opt_a.blocks if b is not ga) and
+                   not opt_a.has_assignment('news_event'),
+                   'tt_tuva.7.a: news_event must not appear outside the guard block')
+
+        # Option B checks: leave_faction, create_wargoal and news_event inside guarded if block
+        opt_b_list = [o for o in ev7.find_blocks('option') if o.get_assignment('name') == 'tt_tuva.7.b']
+        ok(len(opt_b_list) == 1, 'tt_tuva.7.b: option B not found in AST')
+        if opt_b_list:
+            opt_b = opt_b_list[0]
+            gb = verify_option_guard(opt_b, 'tt_tuva.7.b')
+            if gb:
+                ok(gb.has_assignment('leave_faction', 'yes'),
+                   'tt_tuva.7.b: leave_faction = yes must be nested inside guarded if')
+                ok(gb.has_recursive('create_wargoal'),
+                   'tt_tuva.7.b: create_wargoal must be nested inside guarded if')
+                news_b = [b for b in gb.find_all_blocks('news_event') if b.get_assignment('id') == 'tt_tuva.9']
+                ok(len(news_b) == 1,
+                   'tt_tuva.7.b: news_event tt_tuva.9 must be nested inside guarded if')
+                ok(not opt_b.has_assignment('leave_faction'),
+                   'tt_tuva.7.b: leave_faction must not appear outside the guard block')
+                ok(not any(b.key == 'create_wargoal' or b.has_recursive('create_wargoal') for b in opt_b.blocks if b is not gb),
+                   'tt_tuva.7.b: create_wargoal must not appear outside the guard block')
+                ok(not any(b.key == 'news_event' or b.has_recursive('news_event') for b in opt_b.blocks if b is not gb) and
+                   not opt_b.has_assignment('news_event'),
+                   'tt_tuva.7.b: news_event must not appear outside the guard block')
+                nested_ifs = gb.find_all_blocks('if')
+                ok(len(nested_ifs) == 0,
+                   'tt_tuva.7.b: redundant nested if block found inside guard')
     block = text.split('id = tt_tuva.10')[1].split('id = tt_tuva.11')[0]
     ok(block.index('every_state') < block.index('white_peace = TAN'),
        'tt_tuva.10.a: every_state must run before white_peace')
@@ -690,11 +950,11 @@ def check_misc() -> None:
         mod_text = ext.read_text(encoding='utf-8')
         ok('path="mod/tuva_center_of_asia"' in mod_text,
            'tuva_center_of_asia.mod: wrong path')
-        ok('version="1.1.3"' in mod_text, 'tuva_center_of_asia.mod: version is not 1.1.3')
+        ok('version="1.1.4"' in mod_text, 'tuva_center_of_asia.mod: version is not 1.1.4')
     desc = ROOT / 'descriptor.mod'
     ok(desc.exists(), 'descriptor.mod: missing')
     if desc.exists():
-        ok('version="1.1.3"' in desc.read_text(encoding='utf-8'), 'descriptor.mod: version is not 1.1.3')
+        ok('version="1.1.4"' in desc.read_text(encoding='utf-8'), 'descriptor.mod: version is not 1.1.4')
     ok((ROOT / 'docs/focus_tree_preview.png').exists() and
        not (ROOT / 'focus_tree_preview.png').exists(),
        'focus_tree_preview.png must live in docs/')
@@ -702,7 +962,205 @@ def check_misc() -> None:
     ok('docs/ export-ignore' in ga, '.gitattributes: docs/ export-ignore missing')
 
 
+# -------------------------------------------------------- 7. mutation tests
+def run_mutation_tests(verbose: bool = True) -> bool:
+    """Run in-memory mutation tests verifying that AST checks catch broken structures.
+
+    Performs mutations entirely in memory without modifying any files on disk.
+    """
+    global errors, checks
+    orig_errors = list(errors)
+    orig_checks = checks
+
+    results: list[tuple[str, bool, str]] = []
+
+    def test_mutation(name: str, fn, arg, expected_msg_part: str) -> None:
+        global errors
+        errors = []
+        fn(arg)
+        caught = any(expected_msg_part in e for e in errors)
+        sample_msg = next((e for e in errors if expected_msg_part in e), errors[0] if errors else 'No error captured')
+        results.append((name, caught, sample_msg))
+
+    events_txt = (ROOT / 'events/tt_tuva_events.txt').read_text(encoding='utf-8')
+    focus_txt = (ROOT / 'common/national_focus/tt_tuva_focus.txt').read_text(encoding='utf-8')
+
+    # Mutation 1: War check removed from option A guard in tt_tuva.7
+    target_1 = (
+        "\t\t\tlimit = {\n"
+        "\t\t\t\tcountry_exists = TAN\n"
+        "\t\t\t\tTAN = { has_capitulated = no }\n"
+        "\t\t\t\thas_capitulated = no\n"
+        "\t\t\t\tNOT = { has_war_with = TAN }\n"
+        "\t\t\t}\n"
+        "\t\t\tleave_faction = yes\n"
+        "\t\t\tTAN = {\n"
+        "\t\t\t\tannex_country = {"
+    )
+    mut_1 = (
+        "\t\t\tlimit = {\n"
+        "\t\t\t\tcountry_exists = TAN\n"
+        "\t\t\t\tTAN = { has_capitulated = no }\n"
+        "\t\t\t\thas_capitulated = no\n"
+        "\t\t\t}\n"
+        "\t\t\tleave_faction = yes\n"
+        "\t\t\tTAN = {\n"
+        "\t\t\t\tannex_country = {"
+    )
+    test_mutation(
+        "Mutation 1 (War check removed from option A guard in tt_tuva.7)",
+        check_events,
+        events_txt.replace(target_1, mut_1),
+        "tt_tuva.7.a: limit missing NOT = { has_war_with = TAN }"
+    )
+
+    # Mutation 2: TAN capitulation check removed from option B guard in tt_tuva.7
+    target_2 = (
+        "\t\t\tlimit = {\n"
+        "\t\t\t\tcountry_exists = TAN\n"
+        "\t\t\t\tTAN = { has_capitulated = no }\n"
+        "\t\t\t\thas_capitulated = no\n"
+        "\t\t\t\tNOT = { has_war_with = TAN }\n"
+        "\t\t\t}\n"
+        "\t\t\tleave_faction = yes\n"
+        "\t\t\tTAN = {\n"
+        "\t\t\t\tcreate_wargoal = {"
+    )
+    mut_2 = (
+        "\t\t\tlimit = {\n"
+        "\t\t\t\tcountry_exists = TAN\n"
+        "\t\t\t\thas_capitulated = no\n"
+        "\t\t\t\tNOT = { has_war_with = TAN }\n"
+        "\t\t\t}\n"
+        "\t\t\tleave_faction = yes\n"
+        "\t\t\tTAN = {\n"
+        "\t\t\t\tcreate_wargoal = {"
+    )
+    test_mutation(
+        "Mutation 2 (TAN capitulation check removed from option B guard in tt_tuva.7)",
+        check_events,
+        events_txt.replace(target_2, mut_2),
+        "tt_tuva.7.b: limit missing TAN = { has_capitulated = no }"
+    )
+
+    # Mutation 3a: news_event moved outside guard in tt_tuva.7.b
+    target_3a = (
+        "\t\t\tTAN = {\n"
+        "\t\t\t\tcreate_wargoal = {\n"
+        "\t\t\t\t\ttype = annex_everything\n"
+        "\t\t\t\t\ttarget = MON\n"
+        "\t\t\t\t}\n"
+        "\t\t\t}\n"
+        "\t\t\tnews_event = {\n"
+        "\t\t\t\tid = tt_tuva.9\n"
+        "\t\t\t\tdays = 1\n"
+        "\t\t\t}\n"
+        "\t\t}\n"
+        "\t}"
+    )
+    mut_3a = (
+        "\t\t\tTAN = {\n"
+        "\t\t\t\tcreate_wargoal = {\n"
+        "\t\t\t\t\ttype = annex_everything\n"
+        "\t\t\t\t\ttarget = MON\n"
+        "\t\t\t\t}\n"
+        "\t\t\t}\n"
+        "\t\t}\n"
+        "\t\tnews_event = {\n"
+        "\t\t\tid = tt_tuva.9\n"
+        "\t\t\tdays = 1\n"
+        "\t\t}\n"
+        "\t}"
+    )
+    test_mutation(
+        "Mutation 3a (news_event moved outside guard in tt_tuva.7.b)",
+        check_events,
+        events_txt.replace(target_3a, mut_3a),
+        "tt_tuva.7.b: news_event must not appear outside the guard block"
+    )
+
+    # Mutation 3b: leave_faction moved outside guard in tt_tuva.7.a
+    target_3b = (
+        "\t\tif = {\n"
+        "\t\t\tlimit = {\n"
+        "\t\t\t\tcountry_exists = TAN\n"
+        "\t\t\t\tTAN = { has_capitulated = no }\n"
+        "\t\t\t\thas_capitulated = no\n"
+        "\t\t\t\tNOT = { has_war_with = TAN }\n"
+        "\t\t\t}\n"
+        "\t\t\tleave_faction = yes\n"
+        "\t\t\tTAN = {\n"
+        "\t\t\t\tannex_country = {"
+    )
+    mut_3b = (
+        "\t\tleave_faction = yes\n"
+        "\t\tif = {\n"
+        "\t\t\tlimit = {\n"
+        "\t\t\t\tcountry_exists = TAN\n"
+        "\t\t\t\tTAN = { has_capitulated = no }\n"
+        "\t\t\t\thas_capitulated = no\n"
+        "\t\t\t\tNOT = { has_war_with = TAN }\n"
+        "\t\t\t}\n"
+        "\t\t\tTAN = {\n"
+        "\t\t\t\tannex_country = {"
+    )
+    test_mutation(
+        "Mutation 3b (leave_faction moved outside guard in tt_tuva.7.a)",
+        check_events,
+        events_txt.replace(target_3b, mut_3b),
+        "tt_tuva.7.a: leave_faction must not appear outside the guard block"
+    )
+
+    # Mutation C: modifier factor changed in TT_red_yurt ai_will_do
+    target_c = "\t\tai_will_do = {\n\t\t\tfactor = 20\n\t\t\tmodifier = {\n\t\t\t\tfactor = 3"
+    mut_c = "\t\tai_will_do = {\n\t\t\tfactor = 20\n\t\t\tmodifier = {\n\t\t\t\tfactor = 99"
+    test_mutation(
+        "Mutation C (modifier factor in TT_red_yurt ai_will_do changed)",
+        check_focuses,
+        focus_txt.replace(target_c, mut_c),
+        "TT_red_yurt: expected modifier factor = 3"
+    )
+
+    # Mutation D: TT_wings_of_the_steppe CAS GER producer changed
+    target_d = "type = CAS_equipment_1\n\t\t\t\t\t\tamount = 20\n\t\t\t\t\t\tproducer = GER"
+    mut_d = "type = CAS_equipment_1\n\t\t\t\t\t\tamount = 20\n\t\t\t\t\t\tproducer = ITA"
+    test_mutation(
+        "Mutation D (TT_wings_of_the_steppe CAS GER producer missing)",
+        check_focuses,
+        focus_txt.replace(target_d, mut_d),
+        "TT_wings_of_the_steppe: legacy CAS gift lacks its GER producer fallback"
+    )
+
+    # Restore globals
+    errors = orig_errors
+    checks = orig_checks
+
+    all_ok = all(passed for _, passed, _ in results)
+    if verbose:
+        print("Mutation Testing Suite Results:")
+        for name, passed, msg in results:
+            status = "PASS" if passed else "FAIL"
+            print(f"  [{status}] {name}")
+            print(f"         Caught error: {msg}")
+        if all_ok:
+            print(f"All {len(results)} mutation tests passed: deliberate syntax corruptions caught by AST checks.")
+        else:
+            print("Mutation test failures detected!")
+
+    return all_ok
+
+
+def check_mutations() -> None:
+    """Validate that mutation tests pass and AST checks catch corruptions."""
+    all_ok = run_mutation_tests(verbose=False)
+    ok(all_ok, "mutation testing: all in-memory AST mutations were caught as expected")
+
+
 def main() -> int:
+    if '--mutation-test' in sys.argv or '-m' in sys.argv:
+        success = run_mutation_tests(verbose=True)
+        return 0 if success else 1
+
     check_encodings()
     check_localisation()
     check_focuses()
@@ -711,6 +1169,7 @@ def main() -> int:
     check_events()
     check_flags()
     check_misc()
+    check_mutations()
     print(f'Ran {checks} checks.')
     if errors:
         print(f'FAILED: {len(errors)} problem(s):')
