@@ -1308,11 +1308,24 @@ focus_tree = {
 					limit = {
 						country_exists = SOV
 						NOT = { has_war_with = SOV }
+						SOV = { has_tech = tactical_bomber1 }
 					}
-					# Pre-BBA air equipment: the USSR starts 1936 with tactical_bomber1
-					# unlocked, producing Tactical Bomber I (tac_bomber_equipment_1).
 					add_equipment_to_stockpile = {
 						type = tac_bomber_equipment_1
+						amount = 20
+						producer = SOV
+					}
+				}
+				else_if = {
+					limit = {
+						country_exists = SOV
+						NOT = { has_war_with = SOV }
+					}
+					# The USSR starts 1936 with early_bomber only, so until it
+					# researches tactical_bomber1 it can only supply the
+					# interwar model (tac_bomber_equipment_0).
+					add_equipment_to_stockpile = {
+						type = tac_bomber_equipment_0
 						amount = 20
 						producer = SOV
 					}
