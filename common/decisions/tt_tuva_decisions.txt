@@ -392,6 +392,11 @@ TT_tuva_category = {
 
 		ai_will_do = {
 			base = 15
+			modifier = {
+				factor = 0
+				neutrality > 0.99
+				stability > 0.99
+			}
 		}
 
 		complete_effect = {

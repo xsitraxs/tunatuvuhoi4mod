@@ -224,7 +224,7 @@ def check_localisation() -> None:
         keys = [k for k in keys if k not in ('l_english', 'l_russian')]
         ok(text.startswith('l_english:' if lang == 'EN' else 'l_russian:'),
            f'{lang}: wrong localisation header')
-        ok(len(keys) == 235, f'{lang}: expected 235 keys, found {len(keys)}')
+        ok(len(keys) == 241, f'{lang}: expected 241 keys, found {len(keys)}')
         ok(len(set(keys)) == len(keys),
            f'{lang}: duplicate keys: {sorted({k for k in keys if keys.count(k) > 1})}')
         data[lang] = set(keys)
@@ -245,7 +245,7 @@ def check_localisation() -> None:
            f'EN/RU key mismatch: EN-only={sorted(data["EN"] - data["RU"])}, '
            f'RU-only={sorted(data["RU"] - data["EN"])}')
         exp = expected_keys()
-        ok(len(exp) == 235, f'script-implied key set has {len(exp)} keys (expected 235)')
+        ok(len(exp) == 241, f'script-implied key set has {len(exp)} keys (expected 241)')
         ok(not (exp - data['EN']), f'missing localisation keys: {sorted(exp - data["EN"])}')
         ok(not (data['EN'] - exp), f'orphan localisation keys: {sorted(data["EN"] - exp)}')
 
@@ -417,6 +417,15 @@ def check_focuses(custom_focus_text: str | None = None) -> None:
     # Parse focus file AST for structural block and modifier inspection
     focus_root = parse_clausewitz(text)
     foci_by_id = {f.get_assignment('id'): f for f in focus_root.find_all_blocks('focus')}
+    gambit = foci_by_id.get('TT_the_siberian_gambit')
+    gambit_available = gambit.get_block('available') if gambit else None
+    ok(gambit_available is not None and
+       gambit_available.has_assignment('country_exists', 'SOV'),
+       'TT_the_siberian_gambit: target SOV must exist')
+    ok(gambit_available is not None and
+       not any(b.find_assignments('has_war') for b in
+               [gambit_available, *gambit_available.find_all_blocks('SOV')]),
+       'TT_the_siberian_gambit: must not require an ongoing Soviet war')
     renaissance_focus = foci_by_id.get('TT_tuvan_renaissance')
     renaissance_reward = (renaissance_focus.get_block('completion_reward')
                           if renaissance_focus is not None else None)
@@ -538,7 +547,7 @@ VANILLA_EVENT_PICTURES = {
 EXPECTED_COMMANDERS = {
     'TT_the_peoples_army': {
         'role': 'corps_commander',
-        'name': 'Soyan Choodu',
+        'name': 'TT_commander_soyan_choodu',
         'skill': 2,
         'attack_skill': 2,
         'defense_skill': 2,
@@ -549,7 +558,7 @@ EXPECTED_COMMANDERS = {
     },
     'TT_cavalry_of_the_steppe': {
         'role': 'corps_commander',
-        'name': 'Kyrgys Ezir',
+        'name': 'TT_commander_kyrgys_ezir',
         'skill': 3,
         'attack_skill': 4,
         'defense_skill': 2,
@@ -560,7 +569,7 @@ EXPECTED_COMMANDERS = {
     },
     'TT_infantry_and_artillery': {
         'role': 'corps_commander',
-        'name': 'Mongush Dash',
+        'name': 'TT_commander_mongush_dash',
         'skill': 3,
         'attack_skill': 2,
         'defense_skill': 4,
@@ -571,7 +580,7 @@ EXPECTED_COMMANDERS = {
     },
     'TT_tanks_of_the_steppe': {
         'role': 'corps_commander',
-        'name': 'Kuzhuget Arslan',
+        'name': 'TT_commander_kuzhuget_arslan',
         'skill': 3,
         'attack_skill': 4,
         'defense_skill': 2,
@@ -582,7 +591,7 @@ EXPECTED_COMMANDERS = {
     },
     'TT_total_mobilization': {
         'role': 'field_marshal',
-        'name': 'Sat Mergen',
+        'name': 'TT_commander_sat_mergen',
         'skill': 2,
         'attack_skill': 2,
         'defense_skill': 2,
@@ -617,7 +626,7 @@ def check_commanders() -> None:
             continue
         block = cmd_match.group(1)
 
-        name_m = re.search(r'name\s*=\s*"([^"]+)"', block)
+        name_m = re.search(r'name\s*=\s*(TT_\w+)', block)
         name = name_m.group(1) if name_m else None
         ok(name == exp['name'], f'{fid}: expected commander name {exp["name"]}, got {name}')
         if name:
@@ -815,6 +824,49 @@ def check_events(custom_events_text: str | None = None) -> None:
                 nested_ifs = gb.find_all_blocks('if')
                 ok(len(nested_ifs) == 0,
                    'tt_tuva.7.b: redundant nested if block found inside guard')
+    # Receipt-time and response-time checks must protect every effect, not just
+    # the country-scope reward. Compare parsed conditions, ignoring formatting.
+    def signature(node: CWBlock):
+        return (sorted(node.assignments),
+                sorted((child.key, signature(child)) for child in node.blocks))
+
+    requirements = {
+        'tt_tuva.10': """country_exists = TAN
+            has_war_with = TAN
+            TAN = { has_capitulated = no controls_state = 329
+                controls_state = 563 controls_state = 566
+                controls_state = 568 controls_state = 570 }
+            NOT = { TAN = { has_idea = TT_masters_of_siberia } }""",
+        'tt_tuva.12': """country_exists = TAN
+            NOT = { has_war_with = TAN }
+            TAN = { has_country_flag = TT_soviet_path }
+            NOT = { TAN = { has_idea = TT_central_asian_ssr_spirit } }""",
+    }
+    for eid, required in requirements.items():
+        events = [e for e in ev_root.find_blocks('country_event')
+                  if e.get_assignment('id') == eid]
+        ok(len(events) == 1, f'{eid}: missing guarded diplomatic event')
+        if not events:
+            continue
+        event = events[0]
+        expected = signature(parse_clausewitz(required))
+        trigger = event.get_block('trigger')
+        ok(trigger is not None and signature(trigger) == expected,
+           f'{eid}: stale initiative receipt guard missing')
+        options = event.find_blocks('option')
+        ok(len(options) == 2, f'{eid}: expected two diplomatic responses')
+        for option in options:
+            label = option.get_assignment('name')
+            guards = option.find_blocks('if')
+            ok(len(guards) == 1, f'{label}: expected one response guard')
+            ok(all(k == 'name' for k, _, _ in option.assignments) and
+               all(b.key in ('if', 'ai_chance') for b in option.blocks),
+               f'{label}: effect outside response guard')
+            if len(guards) == 1:
+                limit = guards[0].get_block('limit')
+                ok(limit is not None and signature(limit) == expected,
+                   f'{label}: stale initiative response guard missing')
+
     block = text.split('id = tt_tuva.10')[1].split('id = tt_tuva.11')[0]
     ok(block.index('every_state') < block.index('white_peace = TAN'),
        'tt_tuva.10.a: every_state must run before white_peace')
@@ -947,6 +999,21 @@ def check_misc() -> None:
     ok('has_government = neutrality' in rally and 'ideology = neutrality' in rally,
        'TT_rally_the_clans: neutrality popularity decision is missing')
 
+    category_text = (ROOT / 'common/decisions/categories/tt_tuva_categories.txt').read_text(encoding='utf-8')
+    category = parse_clausewitz(category_text).get_block('TT_tuva_category')
+    visible = category.get_block('visible') if category else None
+    alternatives = visible.get_block('OR') if visible else None
+    ok(alternatives is not None and
+       ('=', 'TT_first_five_year_plan') in alternatives.find_assignments('has_completed_focus'),
+       'decision category: economy must not require the political branch')
+    rally_ast = parse_clausewitz(dec).get_block('TT_tuva_category').get_block('TT_rally_the_clans')
+    rally_ai = rally_ast.get_block('ai_will_do')
+    modifier = rally_ai.get_block('modifier') if rally_ai else None
+    ok(modifier is not None and modifier.has_assignment('factor', '0') and
+       ('>', '0.99') in modifier.find_assignments('neutrality') and
+       ('>', '0.99') in modifier.find_assignments('stability'),
+       'TT_rally_the_clans: AI must stop when both rewards are saturated')
+
     # Descriptors live inside the repository: the launcher descriptor at the
     # root (with the mod/ path) and the internal descriptor.mod. Both must
     # carry the current release version.
@@ -984,12 +1051,22 @@ def run_mutation_tests(verbose: bool = True) -> bool:
         global errors
         errors = []
         fn(arg)
-        caught = any(expected_msg_part in e for e in errors)
+        original = events_txt if fn is check_events else focus_txt
+        caught = arg != original and any(expected_msg_part in e for e in errors)
         sample_msg = next((e for e in errors if expected_msg_part in e), errors[0] if errors else 'No error captured')
         results.append((name, caught, sample_msg))
 
     events_txt = (ROOT / 'events/tt_tuva_events.txt').read_text(encoding='utf-8')
     focus_txt = (ROOT / 'common/national_focus/tt_tuva_focus.txt').read_text(encoding='utf-8')
+
+    # Positive controls prevent an already-broken baseline from masquerading
+    # as successful mutation detection when --mutation-test runs on its own.
+    for label, validator, original in [('events', check_events, events_txt),
+                                        ('focuses', check_focuses, focus_txt)]:
+        errors = []
+        validator(original)
+        results.append((f'Baseline {label}', not errors,
+                        errors[0] if errors else 'Unmodified source passes'))
 
     # Mutation 1: War check removed from option A guard in tt_tuva.7
     target_1 = (
@@ -1146,6 +1223,28 @@ def run_mutation_tests(verbose: bool = True) -> bool:
         "TT_tuvan_renaissance: national independence must leave the faction immediately"
     )
 
+    for eid, condition in [(10, 'has_war_with = TAN'),
+                           (12, 'country_exists = TAN')]:
+        start = events_txt.index(f'id = tt_tuva.{eid}\n')
+        end = events_txt.index(f'id = tt_tuva.{eid + 1}\n', start)
+        segment = events_txt[start:end]
+        # Remove a condition from the first response limit, leaving the root
+        # trigger intact: receipt checks alone must not satisfy the validator.
+        guard_start = segment.index('limit = {')
+        segment = segment[:guard_start] + segment[guard_start:].replace(condition, '', 1)
+        mutated = events_txt[:start] + segment + events_txt[end:]
+        test_mutation(f'Mutation diplomatic response {eid}', check_events,
+                      mutated, f'tt_tuva.{eid}.a: stale initiative response guard missing')
+
+    # Exercise both options: no direct effect may escape the response guard.
+    for eid in (10, 12):
+        for option in ('a', 'b'):
+            label = f'tt_tuva.{eid}.{option}'
+            target = f'name = {label}\n'
+            mutated = events_txt.replace(target, target + '\t\tadd_political_power = 1\n', 1)
+            test_mutation(f'Mutation unguarded effect {label}', check_events,
+                          mutated, f'{label}: effect outside response guard')
+
     # Restore globals
     errors = orig_errors
     checks = orig_checks
@@ -1156,9 +1255,9 @@ def run_mutation_tests(verbose: bool = True) -> bool:
         for name, passed, msg in results:
             status = "PASS" if passed else "FAIL"
             print(f"  [{status}] {name}")
-            print(f"         Caught error: {msg}")
+            print(f"         Result: {msg}")
         if all_ok:
-            print(f"All {len(results)} mutation tests passed: deliberate syntax corruptions caught by AST checks.")
+            print(f"All {len(results)} checks passed: clean baselines and deliberate regressions verified.")
         else:
             print("Mutation test failures detected!")
 

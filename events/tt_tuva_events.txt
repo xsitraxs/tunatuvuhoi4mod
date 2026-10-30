@@ -321,6 +321,20 @@ country_event = {
 
 	is_triggered_only = yes
 
+	trigger = {
+		country_exists = TAN
+		has_war_with = TAN
+		TAN = {
+			has_capitulated = no
+			controls_state = 329
+			controls_state = 563
+			controls_state = 566
+			controls_state = 568
+			controls_state = 570
+		}
+		NOT = { TAN = { has_idea = TT_masters_of_siberia } }
+	}
+
 	# Option A: Moscow cedes Siberia
 	option = {
 		name = tt_tuva.10.a
@@ -329,44 +343,59 @@ country_event = {
 			base = 90
 		}
 
-		every_state = {
+		if = {
 			limit = {
-				is_owned_by = SOV
-				is_controlled_by = TAN
-				OR = {
-					state = 40
-					state = 654
-					state = 563
-					state = 564
-					state = 565
-					state = 566
-					state = 567
-					state = 568
-					state = 569
-					state = 570
+				country_exists = TAN
+				has_war_with = TAN
+				TAN = {
+					has_capitulated = no
+					controls_state = 329
+					controls_state = 563
+					controls_state = 566
+					controls_state = 568
+					controls_state = 570
 				}
+				NOT = { TAN = { has_idea = TT_masters_of_siberia } }
 			}
-			transfer_state_to = TAN
-		}
-
-		white_peace = TAN
-
-		TAN = {
-			if = {
-				limit = { has_idea = TT_siberian_gambit }
-				swap_ideas = {
-					remove_idea = TT_siberian_gambit
-					add_idea = TT_masters_of_siberia
+			every_state = {
+				limit = {
+					is_owned_by = SOV
+					is_controlled_by = TAN
+					OR = {
+						state = 40
+						state = 654
+						state = 563
+						state = 564
+						state = 565
+						state = 566
+						state = 567
+						state = 568
+						state = 569
+						state = 570
+					}
 				}
+				transfer_state_to = TAN
 			}
-			else = {
-				add_ideas = TT_masters_of_siberia
-			}
-			add_political_power = 150
-			add_stability = 0.10
-			news_event = {
-				id = tt_tuva.11
-				days = 1
+
+			white_peace = TAN
+
+			TAN = {
+				if = {
+					limit = { has_idea = TT_siberian_gambit }
+					swap_ideas = {
+						remove_idea = TT_siberian_gambit
+						add_idea = TT_masters_of_siberia
+					}
+				}
+				else = {
+					add_ideas = TT_masters_of_siberia
+				}
+				add_political_power = 150
+				add_stability = 0.10
+				news_event = {
+					id = tt_tuva.11
+					days = 1
+				}
 			}
 		}
 	}
@@ -383,8 +412,23 @@ country_event = {
 			}
 		}
 
-		add_stability = -0.10
-		add_war_support = -0.10
+		if = {
+			limit = {
+				country_exists = TAN
+				has_war_with = TAN
+				TAN = {
+					has_capitulated = no
+					controls_state = 329
+					controls_state = 563
+					controls_state = 566
+					controls_state = 568
+					controls_state = 570
+				}
+				NOT = { TAN = { has_idea = TT_masters_of_siberia } }
+			}
+			add_stability = -0.10
+			add_war_support = -0.10
+		}
 	}
 }
 
@@ -417,6 +461,13 @@ country_event = {
 
 	is_triggered_only = yes
 
+	trigger = {
+		country_exists = TAN
+		NOT = { has_war_with = TAN }
+		TAN = { has_country_flag = TT_soviet_path }
+		NOT = { TAN = { has_idea = TT_central_asian_ssr_spirit } }
+	}
+
 	# Option A: Moscow approves the new union republic
 	option = {
 		name = tt_tuva.12.a
@@ -425,65 +476,73 @@ country_event = {
 			base = 90
 		}
 
-		every_state = {
+		if = {
 			limit = {
-				is_owned_by = SOV
-				OR = {
-					state = 402
-					state = 404
-					state = 405
-					state = 406
-					state = 407
-					state = 583
-					state = 584
-					state = 585
-					state = 586
-					state = 587
-					state = 588
-					state = 589
-					state = 590
-					state = 732
-					state = 742
-					state = 823
-					state = 830
-					state = 831
-					state = 832
-					state = 881
-					state = 882
-				}
+				country_exists = TAN
+				NOT = { has_war_with = TAN }
+				TAN = { has_country_flag = TT_soviet_path }
+				NOT = { TAN = { has_idea = TT_central_asian_ssr_spirit } }
 			}
-			transfer_state_to = TAN
-		}
+			every_state = {
+				limit = {
+					is_owned_by = SOV
+					OR = {
+						state = 402
+						state = 404
+						state = 405
+						state = 406
+						state = 407
+						state = 583
+						state = 584
+						state = 585
+						state = 586
+						state = 587
+						state = 588
+						state = 589
+						state = 590
+						state = 732
+						state = 742
+						state = 823
+						state = 830
+						state = 831
+						state = 832
+						state = 881
+						state = 882
+					}
+				}
+				transfer_state_to = TAN
+			}
 
-		TAN = {
-			set_cosmetic_tag = TT_central_asian_ssr
-			add_ideas = TT_central_asian_ssr_spirit
-			add_political_power = 100
-			add_stability = 0.05
-			add_state_core = 402
-			add_state_core = 404
-			add_state_core = 405
-			add_state_core = 406
-			add_state_core = 407
-			add_state_core = 583
-			add_state_core = 584
-			add_state_core = 585
-			add_state_core = 586
-			add_state_core = 587
-			add_state_core = 588
-			add_state_core = 589
-			add_state_core = 590
-			add_state_core = 732
-			add_state_core = 742
-			add_state_core = 823
-			add_state_core = 830
-			add_state_core = 831
-			add_state_core = 832
-			add_state_core = 881
-			add_state_core = 882
-			news_event = {
-				id = tt_tuva.13
-				days = 1
+			TAN = {
+				set_cosmetic_tag = TT_central_asian_ssr
+				add_ideas = TT_central_asian_ssr_spirit
+				add_political_power = 100
+				add_stability = 0.05
+				add_state_core = 402
+				add_state_core = 404
+				add_state_core = 405
+				add_state_core = 406
+				add_state_core = 407
+				add_state_core = 583
+				add_state_core = 584
+				add_state_core = 585
+				add_state_core = 586
+				add_state_core = 587
+				add_state_core = 588
+				add_state_core = 589
+				add_state_core = 590
+				add_state_core = 732
+				add_state_core = 742
+				add_state_core = 823
+				add_state_core = 830
+				add_state_core = 831
+				add_state_core = 832
+				add_state_core = 881
+				add_state_core = 882
+				news_event = {
+					id = tt_tuva.13
+					days = 1
+				}
 			}
 		}
 	}
@@ -496,11 +555,19 @@ country_event = {
 			base = 10
 		}
 
-		TAN = {
-			add_political_power = 50
-			news_event = {
-				id = tt_tuva.14
-				days = 1
+		if = {
+			limit = {
+				country_exists = TAN
+				NOT = { has_war_with = TAN }
+				TAN = { has_country_flag = TT_soviet_path }
+				NOT = { TAN = { has_idea = TT_central_asian_ssr_spirit } }
+			}
+			TAN = {
+				add_political_power = 50
+				news_event = {
+					id = tt_tuva.14
+					days = 1
+				}
 			}
 		}
 	}
