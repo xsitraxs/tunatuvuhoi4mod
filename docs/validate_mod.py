@@ -179,6 +179,8 @@ NON_LOCALISABLE = {
     'TT_corridor_refused_recently', 'TT_corridor_request_pending',
     'TT_needs_siberian_corridor', 'TT_siberian_corridor_granted',
     'TT_transfer_siberian_corridor_states',
+    'TT_war_mandate_diplomacy_valid', 'TT_can_request_war_mandate',
+    'TT_war_mandate_granted', 'TT_war_mandate_pending', 'TT_war_mandate_refused',
 }
 
 
@@ -230,7 +232,7 @@ def check_localisation() -> None:
         keys = [k for k in keys if k not in ('l_english', 'l_russian')]
         ok(text.startswith('l_english:' if lang == 'EN' else 'l_russian:'),
            f'{lang}: wrong localisation header')
-        ok(len(keys) == 249, f'{lang}: expected 249 keys, found {len(keys)}')
+        ok(len(keys) == 270, f'{lang}: expected 270 keys, found {len(keys)}')
         ok(len(set(keys)) == len(keys),
            f'{lang}: duplicate keys: {sorted({k for k in keys if keys.count(k) > 1})}')
         data[lang] = set(keys)
@@ -251,7 +253,7 @@ def check_localisation() -> None:
            f'EN/RU key mismatch: EN-only={sorted(data["EN"] - data["RU"])}, '
            f'RU-only={sorted(data["RU"] - data["EN"])}')
         exp = expected_keys()
-        ok(len(exp) == 249, f'script-implied key set has {len(exp)} keys (expected 249)')
+        ok(len(exp) == 270, f'script-implied key set has {len(exp)} keys (expected 270)')
         ok(not (exp - data['EN']), f'missing localisation keys: {sorted(exp - data["EN"])}')
         ok(not (data['EN'] - exp), f'orphan localisation keys: {sorted(data["EN"] - exp)}')
 
@@ -716,18 +718,18 @@ def check_events(custom_events_text: str | None = None) -> None:
         if p != events_file:
             scan(p, p.read_text(encoding='utf-8').split('\n'), False)
 
-    expected_ids = {f'tt_tuva.{n}' for n in range(1, 20)}
+    expected_ids = {f'tt_tuva.{n}' for n in range(1, 23)}
     ok(set(defs) == expected_ids,
-       f'event definitions: expected tt_tuva.1..19, got {sorted(defs)}')
+       f'event definitions: expected tt_tuva.1..22, got {sorted(defs)}')
     news = sorted((k for k, v in defs.items() if v == 'news_event'),
                   key=lambda s: int(s.split('.')[1]))
     country = sorted((k for k, v in defs.items() if v == 'country_event'),
                      key=lambda s: int(s.split('.')[1]))
-    ok(len(news) == 12, f'expected 12 news events, found {len(news)}')
-    ok(len(country) == 7, f'expected 7 country events, found {len(country)}')
+    ok(len(news) == 14, f'expected 14 news events, found {len(news)}')
+    ok(len(country) == 8, f'expected 8 country events, found {len(country)}')
     ok(news == ['tt_tuva.3', 'tt_tuva.4', 'tt_tuva.6', 'tt_tuva.8', 'tt_tuva.9',
                 'tt_tuva.11', 'tt_tuva.13', 'tt_tuva.14', 'tt_tuva.15', 'tt_tuva.16',
-                'tt_tuva.18', 'tt_tuva.19'],
+                'tt_tuva.18', 'tt_tuva.19', 'tt_tuva.21', 'tt_tuva.22'],
        f'unexpected news event ids: {news}')
     for eid in expected_ids:
         triggered = [c for c in calls if c[0] == eid]
@@ -1073,20 +1075,20 @@ def check_corridor(sources: dict[str, str] | None = None) -> None:
 
     ok(matches(triggers.get_block('TT_needs_siberian_corridor'), '''
         tag = TAN has_idea = TT_central_asian_ssr_spirit
-        NOT = { has_country_flag = TT_siberian_corridor_granted }
+        custom_trigger_tooltip = { tooltip = TT_corridor_not_granted_tt NOT = { has_country_flag = TT_siberian_corridor_granted } }
         329 = { is_owned_by = TAN is_controlled_by = TAN }
         588 = { is_owned_by = TAN is_controlled_by = TAN }
         654 = { is_owned_by = SOV is_controlled_by = SOV }
     '''), 'corridor: ownership and control of both endpoints and the bridge must be checked')
     ok(matches(triggers.get_block('TT_corridor_diplomacy_valid'), '''
-        TT_needs_siberian_corridor = yes has_country_flag = TT_soviet_path
+        TT_needs_siberian_corridor = yes custom_trigger_tooltip = { tooltip = TT_corridor_soviet_path_tt has_country_flag = TT_soviet_path }
         country_exists = SOV has_capitulated = no
         SOV = { has_capitulated = no } NOT = { has_war_with = SOV }
     '''), 'corridor: response diplomacy must require peace and the Soviet path')
     ok(matches(triggers.get_block('TT_can_request_siberian_corridor'), '''
         TT_corridor_diplomacy_valid = yes
-        NOT = { has_country_flag = TT_corridor_request_pending }
-        NOT = { has_country_flag = TT_corridor_refused_recently }
+        custom_trigger_tooltip = { tooltip = TT_corridor_no_pending_tt NOT = { has_country_flag = TT_corridor_request_pending } }
+        custom_trigger_tooltip = { tooltip = TT_corridor_no_refusal_cooldown_tt NOT = { has_country_flag = TT_corridor_refused_recently } }
     '''), 'corridor: outstanding requests and refusal cooldown must block new requests')
     ok(matches(effects.get_block('TT_transfer_siberian_corridor_states'), '''
         if = {
@@ -1163,6 +1165,113 @@ def check_corridor(sources: dict[str, str] | None = None) -> None:
             '''), 'corridor: refusal must clear pending and enforce a 180-day cooldown')
 
 
+def check_war_mandate(sources: dict[str, str] | None = None) -> None:
+    sources = corridor_sources() if sources is None else sources
+    triggers, _, decisions, events = [parse_clausewitz(sources[p]) for p in CORRIDOR_PATHS]
+
+    def signature(node: CWBlock):
+        return (sorted(node.assignments), sorted(node.values),
+                sorted((c.key, c.op, signature(c)) for c in node.blocks))
+
+    def matches(node, source):
+        return node is not None and signature(node) == signature(parse_clausewitz(source))
+
+    ok(matches(triggers.get_block('TT_war_mandate_diplomacy_valid'), '''
+        tag = TAN
+        custom_trigger_tooltip = { tooltip = TT_requires_soviet_path_tt
+            has_country_flag = TT_soviet_path }
+        has_completed_focus = TT_the_battle_for_manchuria
+        is_subject = no has_capitulated = no country_exists = SOV
+        is_in_faction_with = SOV NOT = { has_war_with = SOV }
+        SOV = { is_faction_leader = yes has_capitulated = no }
+        custom_trigger_tooltip = { tooltip = TT_mandate_not_granted_tt
+            NOT = { has_country_flag = TT_war_mandate_granted } }
+    '''), 'war mandate: verify independence, shared faction, Soviet leadership and path')
+    ok(matches(triggers.get_block('TT_can_request_war_mandate'), '''
+        TT_war_mandate_diplomacy_valid = yes
+        custom_trigger_tooltip = { tooltip = TT_mandate_no_pending_tt
+            NOT = { has_country_flag = TT_war_mandate_pending } }
+        custom_trigger_tooltip = { tooltip = TT_mandate_no_refusal_tt
+            NOT = { has_country_flag = TT_war_mandate_refused } }
+    '''), 'war mandate: block overlapping requests and refusal cooldown')
+    category = decisions.get_block('TT_tuva_category')
+    decision = category.get_block('TT_request_war_mandate') if category else None
+    ok(decision is not None, 'war mandate: decision missing')
+    if decision:
+        ok(decision.has_assignment('cost', '50'), 'war mandate: request cost must be 50 PP')
+        ok(matches(decision.get_block('available'), 'TT_can_request_war_mandate = yes'),
+           'war mandate: request prerequisites missing')
+        ok(matches(decision.get_block('visible'), '''
+            has_country_flag = TT_soviet_path
+            has_completed_focus = TT_the_battle_for_manchuria
+            NOT = { has_country_flag = TT_war_mandate_granted }
+        '''), 'war mandate: decision belongs after the Soviet Manchurian focus')
+        ok(matches(decision.get_block('complete_effect'), '''
+            custom_effect_tooltip = TT_request_war_mandate_tt
+            set_country_flag = TT_war_mandate_pending
+            SOV = { country_event = { id = tt_tuva.20 days = 1 } }
+        '''), 'war mandate: single persistent request must be delivered to Moscow')
+    candidates = [e for e in events.find_blocks('country_event')
+                  if e.get_assignment('id') == 'tt_tuva.20']
+    ok(len(candidates) == 1, 'war mandate: exactly one Moscow event required')
+    if len(candidates) != 1:
+        return
+    event = candidates[0]
+    ok(event.get_block('trigger') is None,
+       'war mandate: an invalidated request must still clear pending')
+    for forbidden in ('declare_war_on', 'leave_faction', 'set_major', 'set_faction_leader'):
+        ok(not event.has_recursive(forbidden) and
+           (decision is None or not decision.has_recursive(forbidden)),
+           f'war mandate: must not use {forbidden}')
+    options = event.find_blocks('option')
+    ok(len(options) == 2, 'war mandate: expected approval and refusal')
+    for suffix in ('a', 'b'):
+        matching = [o for o in options if o.has_assignment('name', f'tt_tuva.20.{suffix}')]
+        ok(len(matching) == 1, f'war mandate {suffix}: option missing')
+        if len(matching) != 1:
+            continue
+        option = matching[0]
+        ok(all(k == 'name' for k, _, _ in option.assignments) and
+           [b.key for b in option.blocks] == ['ai_chance', 'if', 'else'],
+           f'war mandate {suffix}: all response effects must be guarded')
+        guard = option.get_block('if')
+        ok(guard is not None, f'war mandate {suffix}: guard missing')
+        if guard is None:
+            continue
+        ok(matches(guard.get_block('limit'), '''
+            tag = SOV is_faction_leader = yes country_exists = TAN
+            TAN = { has_country_flag = TT_war_mandate_pending
+                TT_war_mandate_diplomacy_valid = yes }
+        '''), f'war mandate {suffix}: revalidate pending and faction at answer time')
+        ok(matches(option.get_block('else'), '''
+            if = { limit = { country_exists = TAN }
+                TAN = { clr_country_flag = TT_war_mandate_pending } }
+        '''), f'war mandate {suffix}: invalid response must only clear pending')
+        # Compare the whole effect tree: acceptance must change the rule in
+        # the Soviet country scope, never inside TAN or outside the guard.
+        if suffix == 'a':
+            expected = '''
+                limit = { tag = SOV is_faction_leader = yes country_exists = TAN
+                    TAN = { has_country_flag = TT_war_mandate_pending
+                        TT_war_mandate_diplomacy_valid = yes } }
+                set_faction_rule = war_declaration_rule_independent_countries_only
+                TAN = { clr_country_flag = TT_war_mandate_pending
+                    set_country_flag = TT_war_mandate_granted
+                    news_event = { id = tt_tuva.21 days = 1 } }
+            '''
+        else:
+            expected = '''
+                limit = { tag = SOV is_faction_leader = yes country_exists = TAN
+                    TAN = { has_country_flag = TT_war_mandate_pending
+                        TT_war_mandate_diplomacy_valid = yes } }
+                TAN = { clr_country_flag = TT_war_mandate_pending
+                    set_country_flag = { flag = TT_war_mandate_refused days = 180 }
+                    news_event = { id = tt_tuva.22 days = 1 } }
+            '''
+        ok(matches(guard, expected),
+           f'war mandate {suffix}: incorrect faction policy, scope, rewards or cooldown')
+
+
 def run_mutation_tests(verbose: bool = True) -> bool:
     """Run in-memory mutation tests verifying that AST checks catch broken structures.
 
@@ -1178,7 +1287,7 @@ def run_mutation_tests(verbose: bool = True) -> bool:
         global errors
         errors = []
         fn(arg)
-        original = (corridor_original if fn is check_corridor else
+        original = (corridor_original if fn in (check_corridor, check_war_mandate) else
                     events_txt if fn is check_events else focus_txt)
         caught = arg != original and any(expected_msg_part in e for e in errors)
         sample_msg = next((e for e in errors if expected_msg_part in e), errors[0] if errors else 'No error captured')
@@ -1404,6 +1513,36 @@ def run_mutation_tests(verbose: bool = True) -> bool:
         changed[path] = changed[path].replace(old, new, 1)
         test_mutation(f'Mutation corridor {index}', check_corridor, changed, message)
 
+    errors = []
+    check_war_mandate(corridor_original)
+    results.append(('Baseline war mandate', not errors,
+                    errors[0] if errors else 'Unmodified war mandate passes'))
+    mandate_mutations = [
+        (CORRIDOR_PATHS[0], 'is_subject = no', 'is_subject = yes',
+         'war mandate: verify independence'),
+        (CORRIDOR_PATHS[0], 'is_in_faction_with = SOV', 'always = yes',
+         'war mandate: verify independence'),
+        (CORRIDOR_PATHS[2], 'set_country_flag = TT_war_mandate_pending',
+         'set_country_flag = { flag = TT_war_mandate_pending days = 60 }',
+         'war mandate: single persistent request'),
+        (CORRIDOR_PATHS[3], 'name = tt_tuva.20.a',
+         'name = tt_tuva.20.a set_faction_rule = war_declaration_rule_independent_countries_only',
+         'war mandate a: all response effects must be guarded'),
+        (CORRIDOR_PATHS[3],
+         'set_faction_rule = war_declaration_rule_independent_countries_only',
+         'TAN = { set_faction_rule = war_declaration_rule_independent_countries_only }',
+         'war mandate a: incorrect faction policy'),
+        (CORRIDOR_PATHS[3], 'TT_war_mandate_diplomacy_valid = yes',
+         'always = yes', 'war mandate a: revalidate pending'),
+        (CORRIDOR_PATHS[3], 'flag = TT_war_mandate_refused days = 180',
+         'flag = TT_war_mandate_refused days = 1',
+         'war mandate b: incorrect faction policy'),
+    ]
+    for index, (path, old, new, message) in enumerate(mandate_mutations, 1):
+        changed = dict(corridor_original)
+        changed[path] = changed[path].replace(old, new, 1)
+        test_mutation(f'Mutation war mandate {index}', check_war_mandate, changed, message)
+
     # Restore globals
     errors = orig_errors
     checks = orig_checks
@@ -1443,6 +1582,7 @@ def main() -> int:
     check_flags()
     check_misc()
     check_corridor()
+    check_war_mandate()
     check_mutations()
     print(f'Ran {checks} checks.')
     if errors:

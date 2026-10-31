@@ -798,3 +798,95 @@ news_event = {
 		name = tt_tuva.19.a
 	}
 }
+
+# Moscow may replace the declaring-country rule for the entire faction.
+# No root trigger: even an invalidated request must reach pending cleanup.
+country_event = {
+	id = tt_tuva.20
+	title = tt_tuva.20.t
+	desc = tt_tuva.20.desc
+	picture = GFX_report_event_generic_sign_treaty2
+	is_triggered_only = yes
+
+	option = {
+		name = tt_tuva.20.a
+		ai_chance = { base = 80 }
+		if = {
+			limit = {
+				tag = SOV
+				is_faction_leader = yes
+				country_exists = TAN
+				TAN = {
+					has_country_flag = TT_war_mandate_pending
+					TT_war_mandate_diplomacy_valid = yes
+				}
+			}
+			# Vanilla rule; affects all independent faction members, not only TAN.
+			set_faction_rule = war_declaration_rule_independent_countries_only
+			TAN = {
+				clr_country_flag = TT_war_mandate_pending
+				set_country_flag = TT_war_mandate_granted
+				news_event = {
+					id = tt_tuva.21
+					days = 1
+				}
+			}
+		}
+		else = {
+			if = {
+				limit = { country_exists = TAN }
+				TAN = { clr_country_flag = TT_war_mandate_pending }
+			}
+		}
+	}
+
+	option = {
+		name = tt_tuva.20.b
+		ai_chance = { base = 20 }
+		if = {
+			limit = {
+				tag = SOV
+				is_faction_leader = yes
+				country_exists = TAN
+				TAN = {
+					has_country_flag = TT_war_mandate_pending
+					TT_war_mandate_diplomacy_valid = yes
+				}
+			}
+			TAN = {
+				clr_country_flag = TT_war_mandate_pending
+				set_country_flag = { flag = TT_war_mandate_refused days = 180 }
+				news_event = {
+					id = tt_tuva.22
+					days = 1
+				}
+			}
+		}
+		else = {
+			if = {
+				limit = { country_exists = TAN }
+				TAN = { clr_country_flag = TT_war_mandate_pending }
+			}
+		}
+	}
+}
+
+news_event = {
+	id = tt_tuva.21
+	title = tt_tuva.21.t
+	desc = tt_tuva.21.desc
+	picture = GFX_news_event_generic_sign_treaty2
+	major = yes
+	is_triggered_only = yes
+	option = { name = tt_tuva.21.a }
+}
+
+news_event = {
+	id = tt_tuva.22
+	title = tt_tuva.22.t
+	desc = tt_tuva.22.desc
+	picture = GFX_news_event_generic_parliament
+	major = yes
+	is_triggered_only = yes
+	option = { name = tt_tuva.22.a }
+}
