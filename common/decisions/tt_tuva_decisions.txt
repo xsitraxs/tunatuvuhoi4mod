@@ -454,4 +454,28 @@ TT_tuva_category = {
 			}
 		}
 	}
+	# Request a faction-wide reform; never leave the faction or force a war.
+	TT_request_war_mandate = {
+		icon = GFX_decision_generic_nationalism
+		cost = 50
+		allowed = { original_tag = TAN }
+		visible = {
+			has_country_flag = TT_soviet_path
+			has_completed_focus = TT_the_battle_for_manchuria
+			NOT = { has_country_flag = TT_war_mandate_granted }
+		}
+		available = { TT_can_request_war_mandate = yes }
+		ai_will_do = { base = 40 }
+		complete_effect = {
+			custom_effect_tooltip = TT_request_war_mandate_tt
+			# A single outstanding event owns pending; no timed reuse.
+			set_country_flag = TT_war_mandate_pending
+			SOV = {
+				country_event = {
+					id = tt_tuva.20
+					days = 1
+				}
+			}
+		}
+	}
 }

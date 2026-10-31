@@ -5,7 +5,10 @@
 TT_needs_siberian_corridor = {
 	tag = TAN
 	has_idea = TT_central_asian_ssr_spirit
-	NOT = { has_country_flag = TT_siberian_corridor_granted }
+	custom_trigger_tooltip = {
+		tooltip = TT_corridor_not_granted_tt
+		NOT = { has_country_flag = TT_siberian_corridor_granted }
+	}
 	329 = { is_owned_by = TAN is_controlled_by = TAN }
 	588 = { is_owned_by = TAN is_controlled_by = TAN }
 	654 = { is_owned_by = SOV is_controlled_by = SOV }
@@ -14,7 +17,10 @@ TT_needs_siberian_corridor = {
 # Reused at response time without the pending/cooldown tests.
 TT_corridor_diplomacy_valid = {
 	TT_needs_siberian_corridor = yes
-	has_country_flag = TT_soviet_path
+	custom_trigger_tooltip = {
+		tooltip = TT_corridor_soviet_path_tt
+		has_country_flag = TT_soviet_path
+	}
 	country_exists = SOV
 	has_capitulated = no
 	SOV = { has_capitulated = no }
@@ -23,6 +29,48 @@ TT_corridor_diplomacy_valid = {
 
 TT_can_request_siberian_corridor = {
 	TT_corridor_diplomacy_valid = yes
-	NOT = { has_country_flag = TT_corridor_request_pending }
-	NOT = { has_country_flag = TT_corridor_refused_recently }
+	custom_trigger_tooltip = {
+		tooltip = TT_corridor_no_pending_tt
+		NOT = { has_country_flag = TT_corridor_request_pending }
+	}
+	custom_trigger_tooltip = {
+		tooltip = TT_corridor_no_refusal_cooldown_tt
+		NOT = { has_country_flag = TT_corridor_refused_recently }
+	}
+}
+
+# Country scope: TAN. This is a faction-wide policy request, not a personal
+# exception to diplomatic checks and not permission to declare war automatically.
+TT_war_mandate_diplomacy_valid = {
+	tag = TAN
+	custom_trigger_tooltip = {
+		tooltip = TT_requires_soviet_path_tt
+		has_country_flag = TT_soviet_path
+	}
+	has_completed_focus = TT_the_battle_for_manchuria
+	is_subject = no
+	has_capitulated = no
+	country_exists = SOV
+	is_in_faction_with = SOV
+	NOT = { has_war_with = SOV }
+	SOV = {
+		is_faction_leader = yes
+		has_capitulated = no
+	}
+	custom_trigger_tooltip = {
+		tooltip = TT_mandate_not_granted_tt
+		NOT = { has_country_flag = TT_war_mandate_granted }
+	}
+}
+
+TT_can_request_war_mandate = {
+	TT_war_mandate_diplomacy_valid = yes
+	custom_trigger_tooltip = {
+		tooltip = TT_mandate_no_pending_tt
+		NOT = { has_country_flag = TT_war_mandate_pending }
+	}
+	custom_trigger_tooltip = {
+		tooltip = TT_mandate_no_refusal_tt
+		NOT = { has_country_flag = TT_war_mandate_refused }
+	}
 }
