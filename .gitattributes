@@ -9,3 +9,6 @@ docs/ export-ignore
 # .gitattributes patterns do not recurse into directories: this is the rule
 # that actually keeps docs/ out of `git archive` exports of the mod.
 docs/** export-ignore
+
+*.dds binary
+*.gfx -text

@@ -28,7 +28,10 @@ def ok(condition: bool, message: str) -> bool:
 
 
 def script_files() -> list[Path]:
-    return sorted([*ROOT.glob('**/*.txt'), *ROOT.glob('**/*.mod')])
+    ignored = {'.git', '.venv', 'node_modules'}
+    return sorted(p for ext in ('*.txt', '*.mod', '*.gfx')
+                  for p in ROOT.glob('**/' + ext)
+                  if not (set(p.relative_to(ROOT).parts) & ignored))
 
 
 def strip_noise(text: str) -> str:
@@ -259,47 +262,7 @@ def check_localisation() -> None:
 
 
 # ------------------------------------------------------------------ 3. focuses
-# Vanilla sprites (interface/goals.gfx + interface/goals_shine.gfx), one per focus.
-VANILLA_ICONS = {
-    'GFX_focus_generic_the_giant_wakes', 'GFX_focus_generic_freedom_council',
-    'GFX_focus_generic_soviet_politics', 'GFX_focus_generic_communist_industry',
-    'GFX_focus_generic_total_war', 'GFX_focus_generic_workers_and_farmers_rise',
-    'GFX_focus_generic_join_comintern', 'GFX_focus_generic_attack_mongolia',
-    'GFX_focus_generic_support_the_left_right', 'GFX_focus_generic_monarchy_2',
-    'GFX_focus_generic_provoke_border_clashes',
-    'GFX_focus_generic_military_dictatorship', 'GFX_focus_generic_industry_1',
-    'GFX_focus_generic_agricultural_subsidies', 'GFX_focus_generic_industry_2',
-    'GFX_focus_generic_mining_industry', 'GFX_focus_generic_railroad',
-    'GFX_focus_generic_hydroelectric_energy', 'GFX_focus_generic_resource_extraction',
-    'GFX_focus_generic_military_academy', 'GFX_focus_generic_horse_studs',
-    'GFX_focus_generic_military_mission',
-    'GFX_focus_generic_commonwealth_build_infantry',
-    'GFX_focus_generic_air_bases', 'GFX_focus_generic_manpower',
-    'GFX_focus_generic_annex_country', 'GFX_focus_generic_diplomatic_treaty',
-    'GFX_focus_generic_annex_country_2', 'GFX_focus_generic_winter_warfare',
-    # 1.1.0 doctrine / air / navy focuses use the legacy generic goal sprites.
-    # The GFX_focus_generic_* spellings of these seven do not exist in vanilla;
-    # the GFX_goal_generic_* sprites (and their _shine counterparts) do.
-    'GFX_goal_generic_army_artillery', 'GFX_goal_generic_army_tanks',
-    'GFX_goal_generic_CAS', 'GFX_goal_generic_air_bomber',
-    'GFX_goal_generic_build_navy', 'GFX_goal_generic_navy_doctrines_tactics',
-    'GFX_goal_generic_navy_battleship',
-}
-# Sprites that are known not to exist in vanilla.
-BAD_ICONS = {
-    'GFX_focus_generic_asia_liberation', 'GFX_focus_generic_stalinist_industry',
-    'GFX_focus_generic_communist_asia', 'GFX_focus_generic_printing_press',
-    'GFX_focus_generic_army_attack', 'GFX_focus_generic_modernizing_agriculture',
-    'GFX_focus_generic_mineral_prospecting', 'GFX_focus_generic_expand_gold_mining',
-    'GFX_focus_generic_advisors', 'GFX_focus_generic_mountain_troops',
-    # Invented 1.1.0 spellings replaced by the GFX_goal_generic_* sprites above.
-    'GFX_focus_generic_army_artillery', 'GFX_focus_generic_army_tanks',
-    'GFX_focus_generic_CAS', 'GFX_focus_generic_air_bomber',
-    'GFX_focus_generic_build_navy', 'GFX_focus_generic_navy_doctrines_tactics',
-    'GFX_focus_generic_navy_battleship',
-}
-
-
+# Custom sprites are bound one-to-one to focus IDs and verified against DDS assets.
 def check_focuses(custom_focus_text: str | None = None) -> None:
     text = custom_focus_text if custom_focus_text is not None else (ROOT / 'common/national_focus/tt_tuva_focus.txt').read_text(encoding='utf-8')
     icons = re.findall(r'^\t\ticon = (\S+)', text, re.M)
@@ -309,13 +272,11 @@ def check_focuses(custom_focus_text: str | None = None) -> None:
     ok(len(icons) == 36, f'expected 36 focus icons, found {len(icons)}')
     ok(len(set(icons)) == 36,
        f'focus icons are not unique: {sorted({i for i in icons if icons.count(i) > 1})}')
-    ok(set(icons) == VANILLA_ICONS,
-       f'focus icons differ from the validated vanilla set: '
-       f'unknown={sorted(set(icons) - VANILLA_ICONS)}, '
-       f'missing={sorted(VANILLA_ICONS - set(icons))}')
-    ok(not (set(icons) & BAD_ICONS), f'known-invalid icons still used: {sorted(set(icons) & BAD_ICONS)}')
-    ok(all(i.startswith(('GFX_focus_generic_', 'GFX_goal_generic_')) for i in icons),
-       'every icon must be a validated generic focus/goal sprite')
+    expected_icons = {'GFX_TT_focus_' + fid.removeprefix('TT_') for fid in ids}
+    ok(set(icons) == expected_icons,
+       'focus icons must match the custom one-per-focus sprite set')
+    ok(all(i.startswith('GFX_TT_focus_') for i in icons),
+       'every focus must use original Tuva artwork, not vanilla icons')
     # Specific regression fixes.
     ok('category = infantry_weapons' in text and 'category = infantry_tech' not in text,
        'TT_mountain_warfare: research category is not infantry_weapons')
@@ -1049,6 +1010,100 @@ def check_misc() -> None:
 
 
 # -------------------------------------------------------- 7. mutation tests
+# ------------------------------------------------------ custom focus artwork
+
+def check_focus_art(overrides: dict[str, bytes] | None = None) -> None:
+    """Validate shipped art using only stdlib, not the optional build packages."""
+    import hashlib
+    overrides = overrides or {}
+
+    def read(path: str) -> bytes | None:
+        if path in overrides:
+            return overrides[path]
+        p = ROOT / path
+        return p.read_bytes() if p.is_file() else None
+
+    def value(node: CWBlock, key: str):
+        raw = node.get_assignment(key)
+        return raw.strip(chr(34)) if raw is not None else None
+
+    gfx_path = 'interface/tt_tuva_focus_icons.gfx'
+    gfx = read(gfx_path)
+    ok(gfx is not None, 'focus art: sprite definitions missing')
+    if gfx is None:
+        return
+    ok(not gfx.startswith(BOM) and b'\r' not in gfx,
+       'focus art: GFX must be UTF-8 without BOM and use LF')
+    try:
+        root = parse_clausewitz(gfx.decode('utf-8'))
+    except (UnicodeError, ValueError) as exc:
+        ok(False, f'focus art: invalid GFX: {exc}')
+        return
+    container = root.get_block('spriteTypes')
+    ok(container is not None, 'focus art: spriteTypes container missing')
+    sprites = container.find_blocks('spriteType') if container else []
+    names = [value(b, 'name') for b in sprites]
+    ok(len(names) == len(set(names)) == 72,
+       'focus art: exactly 72 unique normal/shine sprites required')
+    by_name = {value(b, 'name'): b for b in sprites}
+    focuses = parse_clausewitz((ROOT / 'common/national_focus/tt_tuva_focus.txt').read_text(encoding='utf-8')).find_all_blocks('focus')
+    required_names: set[str] = set()
+    required_files: set[str] = set()
+    pixel_hashes: set[str] = set()
+    for focus in focuses:
+        fid = focus.get_assignment('id')
+        suffix = fid.removeprefix('TT_')
+        name = f'GFX_TT_focus_{suffix}'
+        texture = f'gfx/interface/goals/tt_tuva/{suffix}.dds'
+        required_files.add(texture)
+        ok(focus.has_assignment('icon', name), f'focus art: {fid} has wrong icon binding')
+        for shine in (False, True):
+            sprite_name = name + ('_shine' if shine else '')
+            required_names.add(sprite_name)
+            sprite = by_name.get(sprite_name)
+            ok(sprite is not None, f'focus art: missing sprite {sprite_name}')
+            if sprite is None:
+                continue
+            ok(value(sprite, 'texturefile') == texture,
+               f'focus art: {sprite_name} must reference its own DDS')
+            if shine:
+                ok(value(sprite, 'effectFile') == 'gfx/FX/buttonstate.lua' and
+                   sprite.has_assignment('legacy_lazy_load', 'no'),
+                   f'focus art: {sprite_name} shine effect missing')
+                animations = sprite.find_blocks('animation')
+                ok(len(animations) == 2 and
+                   {a.get_assignment('animationrotation') for a in animations} == {'-90.0', '90.0'},
+                   f'focus art: {sprite_name} needs both shine passes')
+                for anim in animations:
+                    ok(value(anim, 'animationmaskfile') == texture and
+                       value(anim, 'animationtexturefile') == 'gfx/interface/goals/shine_overlay.dds',
+                       f'focus art: {sprite_name} shine mask/overlay is incorrect')
+        data = read(texture)
+        ok(data is not None, f'focus art: missing DDS {texture}')
+        if data is None:
+            continue
+        ok(len(data) == 128 + 95 * 85 * 4 and data[:4] == b'DDS ',
+           f'focus art: {texture} must be an uncompressed 95x85 DDS')
+        if len(data) < 128:
+            continue
+        header = struct.unpack('<31I', data[4:128])
+        ok(header[0] == 124 and header[2:5] == (85, 95, 380),
+           f'focus art: {texture} has wrong dimensions/pitch')
+        ok(header[18:26] == (32, 65, 0, 32, 0xFF0000, 0xFF00, 0xFF, 0xFF000000),
+           f'focus art: {texture} requires explicit BGRA32 alpha masks')
+        pixels = data[128:]
+        alpha = pixels[3::4]
+        ok(bool(alpha) and min(alpha) == 0 and max(alpha) == 255 and
+           0 < sum(a > 0 for a in alpha) < 95 * 85,
+           f'focus art: {texture} must have transparent padding and opaque artwork')
+        digest = hashlib.sha256(pixels).hexdigest()
+        ok(digest not in pixel_hashes, f'focus art: duplicate artwork in {texture}')
+        pixel_hashes.add(digest)
+    ok(set(by_name) == required_names, 'focus art: unexpected or missing sprite names')
+    actual = {p.relative_to(ROOT).as_posix() for p in (ROOT / 'gfx/interface/goals/tt_tuva').glob('*.dds')}
+    ok(actual == required_files, 'focus art: DDS set must match the 36 focus IDs exactly')
+
+
 # --------------------------------------------------------- corridor regressions
 CORRIDOR_PATHS = (
     'common/scripted_triggers/tt_tuva_scripted_triggers.txt',
@@ -1287,7 +1342,8 @@ def run_mutation_tests(verbose: bool = True) -> bool:
         global errors
         errors = []
         fn(arg)
-        original = (corridor_original if fn in (check_corridor, check_war_mandate) else
+        original = ({} if fn is check_focus_art else
+                    corridor_original if fn in (check_corridor, check_war_mandate) else
                     events_txt if fn is check_events else focus_txt)
         caught = arg != original and any(expected_msg_part in e for e in errors)
         sample_msg = next((e for e in errors if expected_msg_part in e), errors[0] if errors else 'No error captured')
@@ -1543,6 +1599,30 @@ def run_mutation_tests(verbose: bool = True) -> bool:
         changed[path] = changed[path].replace(old, new, 1)
         test_mutation(f'Mutation war mandate {index}', check_war_mandate, changed, message)
 
+    errors = []
+    check_focus_art()
+    results.append(('Baseline focus artwork', not errors,
+                    errors[0] if errors else 'Shipped DDS and sprite bindings pass'))
+    gfx_path = 'interface/tt_tuva_focus_icons.gfx'
+    gfx = (ROOT / gfx_path).read_bytes()
+    texture_path = 'gfx/interface/goals/tt_tuva/center_of_asia.dds'
+    data = (ROOT / texture_path).read_bytes()
+    damaged_header = bytearray(data)
+    struct.pack_into('<I', damaged_header, 16, 94)  # wrong DDS width
+    test_mutation('Mutation focus DDS dimensions', check_focus_art,
+                  {texture_path: bytes(damaged_header)}, 'wrong dimensions/pitch')
+    test_mutation('Mutation focus missing shine registration', check_focus_art,
+                  {gfx_path: gfx.replace(b'GFX_TT_focus_center_of_asia_shine',
+                                        b'GFX_TT_focus_wrong_shine', 1)},
+                  'missing sprite GFX_TT_focus_center_of_asia_shine')
+    test_mutation('Mutation focus wrong shine mask', check_focus_art,
+                  {gfx_path: gfx.replace(b'animationmaskfile = "gfx/interface/goals/tt_tuva/center_of_asia.dds"',
+                                        b'animationmaskfile = "gfx/interface/goals/tt_tuva/red_yurt.dds"', 1)},
+                  'shine mask/overlay is incorrect')
+    test_mutation('Mutation duplicated focus artwork', check_focus_art,
+                  {'gfx/interface/goals/tt_tuva/the_great_khural.dds': data},
+                  'duplicate artwork')
+
     # Restore globals
     errors = orig_errors
     checks = orig_checks
@@ -1578,6 +1658,7 @@ def main() -> int:
     check_focuses()
     check_commanders()
     check_graphics()
+    check_focus_art()
     check_events()
     check_flags()
     check_misc()

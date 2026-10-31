@@ -1,0 +1,1226 @@
+spriteTypes = {
+	spriteType = {
+		name = "GFX_TT_focus_center_of_asia"
+		texturefile = "gfx/interface/goals/tt_tuva/center_of_asia.dds"
+	}
+	spriteType = {
+		name = "GFX_TT_focus_center_of_asia_shine"
+		texturefile = "gfx/interface/goals/tt_tuva/center_of_asia.dds"
+		effectFile = "gfx/FX/buttonstate.lua"
+		legacy_lazy_load = no
+		animation = {
+			animationmaskfile = "gfx/interface/goals/tt_tuva/center_of_asia.dds"
+			animationtexturefile = "gfx/interface/goals/shine_overlay.dds"
+			animationrotation = -90.0
+			animationlooping = no
+			animationtime = 0.75
+			animationdelay = 0
+			animationblendmode = "add"
+			animationtype = "scrolling"
+			animationrotationoffset = { x = 0.0 y = 0.0 }
+			animationtexturescale = { x = 1.0 y = 1.0 }
+		}
+		animation = {
+			animationmaskfile = "gfx/interface/goals/tt_tuva/center_of_asia.dds"
+			animationtexturefile = "gfx/interface/goals/shine_overlay.dds"
+			animationrotation = 90.0
+			animationlooping = no
+			animationtime = 0.75
+			animationdelay = 0
+			animationblendmode = "add"
+			animationtype = "scrolling"
+			animationrotationoffset = { x = 0.0 y = 0.0 }
+			animationtexturescale = { x = 1.0 y = 1.0 }
+		}
+	}
+	spriteType = {
+		name = "GFX_TT_focus_the_great_khural"
+		texturefile = "gfx/interface/goals/tt_tuva/the_great_khural.dds"
+	}
+	spriteType = {
+		name = "GFX_TT_focus_the_great_khural_shine"
+		texturefile = "gfx/interface/goals/tt_tuva/the_great_khural.dds"
+		effectFile = "gfx/FX/buttonstate.lua"
+		legacy_lazy_load = no
+		animation = {
+			animationmaskfile = "gfx/interface/goals/tt_tuva/the_great_khural.dds"
+			animationtexturefile = "gfx/interface/goals/shine_overlay.dds"
+			animationrotation = -90.0
+			animationlooping = no
+			animationtime = 0.75
+			animationdelay = 0
+			animationblendmode = "add"
+			animationtype = "scrolling"
+			animationrotationoffset = { x = 0.0 y = 0.0 }
+			animationtexturescale = { x = 1.0 y = 1.0 }
+		}
+		animation = {
+			animationmaskfile = "gfx/interface/goals/tt_tuva/the_great_khural.dds"
+			animationtexturefile = "gfx/interface/goals/shine_overlay.dds"
+			animationrotation = 90.0
+			animationlooping = no
+			animationtime = 0.75
+			animationdelay = 0
+			animationblendmode = "add"
+			animationtype = "scrolling"
+			animationrotationoffset = { x = 0.0 y = 0.0 }
+			animationtexturescale = { x = 1.0 y = 1.0 }
+		}
+	}
+	spriteType = {
+		name = "GFX_TT_focus_red_yurt"
+		texturefile = "gfx/interface/goals/tt_tuva/red_yurt.dds"
+	}
+	spriteType = {
+		name = "GFX_TT_focus_red_yurt_shine"
+		texturefile = "gfx/interface/goals/tt_tuva/red_yurt.dds"
+		effectFile = "gfx/FX/buttonstate.lua"
+		legacy_lazy_load = no
+		animation = {
+			animationmaskfile = "gfx/interface/goals/tt_tuva/red_yurt.dds"
+			animationtexturefile = "gfx/interface/goals/shine_overlay.dds"
+			animationrotation = -90.0
+			animationlooping = no
+			animationtime = 0.75
+			animationdelay = 0
+			animationblendmode = "add"
+			animationtype = "scrolling"
+			animationrotationoffset = { x = 0.0 y = 0.0 }
+			animationtexturescale = { x = 1.0 y = 1.0 }
+		}
+		animation = {
+			animationmaskfile = "gfx/interface/goals/tt_tuva/red_yurt.dds"
+			animationtexturefile = "gfx/interface/goals/shine_overlay.dds"
+			animationrotation = 90.0
+			animationlooping = no
+			animationtime = 0.75
+			animationdelay = 0
+			animationblendmode = "add"
+			animationtype = "scrolling"
+			animationrotationoffset = { x = 0.0 y = 0.0 }
+			animationtexturescale = { x = 1.0 y = 1.0 }
+		}
+	}
+	spriteType = {
+		name = "GFX_TT_focus_the_soviet_arsenal"
+		texturefile = "gfx/interface/goals/tt_tuva/the_soviet_arsenal.dds"
+	}
+	spriteType = {
+		name = "GFX_TT_focus_the_soviet_arsenal_shine"
+		texturefile = "gfx/interface/goals/tt_tuva/the_soviet_arsenal.dds"
+		effectFile = "gfx/FX/buttonstate.lua"
+		legacy_lazy_load = no
+		animation = {
+			animationmaskfile = "gfx/interface/goals/tt_tuva/the_soviet_arsenal.dds"
+			animationtexturefile = "gfx/interface/goals/shine_overlay.dds"
+			animationrotation = -90.0
+			animationlooping = no
+			animationtime = 0.75
+			animationdelay = 0
+			animationblendmode = "add"
+			animationtype = "scrolling"
+			animationrotationoffset = { x = 0.0 y = 0.0 }
+			animationtexturescale = { x = 1.0 y = 1.0 }
+		}
+		animation = {
+			animationmaskfile = "gfx/interface/goals/tt_tuva/the_soviet_arsenal.dds"
+			animationtexturefile = "gfx/interface/goals/shine_overlay.dds"
+			animationrotation = 90.0
+			animationlooping = no
+			animationtime = 0.75
+			animationdelay = 0
+			animationblendmode = "add"
+			animationtype = "scrolling"
+			animationrotationoffset = { x = 0.0 y = 0.0 }
+			animationtexturescale = { x = 1.0 y = 1.0 }
+		}
+	}
+	spriteType = {
+		name = "GFX_TT_focus_the_siberian_military_district"
+		texturefile = "gfx/interface/goals/tt_tuva/the_siberian_military_district.dds"
+	}
+	spriteType = {
+		name = "GFX_TT_focus_the_siberian_military_district_shine"
+		texturefile = "gfx/interface/goals/tt_tuva/the_siberian_military_district.dds"
+		effectFile = "gfx/FX/buttonstate.lua"
+		legacy_lazy_load = no
+		animation = {
+			animationmaskfile = "gfx/interface/goals/tt_tuva/the_siberian_military_district.dds"
+			animationtexturefile = "gfx/interface/goals/shine_overlay.dds"
+			animationrotation = -90.0
+			animationlooping = no
+			animationtime = 0.75
+			animationdelay = 0
+			animationblendmode = "add"
+			animationtype = "scrolling"
+			animationrotationoffset = { x = 0.0 y = 0.0 }
+			animationtexturescale = { x = 1.0 y = 1.0 }
+		}
+		animation = {
+			animationmaskfile = "gfx/interface/goals/tt_tuva/the_siberian_military_district.dds"
+			animationtexturefile = "gfx/interface/goals/shine_overlay.dds"
+			animationrotation = 90.0
+			animationlooping = no
+			animationtime = 0.75
+			animationdelay = 0
+			animationblendmode = "add"
+			animationtype = "scrolling"
+			animationrotationoffset = { x = 0.0 y = 0.0 }
+			animationtexturescale = { x = 1.0 y = 1.0 }
+		}
+	}
+	spriteType = {
+		name = "GFX_TT_focus_the_red_banner_over_asia"
+		texturefile = "gfx/interface/goals/tt_tuva/the_red_banner_over_asia.dds"
+	}
+	spriteType = {
+		name = "GFX_TT_focus_the_red_banner_over_asia_shine"
+		texturefile = "gfx/interface/goals/tt_tuva/the_red_banner_over_asia.dds"
+		effectFile = "gfx/FX/buttonstate.lua"
+		legacy_lazy_load = no
+		animation = {
+			animationmaskfile = "gfx/interface/goals/tt_tuva/the_red_banner_over_asia.dds"
+			animationtexturefile = "gfx/interface/goals/shine_overlay.dds"
+			animationrotation = -90.0
+			animationlooping = no
+			animationtime = 0.75
+			animationdelay = 0
+			animationblendmode = "add"
+			animationtype = "scrolling"
+			animationrotationoffset = { x = 0.0 y = 0.0 }
+			animationtexturescale = { x = 1.0 y = 1.0 }
+		}
+		animation = {
+			animationmaskfile = "gfx/interface/goals/tt_tuva/the_red_banner_over_asia.dds"
+			animationtexturefile = "gfx/interface/goals/shine_overlay.dds"
+			animationrotation = 90.0
+			animationlooping = no
+			animationtime = 0.75
+			animationdelay = 0
+			animationblendmode = "add"
+			animationtype = "scrolling"
+			animationrotationoffset = { x = 0.0 y = 0.0 }
+			animationtexturescale = { x = 1.0 y = 1.0 }
+		}
+	}
+	spriteType = {
+		name = "GFX_TT_focus_form_central_asian_ssr"
+		texturefile = "gfx/interface/goals/tt_tuva/form_central_asian_ssr.dds"
+	}
+	spriteType = {
+		name = "GFX_TT_focus_form_central_asian_ssr_shine"
+		texturefile = "gfx/interface/goals/tt_tuva/form_central_asian_ssr.dds"
+		effectFile = "gfx/FX/buttonstate.lua"
+		legacy_lazy_load = no
+		animation = {
+			animationmaskfile = "gfx/interface/goals/tt_tuva/form_central_asian_ssr.dds"
+			animationtexturefile = "gfx/interface/goals/shine_overlay.dds"
+			animationrotation = -90.0
+			animationlooping = no
+			animationtime = 0.75
+			animationdelay = 0
+			animationblendmode = "add"
+			animationtype = "scrolling"
+			animationrotationoffset = { x = 0.0 y = 0.0 }
+			animationtexturescale = { x = 1.0 y = 1.0 }
+		}
+		animation = {
+			animationmaskfile = "gfx/interface/goals/tt_tuva/form_central_asian_ssr.dds"
+			animationtexturefile = "gfx/interface/goals/shine_overlay.dds"
+			animationrotation = 90.0
+			animationlooping = no
+			animationtime = 0.75
+			animationdelay = 0
+			animationblendmode = "add"
+			animationtype = "scrolling"
+			animationrotationoffset = { x = 0.0 y = 0.0 }
+			animationtexturescale = { x = 1.0 y = 1.0 }
+		}
+	}
+	spriteType = {
+		name = "GFX_TT_focus_the_battle_for_manchuria"
+		texturefile = "gfx/interface/goals/tt_tuva/the_battle_for_manchuria.dds"
+	}
+	spriteType = {
+		name = "GFX_TT_focus_the_battle_for_manchuria_shine"
+		texturefile = "gfx/interface/goals/tt_tuva/the_battle_for_manchuria.dds"
+		effectFile = "gfx/FX/buttonstate.lua"
+		legacy_lazy_load = no
+		animation = {
+			animationmaskfile = "gfx/interface/goals/tt_tuva/the_battle_for_manchuria.dds"
+			animationtexturefile = "gfx/interface/goals/shine_overlay.dds"
+			animationrotation = -90.0
+			animationlooping = no
+			animationtime = 0.75
+			animationdelay = 0
+			animationblendmode = "add"
+			animationtype = "scrolling"
+			animationrotationoffset = { x = 0.0 y = 0.0 }
+			animationtexturescale = { x = 1.0 y = 1.0 }
+		}
+		animation = {
+			animationmaskfile = "gfx/interface/goals/tt_tuva/the_battle_for_manchuria.dds"
+			animationtexturefile = "gfx/interface/goals/shine_overlay.dds"
+			animationrotation = 90.0
+			animationlooping = no
+			animationtime = 0.75
+			animationdelay = 0
+			animationblendmode = "add"
+			animationtype = "scrolling"
+			animationrotationoffset = { x = 0.0 y = 0.0 }
+			animationtexturescale = { x = 1.0 y = 1.0 }
+		}
+	}
+	spriteType = {
+		name = "GFX_TT_focus_tuvan_renaissance"
+		texturefile = "gfx/interface/goals/tt_tuva/tuvan_renaissance.dds"
+	}
+	spriteType = {
+		name = "GFX_TT_focus_tuvan_renaissance_shine"
+		texturefile = "gfx/interface/goals/tt_tuva/tuvan_renaissance.dds"
+		effectFile = "gfx/FX/buttonstate.lua"
+		legacy_lazy_load = no
+		animation = {
+			animationmaskfile = "gfx/interface/goals/tt_tuva/tuvan_renaissance.dds"
+			animationtexturefile = "gfx/interface/goals/shine_overlay.dds"
+			animationrotation = -90.0
+			animationlooping = no
+			animationtime = 0.75
+			animationdelay = 0
+			animationblendmode = "add"
+			animationtype = "scrolling"
+			animationrotationoffset = { x = 0.0 y = 0.0 }
+			animationtexturescale = { x = 1.0 y = 1.0 }
+		}
+		animation = {
+			animationmaskfile = "gfx/interface/goals/tt_tuva/tuvan_renaissance.dds"
+			animationtexturefile = "gfx/interface/goals/shine_overlay.dds"
+			animationrotation = 90.0
+			animationlooping = no
+			animationtime = 0.75
+			animationdelay = 0
+			animationblendmode = "add"
+			animationtype = "scrolling"
+			animationrotationoffset = { x = 0.0 y = 0.0 }
+			animationtexturescale = { x = 1.0 y = 1.0 }
+		}
+	}
+	spriteType = {
+		name = "GFX_TT_focus_the_second_khanate"
+		texturefile = "gfx/interface/goals/tt_tuva/the_second_khanate.dds"
+	}
+	spriteType = {
+		name = "GFX_TT_focus_the_second_khanate_shine"
+		texturefile = "gfx/interface/goals/tt_tuva/the_second_khanate.dds"
+		effectFile = "gfx/FX/buttonstate.lua"
+		legacy_lazy_load = no
+		animation = {
+			animationmaskfile = "gfx/interface/goals/tt_tuva/the_second_khanate.dds"
+			animationtexturefile = "gfx/interface/goals/shine_overlay.dds"
+			animationrotation = -90.0
+			animationlooping = no
+			animationtime = 0.75
+			animationdelay = 0
+			animationblendmode = "add"
+			animationtype = "scrolling"
+			animationrotationoffset = { x = 0.0 y = 0.0 }
+			animationtexturescale = { x = 1.0 y = 1.0 }
+		}
+		animation = {
+			animationmaskfile = "gfx/interface/goals/tt_tuva/the_second_khanate.dds"
+			animationtexturefile = "gfx/interface/goals/shine_overlay.dds"
+			animationrotation = 90.0
+			animationlooping = no
+			animationtime = 0.75
+			animationdelay = 0
+			animationblendmode = "add"
+			animationtype = "scrolling"
+			animationrotationoffset = { x = 0.0 y = 0.0 }
+			animationtexturescale = { x = 1.0 y = 1.0 }
+		}
+	}
+	spriteType = {
+		name = "GFX_TT_focus_the_great_khan"
+		texturefile = "gfx/interface/goals/tt_tuva/the_great_khan.dds"
+	}
+	spriteType = {
+		name = "GFX_TT_focus_the_great_khan_shine"
+		texturefile = "gfx/interface/goals/tt_tuva/the_great_khan.dds"
+		effectFile = "gfx/FX/buttonstate.lua"
+		legacy_lazy_load = no
+		animation = {
+			animationmaskfile = "gfx/interface/goals/tt_tuva/the_great_khan.dds"
+			animationtexturefile = "gfx/interface/goals/shine_overlay.dds"
+			animationrotation = -90.0
+			animationlooping = no
+			animationtime = 0.75
+			animationdelay = 0
+			animationblendmode = "add"
+			animationtype = "scrolling"
+			animationrotationoffset = { x = 0.0 y = 0.0 }
+			animationtexturescale = { x = 1.0 y = 1.0 }
+		}
+		animation = {
+			animationmaskfile = "gfx/interface/goals/tt_tuva/the_great_khan.dds"
+			animationtexturefile = "gfx/interface/goals/shine_overlay.dds"
+			animationrotation = 90.0
+			animationlooping = no
+			animationtime = 0.75
+			animationdelay = 0
+			animationblendmode = "add"
+			animationtype = "scrolling"
+			animationrotationoffset = { x = 0.0 y = 0.0 }
+			animationtexturescale = { x = 1.0 y = 1.0 }
+		}
+	}
+	spriteType = {
+		name = "GFX_TT_focus_the_empire_of_the_steppe"
+		texturefile = "gfx/interface/goals/tt_tuva/the_empire_of_the_steppe.dds"
+	}
+	spriteType = {
+		name = "GFX_TT_focus_the_empire_of_the_steppe_shine"
+		texturefile = "gfx/interface/goals/tt_tuva/the_empire_of_the_steppe.dds"
+		effectFile = "gfx/FX/buttonstate.lua"
+		legacy_lazy_load = no
+		animation = {
+			animationmaskfile = "gfx/interface/goals/tt_tuva/the_empire_of_the_steppe.dds"
+			animationtexturefile = "gfx/interface/goals/shine_overlay.dds"
+			animationrotation = -90.0
+			animationlooping = no
+			animationtime = 0.75
+			animationdelay = 0
+			animationblendmode = "add"
+			animationtype = "scrolling"
+			animationrotationoffset = { x = 0.0 y = 0.0 }
+			animationtexturescale = { x = 1.0 y = 1.0 }
+		}
+		animation = {
+			animationmaskfile = "gfx/interface/goals/tt_tuva/the_empire_of_the_steppe.dds"
+			animationtexturefile = "gfx/interface/goals/shine_overlay.dds"
+			animationrotation = 90.0
+			animationlooping = no
+			animationtime = 0.75
+			animationdelay = 0
+			animationblendmode = "add"
+			animationtype = "scrolling"
+			animationrotationoffset = { x = 0.0 y = 0.0 }
+			animationtexturescale = { x = 1.0 y = 1.0 }
+		}
+	}
+	spriteType = {
+		name = "GFX_TT_focus_first_five_year_plan"
+		texturefile = "gfx/interface/goals/tt_tuva/first_five_year_plan.dds"
+	}
+	spriteType = {
+		name = "GFX_TT_focus_first_five_year_plan_shine"
+		texturefile = "gfx/interface/goals/tt_tuva/first_five_year_plan.dds"
+		effectFile = "gfx/FX/buttonstate.lua"
+		legacy_lazy_load = no
+		animation = {
+			animationmaskfile = "gfx/interface/goals/tt_tuva/first_five_year_plan.dds"
+			animationtexturefile = "gfx/interface/goals/shine_overlay.dds"
+			animationrotation = -90.0
+			animationlooping = no
+			animationtime = 0.75
+			animationdelay = 0
+			animationblendmode = "add"
+			animationtype = "scrolling"
+			animationrotationoffset = { x = 0.0 y = 0.0 }
+			animationtexturescale = { x = 1.0 y = 1.0 }
+		}
+		animation = {
+			animationmaskfile = "gfx/interface/goals/tt_tuva/first_five_year_plan.dds"
+			animationtexturefile = "gfx/interface/goals/shine_overlay.dds"
+			animationrotation = 90.0
+			animationlooping = no
+			animationtime = 0.75
+			animationdelay = 0
+			animationblendmode = "add"
+			animationtype = "scrolling"
+			animationrotationoffset = { x = 0.0 y = 0.0 }
+			animationtexturescale = { x = 1.0 y = 1.0 }
+		}
+	}
+	spriteType = {
+		name = "GFX_TT_focus_collective_herds"
+		texturefile = "gfx/interface/goals/tt_tuva/collective_herds.dds"
+	}
+	spriteType = {
+		name = "GFX_TT_focus_collective_herds_shine"
+		texturefile = "gfx/interface/goals/tt_tuva/collective_herds.dds"
+		effectFile = "gfx/FX/buttonstate.lua"
+		legacy_lazy_load = no
+		animation = {
+			animationmaskfile = "gfx/interface/goals/tt_tuva/collective_herds.dds"
+			animationtexturefile = "gfx/interface/goals/shine_overlay.dds"
+			animationrotation = -90.0
+			animationlooping = no
+			animationtime = 0.75
+			animationdelay = 0
+			animationblendmode = "add"
+			animationtype = "scrolling"
+			animationrotationoffset = { x = 0.0 y = 0.0 }
+			animationtexturescale = { x = 1.0 y = 1.0 }
+		}
+		animation = {
+			animationmaskfile = "gfx/interface/goals/tt_tuva/collective_herds.dds"
+			animationtexturefile = "gfx/interface/goals/shine_overlay.dds"
+			animationrotation = 90.0
+			animationlooping = no
+			animationtime = 0.75
+			animationdelay = 0
+			animationblendmode = "add"
+			animationtype = "scrolling"
+			animationrotationoffset = { x = 0.0 y = 0.0 }
+			animationtexturescale = { x = 1.0 y = 1.0 }
+		}
+	}
+	spriteType = {
+		name = "GFX_TT_focus_kyzyl_industries"
+		texturefile = "gfx/interface/goals/tt_tuva/kyzyl_industries.dds"
+	}
+	spriteType = {
+		name = "GFX_TT_focus_kyzyl_industries_shine"
+		texturefile = "gfx/interface/goals/tt_tuva/kyzyl_industries.dds"
+		effectFile = "gfx/FX/buttonstate.lua"
+		legacy_lazy_load = no
+		animation = {
+			animationmaskfile = "gfx/interface/goals/tt_tuva/kyzyl_industries.dds"
+			animationtexturefile = "gfx/interface/goals/shine_overlay.dds"
+			animationrotation = -90.0
+			animationlooping = no
+			animationtime = 0.75
+			animationdelay = 0
+			animationblendmode = "add"
+			animationtype = "scrolling"
+			animationrotationoffset = { x = 0.0 y = 0.0 }
+			animationtexturescale = { x = 1.0 y = 1.0 }
+		}
+		animation = {
+			animationmaskfile = "gfx/interface/goals/tt_tuva/kyzyl_industries.dds"
+			animationtexturefile = "gfx/interface/goals/shine_overlay.dds"
+			animationrotation = 90.0
+			animationlooping = no
+			animationtime = 0.75
+			animationdelay = 0
+			animationblendmode = "add"
+			animationtype = "scrolling"
+			animationrotationoffset = { x = 0.0 y = 0.0 }
+			animationtexturescale = { x = 1.0 y = 1.0 }
+		}
+	}
+	spriteType = {
+		name = "GFX_TT_focus_mineral_prospecting"
+		texturefile = "gfx/interface/goals/tt_tuva/mineral_prospecting.dds"
+	}
+	spriteType = {
+		name = "GFX_TT_focus_mineral_prospecting_shine"
+		texturefile = "gfx/interface/goals/tt_tuva/mineral_prospecting.dds"
+		effectFile = "gfx/FX/buttonstate.lua"
+		legacy_lazy_load = no
+		animation = {
+			animationmaskfile = "gfx/interface/goals/tt_tuva/mineral_prospecting.dds"
+			animationtexturefile = "gfx/interface/goals/shine_overlay.dds"
+			animationrotation = -90.0
+			animationlooping = no
+			animationtime = 0.75
+			animationdelay = 0
+			animationblendmode = "add"
+			animationtype = "scrolling"
+			animationrotationoffset = { x = 0.0 y = 0.0 }
+			animationtexturescale = { x = 1.0 y = 1.0 }
+		}
+		animation = {
+			animationmaskfile = "gfx/interface/goals/tt_tuva/mineral_prospecting.dds"
+			animationtexturefile = "gfx/interface/goals/shine_overlay.dds"
+			animationrotation = 90.0
+			animationlooping = no
+			animationtime = 0.75
+			animationdelay = 0
+			animationblendmode = "add"
+			animationtype = "scrolling"
+			animationrotationoffset = { x = 0.0 y = 0.0 }
+			animationtexturescale = { x = 1.0 y = 1.0 }
+		}
+	}
+	spriteType = {
+		name = "GFX_TT_focus_the_kyzyl_railroad"
+		texturefile = "gfx/interface/goals/tt_tuva/the_kyzyl_railroad.dds"
+	}
+	spriteType = {
+		name = "GFX_TT_focus_the_kyzyl_railroad_shine"
+		texturefile = "gfx/interface/goals/tt_tuva/the_kyzyl_railroad.dds"
+		effectFile = "gfx/FX/buttonstate.lua"
+		legacy_lazy_load = no
+		animation = {
+			animationmaskfile = "gfx/interface/goals/tt_tuva/the_kyzyl_railroad.dds"
+			animationtexturefile = "gfx/interface/goals/shine_overlay.dds"
+			animationrotation = -90.0
+			animationlooping = no
+			animationtime = 0.75
+			animationdelay = 0
+			animationblendmode = "add"
+			animationtype = "scrolling"
+			animationrotationoffset = { x = 0.0 y = 0.0 }
+			animationtexturescale = { x = 1.0 y = 1.0 }
+		}
+		animation = {
+			animationmaskfile = "gfx/interface/goals/tt_tuva/the_kyzyl_railroad.dds"
+			animationtexturefile = "gfx/interface/goals/shine_overlay.dds"
+			animationrotation = 90.0
+			animationlooping = no
+			animationtime = 0.75
+			animationdelay = 0
+			animationblendmode = "add"
+			animationtype = "scrolling"
+			animationrotationoffset = { x = 0.0 y = 0.0 }
+			animationtexturescale = { x = 1.0 y = 1.0 }
+		}
+	}
+	spriteType = {
+		name = "GFX_TT_focus_the_yenisei_dam"
+		texturefile = "gfx/interface/goals/tt_tuva/the_yenisei_dam.dds"
+	}
+	spriteType = {
+		name = "GFX_TT_focus_the_yenisei_dam_shine"
+		texturefile = "gfx/interface/goals/tt_tuva/the_yenisei_dam.dds"
+		effectFile = "gfx/FX/buttonstate.lua"
+		legacy_lazy_load = no
+		animation = {
+			animationmaskfile = "gfx/interface/goals/tt_tuva/the_yenisei_dam.dds"
+			animationtexturefile = "gfx/interface/goals/shine_overlay.dds"
+			animationrotation = -90.0
+			animationlooping = no
+			animationtime = 0.75
+			animationdelay = 0
+			animationblendmode = "add"
+			animationtype = "scrolling"
+			animationrotationoffset = { x = 0.0 y = 0.0 }
+			animationtexturescale = { x = 1.0 y = 1.0 }
+		}
+		animation = {
+			animationmaskfile = "gfx/interface/goals/tt_tuva/the_yenisei_dam.dds"
+			animationtexturefile = "gfx/interface/goals/shine_overlay.dds"
+			animationrotation = 90.0
+			animationlooping = no
+			animationtime = 0.75
+			animationdelay = 0
+			animationblendmode = "add"
+			animationtype = "scrolling"
+			animationrotationoffset = { x = 0.0 y = 0.0 }
+			animationtexturescale = { x = 1.0 y = 1.0 }
+		}
+	}
+	spriteType = {
+		name = "GFX_TT_focus_the_golden_hoard"
+		texturefile = "gfx/interface/goals/tt_tuva/the_golden_hoard.dds"
+	}
+	spriteType = {
+		name = "GFX_TT_focus_the_golden_hoard_shine"
+		texturefile = "gfx/interface/goals/tt_tuva/the_golden_hoard.dds"
+		effectFile = "gfx/FX/buttonstate.lua"
+		legacy_lazy_load = no
+		animation = {
+			animationmaskfile = "gfx/interface/goals/tt_tuva/the_golden_hoard.dds"
+			animationtexturefile = "gfx/interface/goals/shine_overlay.dds"
+			animationrotation = -90.0
+			animationlooping = no
+			animationtime = 0.75
+			animationdelay = 0
+			animationblendmode = "add"
+			animationtype = "scrolling"
+			animationrotationoffset = { x = 0.0 y = 0.0 }
+			animationtexturescale = { x = 1.0 y = 1.0 }
+		}
+		animation = {
+			animationmaskfile = "gfx/interface/goals/tt_tuva/the_golden_hoard.dds"
+			animationtexturefile = "gfx/interface/goals/shine_overlay.dds"
+			animationrotation = 90.0
+			animationlooping = no
+			animationtime = 0.75
+			animationdelay = 0
+			animationblendmode = "add"
+			animationtype = "scrolling"
+			animationrotationoffset = { x = 0.0 y = 0.0 }
+			animationtexturescale = { x = 1.0 y = 1.0 }
+		}
+	}
+	spriteType = {
+		name = "GFX_TT_focus_the_peoples_army"
+		texturefile = "gfx/interface/goals/tt_tuva/the_peoples_army.dds"
+	}
+	spriteType = {
+		name = "GFX_TT_focus_the_peoples_army_shine"
+		texturefile = "gfx/interface/goals/tt_tuva/the_peoples_army.dds"
+		effectFile = "gfx/FX/buttonstate.lua"
+		legacy_lazy_load = no
+		animation = {
+			animationmaskfile = "gfx/interface/goals/tt_tuva/the_peoples_army.dds"
+			animationtexturefile = "gfx/interface/goals/shine_overlay.dds"
+			animationrotation = -90.0
+			animationlooping = no
+			animationtime = 0.75
+			animationdelay = 0
+			animationblendmode = "add"
+			animationtype = "scrolling"
+			animationrotationoffset = { x = 0.0 y = 0.0 }
+			animationtexturescale = { x = 1.0 y = 1.0 }
+		}
+		animation = {
+			animationmaskfile = "gfx/interface/goals/tt_tuva/the_peoples_army.dds"
+			animationtexturefile = "gfx/interface/goals/shine_overlay.dds"
+			animationrotation = 90.0
+			animationlooping = no
+			animationtime = 0.75
+			animationdelay = 0
+			animationblendmode = "add"
+			animationtype = "scrolling"
+			animationrotationoffset = { x = 0.0 y = 0.0 }
+			animationtexturescale = { x = 1.0 y = 1.0 }
+		}
+	}
+	spriteType = {
+		name = "GFX_TT_focus_cavalry_of_the_steppe"
+		texturefile = "gfx/interface/goals/tt_tuva/cavalry_of_the_steppe.dds"
+	}
+	spriteType = {
+		name = "GFX_TT_focus_cavalry_of_the_steppe_shine"
+		texturefile = "gfx/interface/goals/tt_tuva/cavalry_of_the_steppe.dds"
+		effectFile = "gfx/FX/buttonstate.lua"
+		legacy_lazy_load = no
+		animation = {
+			animationmaskfile = "gfx/interface/goals/tt_tuva/cavalry_of_the_steppe.dds"
+			animationtexturefile = "gfx/interface/goals/shine_overlay.dds"
+			animationrotation = -90.0
+			animationlooping = no
+			animationtime = 0.75
+			animationdelay = 0
+			animationblendmode = "add"
+			animationtype = "scrolling"
+			animationrotationoffset = { x = 0.0 y = 0.0 }
+			animationtexturescale = { x = 1.0 y = 1.0 }
+		}
+		animation = {
+			animationmaskfile = "gfx/interface/goals/tt_tuva/cavalry_of_the_steppe.dds"
+			animationtexturefile = "gfx/interface/goals/shine_overlay.dds"
+			animationrotation = 90.0
+			animationlooping = no
+			animationtime = 0.75
+			animationdelay = 0
+			animationblendmode = "add"
+			animationtype = "scrolling"
+			animationrotationoffset = { x = 0.0 y = 0.0 }
+			animationtexturescale = { x = 1.0 y = 1.0 }
+		}
+	}
+	spriteType = {
+		name = "GFX_TT_focus_soviet_advisors"
+		texturefile = "gfx/interface/goals/tt_tuva/soviet_advisors.dds"
+	}
+	spriteType = {
+		name = "GFX_TT_focus_soviet_advisors_shine"
+		texturefile = "gfx/interface/goals/tt_tuva/soviet_advisors.dds"
+		effectFile = "gfx/FX/buttonstate.lua"
+		legacy_lazy_load = no
+		animation = {
+			animationmaskfile = "gfx/interface/goals/tt_tuva/soviet_advisors.dds"
+			animationtexturefile = "gfx/interface/goals/shine_overlay.dds"
+			animationrotation = -90.0
+			animationlooping = no
+			animationtime = 0.75
+			animationdelay = 0
+			animationblendmode = "add"
+			animationtype = "scrolling"
+			animationrotationoffset = { x = 0.0 y = 0.0 }
+			animationtexturescale = { x = 1.0 y = 1.0 }
+		}
+		animation = {
+			animationmaskfile = "gfx/interface/goals/tt_tuva/soviet_advisors.dds"
+			animationtexturefile = "gfx/interface/goals/shine_overlay.dds"
+			animationrotation = 90.0
+			animationlooping = no
+			animationtime = 0.75
+			animationdelay = 0
+			animationblendmode = "add"
+			animationtype = "scrolling"
+			animationrotationoffset = { x = 0.0 y = 0.0 }
+			animationtexturescale = { x = 1.0 y = 1.0 }
+		}
+	}
+	spriteType = {
+		name = "GFX_TT_focus_mountain_warfare"
+		texturefile = "gfx/interface/goals/tt_tuva/mountain_warfare.dds"
+	}
+	spriteType = {
+		name = "GFX_TT_focus_mountain_warfare_shine"
+		texturefile = "gfx/interface/goals/tt_tuva/mountain_warfare.dds"
+		effectFile = "gfx/FX/buttonstate.lua"
+		legacy_lazy_load = no
+		animation = {
+			animationmaskfile = "gfx/interface/goals/tt_tuva/mountain_warfare.dds"
+			animationtexturefile = "gfx/interface/goals/shine_overlay.dds"
+			animationrotation = -90.0
+			animationlooping = no
+			animationtime = 0.75
+			animationdelay = 0
+			animationblendmode = "add"
+			animationtype = "scrolling"
+			animationrotationoffset = { x = 0.0 y = 0.0 }
+			animationtexturescale = { x = 1.0 y = 1.0 }
+		}
+		animation = {
+			animationmaskfile = "gfx/interface/goals/tt_tuva/mountain_warfare.dds"
+			animationtexturefile = "gfx/interface/goals/shine_overlay.dds"
+			animationrotation = 90.0
+			animationlooping = no
+			animationtime = 0.75
+			animationdelay = 0
+			animationblendmode = "add"
+			animationtype = "scrolling"
+			animationrotationoffset = { x = 0.0 y = 0.0 }
+			animationtexturescale = { x = 1.0 y = 1.0 }
+		}
+	}
+	spriteType = {
+		name = "GFX_TT_focus_the_tuvan_air_force"
+		texturefile = "gfx/interface/goals/tt_tuva/the_tuvan_air_force.dds"
+	}
+	spriteType = {
+		name = "GFX_TT_focus_the_tuvan_air_force_shine"
+		texturefile = "gfx/interface/goals/tt_tuva/the_tuvan_air_force.dds"
+		effectFile = "gfx/FX/buttonstate.lua"
+		legacy_lazy_load = no
+		animation = {
+			animationmaskfile = "gfx/interface/goals/tt_tuva/the_tuvan_air_force.dds"
+			animationtexturefile = "gfx/interface/goals/shine_overlay.dds"
+			animationrotation = -90.0
+			animationlooping = no
+			animationtime = 0.75
+			animationdelay = 0
+			animationblendmode = "add"
+			animationtype = "scrolling"
+			animationrotationoffset = { x = 0.0 y = 0.0 }
+			animationtexturescale = { x = 1.0 y = 1.0 }
+		}
+		animation = {
+			animationmaskfile = "gfx/interface/goals/tt_tuva/the_tuvan_air_force.dds"
+			animationtexturefile = "gfx/interface/goals/shine_overlay.dds"
+			animationrotation = 90.0
+			animationlooping = no
+			animationtime = 0.75
+			animationdelay = 0
+			animationblendmode = "add"
+			animationtype = "scrolling"
+			animationrotationoffset = { x = 0.0 y = 0.0 }
+			animationtexturescale = { x = 1.0 y = 1.0 }
+		}
+	}
+	spriteType = {
+		name = "GFX_TT_focus_total_mobilization"
+		texturefile = "gfx/interface/goals/tt_tuva/total_mobilization.dds"
+	}
+	spriteType = {
+		name = "GFX_TT_focus_total_mobilization_shine"
+		texturefile = "gfx/interface/goals/tt_tuva/total_mobilization.dds"
+		effectFile = "gfx/FX/buttonstate.lua"
+		legacy_lazy_load = no
+		animation = {
+			animationmaskfile = "gfx/interface/goals/tt_tuva/total_mobilization.dds"
+			animationtexturefile = "gfx/interface/goals/shine_overlay.dds"
+			animationrotation = -90.0
+			animationlooping = no
+			animationtime = 0.75
+			animationdelay = 0
+			animationblendmode = "add"
+			animationtype = "scrolling"
+			animationrotationoffset = { x = 0.0 y = 0.0 }
+			animationtexturescale = { x = 1.0 y = 1.0 }
+		}
+		animation = {
+			animationmaskfile = "gfx/interface/goals/tt_tuva/total_mobilization.dds"
+			animationtexturefile = "gfx/interface/goals/shine_overlay.dds"
+			animationrotation = 90.0
+			animationlooping = no
+			animationtime = 0.75
+			animationdelay = 0
+			animationblendmode = "add"
+			animationtype = "scrolling"
+			animationrotationoffset = { x = 0.0 y = 0.0 }
+			animationtexturescale = { x = 1.0 y = 1.0 }
+		}
+	}
+	spriteType = {
+		name = "GFX_TT_focus_infantry_and_artillery"
+		texturefile = "gfx/interface/goals/tt_tuva/infantry_and_artillery.dds"
+	}
+	spriteType = {
+		name = "GFX_TT_focus_infantry_and_artillery_shine"
+		texturefile = "gfx/interface/goals/tt_tuva/infantry_and_artillery.dds"
+		effectFile = "gfx/FX/buttonstate.lua"
+		legacy_lazy_load = no
+		animation = {
+			animationmaskfile = "gfx/interface/goals/tt_tuva/infantry_and_artillery.dds"
+			animationtexturefile = "gfx/interface/goals/shine_overlay.dds"
+			animationrotation = -90.0
+			animationlooping = no
+			animationtime = 0.75
+			animationdelay = 0
+			animationblendmode = "add"
+			animationtype = "scrolling"
+			animationrotationoffset = { x = 0.0 y = 0.0 }
+			animationtexturescale = { x = 1.0 y = 1.0 }
+		}
+		animation = {
+			animationmaskfile = "gfx/interface/goals/tt_tuva/infantry_and_artillery.dds"
+			animationtexturefile = "gfx/interface/goals/shine_overlay.dds"
+			animationrotation = 90.0
+			animationlooping = no
+			animationtime = 0.75
+			animationdelay = 0
+			animationblendmode = "add"
+			animationtype = "scrolling"
+			animationrotationoffset = { x = 0.0 y = 0.0 }
+			animationtexturescale = { x = 1.0 y = 1.0 }
+		}
+	}
+	spriteType = {
+		name = "GFX_TT_focus_tanks_of_the_steppe"
+		texturefile = "gfx/interface/goals/tt_tuva/tanks_of_the_steppe.dds"
+	}
+	spriteType = {
+		name = "GFX_TT_focus_tanks_of_the_steppe_shine"
+		texturefile = "gfx/interface/goals/tt_tuva/tanks_of_the_steppe.dds"
+		effectFile = "gfx/FX/buttonstate.lua"
+		legacy_lazy_load = no
+		animation = {
+			animationmaskfile = "gfx/interface/goals/tt_tuva/tanks_of_the_steppe.dds"
+			animationtexturefile = "gfx/interface/goals/shine_overlay.dds"
+			animationrotation = -90.0
+			animationlooping = no
+			animationtime = 0.75
+			animationdelay = 0
+			animationblendmode = "add"
+			animationtype = "scrolling"
+			animationrotationoffset = { x = 0.0 y = 0.0 }
+			animationtexturescale = { x = 1.0 y = 1.0 }
+		}
+		animation = {
+			animationmaskfile = "gfx/interface/goals/tt_tuva/tanks_of_the_steppe.dds"
+			animationtexturefile = "gfx/interface/goals/shine_overlay.dds"
+			animationrotation = 90.0
+			animationlooping = no
+			animationtime = 0.75
+			animationdelay = 0
+			animationblendmode = "add"
+			animationtype = "scrolling"
+			animationrotationoffset = { x = 0.0 y = 0.0 }
+			animationtexturescale = { x = 1.0 y = 1.0 }
+		}
+	}
+	spriteType = {
+		name = "GFX_TT_focus_wings_of_the_steppe"
+		texturefile = "gfx/interface/goals/tt_tuva/wings_of_the_steppe.dds"
+	}
+	spriteType = {
+		name = "GFX_TT_focus_wings_of_the_steppe_shine"
+		texturefile = "gfx/interface/goals/tt_tuva/wings_of_the_steppe.dds"
+		effectFile = "gfx/FX/buttonstate.lua"
+		legacy_lazy_load = no
+		animation = {
+			animationmaskfile = "gfx/interface/goals/tt_tuva/wings_of_the_steppe.dds"
+			animationtexturefile = "gfx/interface/goals/shine_overlay.dds"
+			animationrotation = -90.0
+			animationlooping = no
+			animationtime = 0.75
+			animationdelay = 0
+			animationblendmode = "add"
+			animationtype = "scrolling"
+			animationrotationoffset = { x = 0.0 y = 0.0 }
+			animationtexturescale = { x = 1.0 y = 1.0 }
+		}
+		animation = {
+			animationmaskfile = "gfx/interface/goals/tt_tuva/wings_of_the_steppe.dds"
+			animationtexturefile = "gfx/interface/goals/shine_overlay.dds"
+			animationrotation = 90.0
+			animationlooping = no
+			animationtime = 0.75
+			animationdelay = 0
+			animationblendmode = "add"
+			animationtype = "scrolling"
+			animationrotationoffset = { x = 0.0 y = 0.0 }
+			animationtexturescale = { x = 1.0 y = 1.0 }
+		}
+	}
+	spriteType = {
+		name = "GFX_TT_focus_bombers_over_siberia"
+		texturefile = "gfx/interface/goals/tt_tuva/bombers_over_siberia.dds"
+	}
+	spriteType = {
+		name = "GFX_TT_focus_bombers_over_siberia_shine"
+		texturefile = "gfx/interface/goals/tt_tuva/bombers_over_siberia.dds"
+		effectFile = "gfx/FX/buttonstate.lua"
+		legacy_lazy_load = no
+		animation = {
+			animationmaskfile = "gfx/interface/goals/tt_tuva/bombers_over_siberia.dds"
+			animationtexturefile = "gfx/interface/goals/shine_overlay.dds"
+			animationrotation = -90.0
+			animationlooping = no
+			animationtime = 0.75
+			animationdelay = 0
+			animationblendmode = "add"
+			animationtype = "scrolling"
+			animationrotationoffset = { x = 0.0 y = 0.0 }
+			animationtexturescale = { x = 1.0 y = 1.0 }
+		}
+		animation = {
+			animationmaskfile = "gfx/interface/goals/tt_tuva/bombers_over_siberia.dds"
+			animationtexturefile = "gfx/interface/goals/shine_overlay.dds"
+			animationrotation = 90.0
+			animationlooping = no
+			animationtime = 0.75
+			animationdelay = 0
+			animationblendmode = "add"
+			animationtype = "scrolling"
+			animationrotationoffset = { x = 0.0 y = 0.0 }
+			animationtexturescale = { x = 1.0 y = 1.0 }
+		}
+	}
+	spriteType = {
+		name = "GFX_TT_focus_the_yenisei_flotilla"
+		texturefile = "gfx/interface/goals/tt_tuva/the_yenisei_flotilla.dds"
+	}
+	spriteType = {
+		name = "GFX_TT_focus_the_yenisei_flotilla_shine"
+		texturefile = "gfx/interface/goals/tt_tuva/the_yenisei_flotilla.dds"
+		effectFile = "gfx/FX/buttonstate.lua"
+		legacy_lazy_load = no
+		animation = {
+			animationmaskfile = "gfx/interface/goals/tt_tuva/the_yenisei_flotilla.dds"
+			animationtexturefile = "gfx/interface/goals/shine_overlay.dds"
+			animationrotation = -90.0
+			animationlooping = no
+			animationtime = 0.75
+			animationdelay = 0
+			animationblendmode = "add"
+			animationtype = "scrolling"
+			animationrotationoffset = { x = 0.0 y = 0.0 }
+			animationtexturescale = { x = 1.0 y = 1.0 }
+		}
+		animation = {
+			animationmaskfile = "gfx/interface/goals/tt_tuva/the_yenisei_flotilla.dds"
+			animationtexturefile = "gfx/interface/goals/shine_overlay.dds"
+			animationrotation = 90.0
+			animationlooping = no
+			animationtime = 0.75
+			animationdelay = 0
+			animationblendmode = "add"
+			animationtype = "scrolling"
+			animationrotationoffset = { x = 0.0 y = 0.0 }
+			animationtexturescale = { x = 1.0 y = 1.0 }
+		}
+	}
+	spriteType = {
+		name = "GFX_TT_focus_kyzyl_naval_school"
+		texturefile = "gfx/interface/goals/tt_tuva/kyzyl_naval_school.dds"
+	}
+	spriteType = {
+		name = "GFX_TT_focus_kyzyl_naval_school_shine"
+		texturefile = "gfx/interface/goals/tt_tuva/kyzyl_naval_school.dds"
+		effectFile = "gfx/FX/buttonstate.lua"
+		legacy_lazy_load = no
+		animation = {
+			animationmaskfile = "gfx/interface/goals/tt_tuva/kyzyl_naval_school.dds"
+			animationtexturefile = "gfx/interface/goals/shine_overlay.dds"
+			animationrotation = -90.0
+			animationlooping = no
+			animationtime = 0.75
+			animationdelay = 0
+			animationblendmode = "add"
+			animationtype = "scrolling"
+			animationrotationoffset = { x = 0.0 y = 0.0 }
+			animationtexturescale = { x = 1.0 y = 1.0 }
+		}
+		animation = {
+			animationmaskfile = "gfx/interface/goals/tt_tuva/kyzyl_naval_school.dds"
+			animationtexturefile = "gfx/interface/goals/shine_overlay.dds"
+			animationrotation = 90.0
+			animationlooping = no
+			animationtime = 0.75
+			animationdelay = 0
+			animationblendmode = "add"
+			animationtype = "scrolling"
+			animationrotationoffset = { x = 0.0 y = 0.0 }
+			animationtexturescale = { x = 1.0 y = 1.0 }
+		}
+	}
+	spriteType = {
+		name = "GFX_TT_focus_the_pacific_fleet"
+		texturefile = "gfx/interface/goals/tt_tuva/the_pacific_fleet.dds"
+	}
+	spriteType = {
+		name = "GFX_TT_focus_the_pacific_fleet_shine"
+		texturefile = "gfx/interface/goals/tt_tuva/the_pacific_fleet.dds"
+		effectFile = "gfx/FX/buttonstate.lua"
+		legacy_lazy_load = no
+		animation = {
+			animationmaskfile = "gfx/interface/goals/tt_tuva/the_pacific_fleet.dds"
+			animationtexturefile = "gfx/interface/goals/shine_overlay.dds"
+			animationrotation = -90.0
+			animationlooping = no
+			animationtime = 0.75
+			animationdelay = 0
+			animationblendmode = "add"
+			animationtype = "scrolling"
+			animationrotationoffset = { x = 0.0 y = 0.0 }
+			animationtexturescale = { x = 1.0 y = 1.0 }
+		}
+		animation = {
+			animationmaskfile = "gfx/interface/goals/tt_tuva/the_pacific_fleet.dds"
+			animationtexturefile = "gfx/interface/goals/shine_overlay.dds"
+			animationrotation = 90.0
+			animationlooping = no
+			animationtime = 0.75
+			animationdelay = 0
+			animationblendmode = "add"
+			animationtype = "scrolling"
+			animationrotationoffset = { x = 0.0 y = 0.0 }
+			animationtexturescale = { x = 1.0 y = 1.0 }
+		}
+	}
+	spriteType = {
+		name = "GFX_TT_focus_claims_on_the_steppe"
+		texturefile = "gfx/interface/goals/tt_tuva/claims_on_the_steppe.dds"
+	}
+	spriteType = {
+		name = "GFX_TT_focus_claims_on_the_steppe_shine"
+		texturefile = "gfx/interface/goals/tt_tuva/claims_on_the_steppe.dds"
+		effectFile = "gfx/FX/buttonstate.lua"
+		legacy_lazy_load = no
+		animation = {
+			animationmaskfile = "gfx/interface/goals/tt_tuva/claims_on_the_steppe.dds"
+			animationtexturefile = "gfx/interface/goals/shine_overlay.dds"
+			animationrotation = -90.0
+			animationlooping = no
+			animationtime = 0.75
+			animationdelay = 0
+			animationblendmode = "add"
+			animationtype = "scrolling"
+			animationrotationoffset = { x = 0.0 y = 0.0 }
+			animationtexturescale = { x = 1.0 y = 1.0 }
+		}
+		animation = {
+			animationmaskfile = "gfx/interface/goals/tt_tuva/claims_on_the_steppe.dds"
+			animationtexturefile = "gfx/interface/goals/shine_overlay.dds"
+			animationrotation = 90.0
+			animationlooping = no
+			animationtime = 0.75
+			animationdelay = 0
+			animationblendmode = "add"
+			animationtype = "scrolling"
+			animationrotationoffset = { x = 0.0 y = 0.0 }
+			animationtexturescale = { x = 1.0 y = 1.0 }
+		}
+	}
+	spriteType = {
+		name = "GFX_TT_focus_the_mongolian_question"
+		texturefile = "gfx/interface/goals/tt_tuva/the_mongolian_question.dds"
+	}
+	spriteType = {
+		name = "GFX_TT_focus_the_mongolian_question_shine"
+		texturefile = "gfx/interface/goals/tt_tuva/the_mongolian_question.dds"
+		effectFile = "gfx/FX/buttonstate.lua"
+		legacy_lazy_load = no
+		animation = {
+			animationmaskfile = "gfx/interface/goals/tt_tuva/the_mongolian_question.dds"
+			animationtexturefile = "gfx/interface/goals/shine_overlay.dds"
+			animationrotation = -90.0
+			animationlooping = no
+			animationtime = 0.75
+			animationdelay = 0
+			animationblendmode = "add"
+			animationtype = "scrolling"
+			animationrotationoffset = { x = 0.0 y = 0.0 }
+			animationtexturescale = { x = 1.0 y = 1.0 }
+		}
+		animation = {
+			animationmaskfile = "gfx/interface/goals/tt_tuva/the_mongolian_question.dds"
+			animationtexturefile = "gfx/interface/goals/shine_overlay.dds"
+			animationrotation = 90.0
+			animationlooping = no
+			animationtime = 0.75
+			animationdelay = 0
+			animationblendmode = "add"
+			animationtype = "scrolling"
+			animationrotationoffset = { x = 0.0 y = 0.0 }
+			animationtexturescale = { x = 1.0 y = 1.0 }
+		}
+	}
+	spriteType = {
+		name = "GFX_TT_focus_greater_tuva"
+		texturefile = "gfx/interface/goals/tt_tuva/greater_tuva.dds"
+	}
+	spriteType = {
+		name = "GFX_TT_focus_greater_tuva_shine"
+		texturefile = "gfx/interface/goals/tt_tuva/greater_tuva.dds"
+		effectFile = "gfx/FX/buttonstate.lua"
+		legacy_lazy_load = no
+		animation = {
+			animationmaskfile = "gfx/interface/goals/tt_tuva/greater_tuva.dds"
+			animationtexturefile = "gfx/interface/goals/shine_overlay.dds"
+			animationrotation = -90.0
+			animationlooping = no
+			animationtime = 0.75
+			animationdelay = 0
+			animationblendmode = "add"
+			animationtype = "scrolling"
+			animationrotationoffset = { x = 0.0 y = 0.0 }
+			animationtexturescale = { x = 1.0 y = 1.0 }
+		}
+		animation = {
+			animationmaskfile = "gfx/interface/goals/tt_tuva/greater_tuva.dds"
+			animationtexturefile = "gfx/interface/goals/shine_overlay.dds"
+			animationrotation = 90.0
+			animationlooping = no
+			animationtime = 0.75
+			animationdelay = 0
+			animationblendmode = "add"
+			animationtype = "scrolling"
+			animationrotationoffset = { x = 0.0 y = 0.0 }
+			animationtexturescale = { x = 1.0 y = 1.0 }
+		}
+	}
+	spriteType = {
+		name = "GFX_TT_focus_the_siberian_gambit"
+		texturefile = "gfx/interface/goals/tt_tuva/the_siberian_gambit.dds"
+	}
+	spriteType = {
+		name = "GFX_TT_focus_the_siberian_gambit_shine"
+		texturefile = "gfx/interface/goals/tt_tuva/the_siberian_gambit.dds"
+		effectFile = "gfx/FX/buttonstate.lua"
+		legacy_lazy_load = no
+		animation = {
+			animationmaskfile = "gfx/interface/goals/tt_tuva/the_siberian_gambit.dds"
+			animationtexturefile = "gfx/interface/goals/shine_overlay.dds"
+			animationrotation = -90.0
+			animationlooping = no
+			animationtime = 0.75
+			animationdelay = 0
+			animationblendmode = "add"
+			animationtype = "scrolling"
+			animationrotationoffset = { x = 0.0 y = 0.0 }
+			animationtexturescale = { x = 1.0 y = 1.0 }
+		}
+		animation = {
+			animationmaskfile = "gfx/interface/goals/tt_tuva/the_siberian_gambit.dds"
+			animationtexturefile = "gfx/interface/goals/shine_overlay.dds"
+			animationrotation = 90.0
+			animationlooping = no
+			animationtime = 0.75
+			animationdelay = 0
+			animationblendmode = "add"
+			animationtype = "scrolling"
+			animationrotationoffset = { x = 0.0 y = 0.0 }
+			animationtexturescale = { x = 1.0 y = 1.0 }
+		}
+	}
+}

@@ -30,7 +30,7 @@ focus_tree = {
 
 	focus = {
 		id = TT_center_of_asia
-		icon = GFX_focus_generic_the_giant_wakes
+		icon = GFX_TT_focus_center_of_asia
 		x = 10
 		y = 0
 		cost = 5
@@ -54,7 +54,7 @@ focus_tree = {
 
 	focus = {
 		id = TT_the_great_khural
-		icon = GFX_focus_generic_freedom_council
+		icon = GFX_TT_focus_the_great_khural
 		prerequisite = { focus = TT_center_of_asia }
 		relative_position_id = TT_center_of_asia
 		x = -6
@@ -76,7 +76,7 @@ focus_tree = {
 
 	focus = {
 		id = TT_red_yurt
-		icon = GFX_focus_generic_soviet_politics
+		icon = GFX_TT_focus_red_yurt
 		prerequisite = { focus = TT_the_great_khural }
 		mutually_exclusive = { focus = TT_tuvan_renaissance }
 		relative_position_id = TT_the_great_khural
@@ -108,7 +108,7 @@ focus_tree = {
 
 	focus = {
 		id = TT_the_soviet_arsenal
-		icon = GFX_focus_generic_communist_industry
+		icon = GFX_TT_focus_the_soviet_arsenal
 		prerequisite = { focus = TT_red_yurt }
 		relative_position_id = TT_red_yurt
 		x = 0
@@ -145,7 +145,7 @@ focus_tree = {
 
 	focus = {
 		id = TT_the_siberian_military_district
-		icon = GFX_focus_generic_total_war
+		icon = GFX_TT_focus_the_siberian_military_district
 		prerequisite = { focus = TT_the_soviet_arsenal }
 		relative_position_id = TT_the_soviet_arsenal
 		x = 0
@@ -186,7 +186,7 @@ focus_tree = {
 
 	focus = {
 		id = TT_the_red_banner_over_asia
-		icon = GFX_focus_generic_workers_and_farmers_rise
+		icon = GFX_TT_focus_the_red_banner_over_asia
 		prerequisite = { focus = TT_the_siberian_military_district }
 		relative_position_id = TT_the_siberian_military_district
 		x = 0
@@ -227,7 +227,7 @@ focus_tree = {
 
 	focus = {
 		id = TT_form_central_asian_ssr
-		icon = GFX_focus_generic_join_comintern
+		icon = GFX_TT_focus_form_central_asian_ssr
 		prerequisite = { focus = TT_the_red_banner_over_asia }
 		relative_position_id = TT_the_red_banner_over_asia
 		x = 0
@@ -291,7 +291,7 @@ focus_tree = {
 
 	focus = {
 		id = TT_the_battle_for_manchuria
-		icon = GFX_focus_generic_attack_mongolia
+		icon = GFX_TT_focus_the_battle_for_manchuria
 		prerequisite = { focus = TT_form_central_asian_ssr }
 		relative_position_id = TT_form_central_asian_ssr
 		x = 0
@@ -340,7 +340,7 @@ focus_tree = {
 
 	focus = {
 		id = TT_tuvan_renaissance
-		icon = GFX_focus_generic_support_the_left_right
+		icon = GFX_TT_focus_tuvan_renaissance
 		prerequisite = { focus = TT_the_great_khural }
 		mutually_exclusive = { focus = TT_red_yurt }
 		relative_position_id = TT_the_great_khural
@@ -378,7 +378,7 @@ focus_tree = {
 
 	focus = {
 		id = TT_the_second_khanate
-		icon = GFX_focus_generic_monarchy_2
+		icon = GFX_TT_focus_the_second_khanate
 		prerequisite = { focus = TT_tuvan_renaissance }
 		relative_position_id = TT_tuvan_renaissance
 		x = 0
@@ -434,7 +434,7 @@ focus_tree = {
 
 	focus = {
 		id = TT_the_great_khan
-		icon = GFX_focus_generic_provoke_border_clashes
+		icon = GFX_TT_focus_the_great_khan
 		prerequisite = { focus = TT_the_second_khanate }
 		relative_position_id = TT_the_second_khanate
 		x = 0
@@ -473,7 +473,7 @@ focus_tree = {
 
 	focus = {
 		id = TT_the_empire_of_the_steppe
-		icon = GFX_focus_generic_military_dictatorship
+		icon = GFX_TT_focus_the_empire_of_the_steppe
 		prerequisite = { focus = TT_the_great_khan }
 		relative_position_id = TT_the_great_khan
 		x = 0
@@ -537,7 +537,7 @@ focus_tree = {
 
 	focus = {
 		id = TT_first_five_year_plan
-		icon = GFX_focus_generic_industry_1
+		icon = GFX_TT_focus_first_five_year_plan
 		prerequisite = { focus = TT_center_of_asia }
 		relative_position_id = TT_center_of_asia
 		x = 0
@@ -568,7 +568,7 @@ focus_tree = {
 
 	focus = {
 		id = TT_collective_herds
-		icon = GFX_focus_generic_agricultural_subsidies
+		icon = GFX_TT_focus_collective_herds
 		prerequisite = { focus = TT_first_five_year_plan }
 		relative_position_id = TT_first_five_year_plan
 		x = 0
@@ -604,7 +604,7 @@ focus_tree = {
 
 	focus = {
 		id = TT_kyzyl_industries
-		icon = GFX_focus_generic_industry_2
+		icon = GFX_TT_focus_kyzyl_industries
 		prerequisite = { focus = TT_collective_herds }
 		relative_position_id = TT_collective_herds
 		x = 0
@@ -639,7 +639,7 @@ focus_tree = {
 
 	focus = {
 		id = TT_mineral_prospecting
-		icon = GFX_focus_generic_mining_industry
+		icon = GFX_TT_focus_mineral_prospecting
 		prerequisite = { focus = TT_kyzyl_industries }
 		relative_position_id = TT_kyzyl_industries
 		x = 0
@@ -672,7 +672,7 @@ focus_tree = {
 
 	focus = {
 		id = TT_the_kyzyl_railroad
-		icon = GFX_focus_generic_railroad
+		icon = GFX_TT_focus_the_kyzyl_railroad
 		prerequisite = { focus = TT_mineral_prospecting }
 		relative_position_id = TT_mineral_prospecting
 		x = 0
@@ -723,7 +723,7 @@ focus_tree = {
 
 	focus = {
 		id = TT_the_yenisei_dam
-		icon = GFX_focus_generic_hydroelectric_energy
+		icon = GFX_TT_focus_the_yenisei_dam
 		prerequisite = { focus = TT_the_kyzyl_railroad }
 		relative_position_id = TT_the_kyzyl_railroad
 		x = 0
@@ -770,7 +770,7 @@ focus_tree = {
 
 	focus = {
 		id = TT_the_golden_hoard
-		icon = GFX_focus_generic_resource_extraction
+		icon = GFX_TT_focus_the_golden_hoard
 		prerequisite = { focus = TT_the_yenisei_dam }
 		relative_position_id = TT_the_yenisei_dam
 		x = 0
@@ -819,7 +819,7 @@ focus_tree = {
 
 	focus = {
 		id = TT_the_peoples_army
-		icon = GFX_focus_generic_military_academy
+		icon = GFX_TT_focus_the_peoples_army
 		prerequisite = { focus = TT_center_of_asia }
 		relative_position_id = TT_center_of_asia
 		x = 6
@@ -851,7 +851,7 @@ focus_tree = {
 
 	focus = {
 		id = TT_cavalry_of_the_steppe
-		icon = GFX_focus_generic_horse_studs
+		icon = GFX_TT_focus_cavalry_of_the_steppe
 		prerequisite = { focus = TT_the_peoples_army }
 		mutually_exclusive = { focus = TT_infantry_and_artillery focus = TT_tanks_of_the_steppe }
 		relative_position_id = TT_the_peoples_army
@@ -884,7 +884,7 @@ focus_tree = {
 
 	focus = {
 		id = TT_soviet_advisors
-		icon = GFX_focus_generic_military_mission
+		icon = GFX_TT_focus_soviet_advisors
 		prerequisite = { focus = TT_cavalry_of_the_steppe focus = TT_infantry_and_artillery focus = TT_tanks_of_the_steppe }
 		relative_position_id = TT_the_peoples_army
 		x = -3
@@ -929,7 +929,7 @@ focus_tree = {
 
 	focus = {
 		id = TT_mountain_warfare
-		icon = GFX_focus_generic_commonwealth_build_infantry
+		icon = GFX_TT_focus_mountain_warfare
 		prerequisite = { focus = TT_soviet_advisors }
 		relative_position_id = TT_soviet_advisors
 		x = 0
@@ -955,7 +955,7 @@ focus_tree = {
 
 	focus = {
 		id = TT_the_tuvan_air_force
-		icon = GFX_focus_generic_air_bases
+		icon = GFX_TT_focus_the_tuvan_air_force
 		prerequisite = { focus = TT_cavalry_of_the_steppe focus = TT_infantry_and_artillery focus = TT_tanks_of_the_steppe }
 		relative_position_id = TT_the_peoples_army
 		x = 0
@@ -1026,7 +1026,7 @@ focus_tree = {
 
 	focus = {
 		id = TT_total_mobilization
-		icon = GFX_focus_generic_manpower
+		icon = GFX_TT_focus_total_mobilization
 		prerequisite = { focus = TT_mountain_warfare }
 		relative_position_id = TT_mountain_warfare
 		x = 0
@@ -1062,7 +1062,7 @@ focus_tree = {
 
 	focus = {
 		id = TT_infantry_and_artillery
-		icon = GFX_goal_generic_army_artillery
+		icon = GFX_TT_focus_infantry_and_artillery
 		prerequisite = { focus = TT_the_peoples_army }
 		mutually_exclusive = { focus = TT_cavalry_of_the_steppe focus = TT_tanks_of_the_steppe }
 		relative_position_id = TT_the_peoples_army
@@ -1118,7 +1118,7 @@ focus_tree = {
 
 	focus = {
 		id = TT_tanks_of_the_steppe
-		icon = GFX_goal_generic_army_tanks
+		icon = GFX_TT_focus_tanks_of_the_steppe
 		prerequisite = { focus = TT_the_peoples_army }
 		mutually_exclusive = { focus = TT_cavalry_of_the_steppe focus = TT_infantry_and_artillery }
 		relative_position_id = TT_the_peoples_army
@@ -1178,7 +1178,7 @@ focus_tree = {
 
 	focus = {
 		id = TT_wings_of_the_steppe
-		icon = GFX_goal_generic_CAS
+		icon = GFX_TT_focus_wings_of_the_steppe
 		prerequisite = { focus = TT_the_tuvan_air_force }
 		relative_position_id = TT_the_tuvan_air_force
 		x = 0
@@ -1319,7 +1319,7 @@ focus_tree = {
 
 	focus = {
 		id = TT_bombers_over_siberia
-		icon = GFX_goal_generic_air_bomber
+		icon = GFX_TT_focus_bombers_over_siberia
 		prerequisite = { focus = TT_wings_of_the_steppe }
 		relative_position_id = TT_wings_of_the_steppe
 		x = 0
@@ -1397,7 +1397,7 @@ focus_tree = {
 
 	focus = {
 		id = TT_the_yenisei_flotilla
-		icon = GFX_goal_generic_build_navy
+		icon = GFX_TT_focus_the_yenisei_flotilla
 		prerequisite = { focus = TT_cavalry_of_the_steppe focus = TT_infantry_and_artillery focus = TT_tanks_of_the_steppe }
 		relative_position_id = TT_the_peoples_army
 		x = 3
@@ -1418,7 +1418,7 @@ focus_tree = {
 
 	focus = {
 		id = TT_kyzyl_naval_school
-		icon = GFX_goal_generic_navy_doctrines_tactics
+		icon = GFX_TT_focus_kyzyl_naval_school
 		prerequisite = { focus = TT_the_yenisei_flotilla }
 		relative_position_id = TT_the_yenisei_flotilla
 		x = 0
@@ -1444,7 +1444,7 @@ focus_tree = {
 
 	focus = {
 		id = TT_the_pacific_fleet
-		icon = GFX_goal_generic_navy_battleship
+		icon = GFX_TT_focus_the_pacific_fleet
 		prerequisite = { focus = TT_kyzyl_naval_school }
 		relative_position_id = TT_kyzyl_naval_school
 		x = 0
@@ -1488,7 +1488,7 @@ focus_tree = {
 
 	focus = {
 		id = TT_claims_on_the_steppe
-		icon = GFX_focus_generic_annex_country
+		icon = GFX_TT_focus_claims_on_the_steppe
 		prerequisite = { focus = TT_center_of_asia }
 		relative_position_id = TT_center_of_asia
 		x = 14
@@ -1523,7 +1523,7 @@ focus_tree = {
 
 	focus = {
 		id = TT_the_mongolian_question
-		icon = GFX_focus_generic_diplomatic_treaty
+		icon = GFX_TT_focus_the_mongolian_question
 		prerequisite = { focus = TT_claims_on_the_steppe }
 		relative_position_id = TT_claims_on_the_steppe
 		x = 0
@@ -1570,7 +1570,7 @@ focus_tree = {
 
 	focus = {
 		id = TT_greater_tuva
-		icon = GFX_focus_generic_annex_country_2
+		icon = GFX_TT_focus_greater_tuva
 		prerequisite = { focus = TT_the_mongolian_question }
 		relative_position_id = TT_the_mongolian_question
 		x = 0
@@ -1604,7 +1604,7 @@ focus_tree = {
 
 	focus = {
 		id = TT_the_siberian_gambit
-		icon = GFX_focus_generic_winter_warfare
+		icon = GFX_TT_focus_the_siberian_gambit
 		prerequisite = { focus = TT_greater_tuva }
 		relative_position_id = TT_greater_tuva
 		x = 0
