@@ -173,7 +173,13 @@ LOC_FILES = {
 }
 KEY_RE = re.compile(r'^\s*([A-Za-z_][A-Za-z0-9_.]*):\s', re.M)
 TOKEN_RE = re.compile(r'\b(?:TT_[A-Za-z0-9_]+|tt_tuva\.[A-Za-z0-9_.]+)\b')
-NON_LOCALISABLE = {'TT_khural_open', 'TT_soviet_path', 'TT_national_path'}
+NON_LOCALISABLE = {
+    'TT_khural_open', 'TT_soviet_path', 'TT_national_path',
+    'TT_can_request_siberian_corridor', 'TT_corridor_diplomacy_valid',
+    'TT_corridor_refused_recently', 'TT_corridor_request_pending',
+    'TT_needs_siberian_corridor', 'TT_siberian_corridor_granted',
+    'TT_transfer_siberian_corridor_states',
+}
 
 
 def loc_keys(path: Path) -> tuple[list[str], str]:
@@ -224,7 +230,7 @@ def check_localisation() -> None:
         keys = [k for k in keys if k not in ('l_english', 'l_russian')]
         ok(text.startswith('l_english:' if lang == 'EN' else 'l_russian:'),
            f'{lang}: wrong localisation header')
-        ok(len(keys) == 241, f'{lang}: expected 241 keys, found {len(keys)}')
+        ok(len(keys) == 249, f'{lang}: expected 249 keys, found {len(keys)}')
         ok(len(set(keys)) == len(keys),
            f'{lang}: duplicate keys: {sorted({k for k in keys if keys.count(k) > 1})}')
         data[lang] = set(keys)
@@ -245,7 +251,7 @@ def check_localisation() -> None:
            f'EN/RU key mismatch: EN-only={sorted(data["EN"] - data["RU"])}, '
            f'RU-only={sorted(data["RU"] - data["EN"])}')
         exp = expected_keys()
-        ok(len(exp) == 241, f'script-implied key set has {len(exp)} keys (expected 241)')
+        ok(len(exp) == 249, f'script-implied key set has {len(exp)} keys (expected 249)')
         ok(not (exp - data['EN']), f'missing localisation keys: {sorted(exp - data["EN"])}')
         ok(not (data['EN'] - exp), f'orphan localisation keys: {sorted(data["EN"] - exp)}')
 
@@ -547,7 +553,7 @@ VANILLA_EVENT_PICTURES = {
 EXPECTED_COMMANDERS = {
     'TT_the_peoples_army': {
         'role': 'corps_commander',
-        'name': 'TT_commander_soyan_choodu',
+        'name': 'Соян Чооду',
         'skill': 2,
         'attack_skill': 2,
         'defense_skill': 2,
@@ -558,7 +564,7 @@ EXPECTED_COMMANDERS = {
     },
     'TT_cavalry_of_the_steppe': {
         'role': 'corps_commander',
-        'name': 'TT_commander_kyrgys_ezir',
+        'name': 'Кыргыс Эзир',
         'skill': 3,
         'attack_skill': 4,
         'defense_skill': 2,
@@ -569,7 +575,7 @@ EXPECTED_COMMANDERS = {
     },
     'TT_infantry_and_artillery': {
         'role': 'corps_commander',
-        'name': 'TT_commander_mongush_dash',
+        'name': 'Монгуш Даш',
         'skill': 3,
         'attack_skill': 2,
         'defense_skill': 4,
@@ -580,7 +586,7 @@ EXPECTED_COMMANDERS = {
     },
     'TT_tanks_of_the_steppe': {
         'role': 'corps_commander',
-        'name': 'TT_commander_kuzhuget_arslan',
+        'name': 'Кужугет Арслан',
         'skill': 3,
         'attack_skill': 4,
         'defense_skill': 2,
@@ -591,7 +597,7 @@ EXPECTED_COMMANDERS = {
     },
     'TT_total_mobilization': {
         'role': 'field_marshal',
-        'name': 'TT_commander_sat_mergen',
+        'name': 'Сат Мерген',
         'skill': 2,
         'attack_skill': 2,
         'defense_skill': 2,
@@ -626,9 +632,11 @@ def check_commanders() -> None:
             continue
         block = cmd_match.group(1)
 
-        name_m = re.search(r'name\s*=\s*(TT_\w+)', block)
+        name_m = re.search(r'name\s*=\s*"([^"]+)"', block)
         name = name_m.group(1) if name_m else None
         ok(name == exp['name'], f'{fid}: expected commander name {exp["name"]}, got {name}')
+        ok(name is not None and not name.startswith('TT_'),
+           f'{fid}: legacy commander creation needs a literal display name, not a localisation key')
         if name:
             names.append(name)
 
@@ -708,17 +716,18 @@ def check_events(custom_events_text: str | None = None) -> None:
         if p != events_file:
             scan(p, p.read_text(encoding='utf-8').split('\n'), False)
 
-    expected_ids = {f'tt_tuva.{n}' for n in range(1, 17)}
+    expected_ids = {f'tt_tuva.{n}' for n in range(1, 20)}
     ok(set(defs) == expected_ids,
-       f'event definitions: expected tt_tuva.1..16, got {sorted(defs)}')
+       f'event definitions: expected tt_tuva.1..19, got {sorted(defs)}')
     news = sorted((k for k, v in defs.items() if v == 'news_event'),
                   key=lambda s: int(s.split('.')[1]))
     country = sorted((k for k, v in defs.items() if v == 'country_event'),
                      key=lambda s: int(s.split('.')[1]))
-    ok(len(news) == 10, f'expected 10 news events, found {len(news)}')
-    ok(len(country) == 6, f'expected 6 country events, found {len(country)}')
+    ok(len(news) == 12, f'expected 12 news events, found {len(news)}')
+    ok(len(country) == 7, f'expected 7 country events, found {len(country)}')
     ok(news == ['tt_tuva.3', 'tt_tuva.4', 'tt_tuva.6', 'tt_tuva.8', 'tt_tuva.9',
-                'tt_tuva.11', 'tt_tuva.13', 'tt_tuva.14', 'tt_tuva.15', 'tt_tuva.16'],
+                'tt_tuva.11', 'tt_tuva.13', 'tt_tuva.14', 'tt_tuva.15', 'tt_tuva.16',
+                'tt_tuva.18', 'tt_tuva.19'],
        f'unexpected news event ids: {news}')
     for eid in expected_ids:
         triggered = [c for c in calls if c[0] == eid]
@@ -1011,8 +1020,10 @@ def check_misc() -> None:
     modifier = rally_ai.get_block('modifier') if rally_ai else None
     ok(modifier is not None and modifier.has_assignment('factor', '0') and
        ('>', '0.99') in modifier.find_assignments('neutrality') and
-       ('>', '0.99') in modifier.find_assignments('stability'),
+       ('>', '0.99') in modifier.find_assignments('has_stability'),
        'TT_rally_the_clans: AI must stop when both rewards are saturated')
+    ok(not re.search(r'(?m)^\s*stability\s*[<>=]', dec),
+       'decisions: stability is not a valid trigger; use has_stability')
 
     # Descriptors live inside the repository: the launcher descriptor at the
     # root (with the mod/ path) and the internal descriptor.mod. Both must
@@ -1036,6 +1047,122 @@ def check_misc() -> None:
 
 
 # -------------------------------------------------------- 7. mutation tests
+# --------------------------------------------------------- corridor regressions
+CORRIDOR_PATHS = (
+    'common/scripted_triggers/tt_tuva_scripted_triggers.txt',
+    'common/scripted_effects/tt_tuva_scripted_effects.txt',
+    'common/decisions/tt_tuva_decisions.txt',
+    'events/tt_tuva_events.txt',
+)
+
+
+def corridor_sources() -> dict[str, str]:
+    return {p: (ROOT / p).read_text(encoding='utf-8') for p in CORRIDOR_PATHS}
+
+
+def check_corridor(sources: dict[str, str] | None = None) -> None:
+    sources = corridor_sources() if sources is None else sources
+    triggers, effects, decisions, events = [parse_clausewitz(sources[p]) for p in CORRIDOR_PATHS]
+
+    def signature(node: CWBlock):
+        return (sorted(node.assignments), sorted(node.values),
+                sorted((c.key, c.op, signature(c)) for c in node.blocks))
+
+    def matches(node, source):
+        return node is not None and signature(node) == signature(parse_clausewitz(source))
+
+    ok(matches(triggers.get_block('TT_needs_siberian_corridor'), '''
+        tag = TAN has_idea = TT_central_asian_ssr_spirit
+        NOT = { has_country_flag = TT_siberian_corridor_granted }
+        329 = { is_owned_by = TAN is_controlled_by = TAN }
+        588 = { is_owned_by = TAN is_controlled_by = TAN }
+        654 = { is_owned_by = SOV is_controlled_by = SOV }
+    '''), 'corridor: ownership and control of both endpoints and the bridge must be checked')
+    ok(matches(triggers.get_block('TT_corridor_diplomacy_valid'), '''
+        TT_needs_siberian_corridor = yes has_country_flag = TT_soviet_path
+        country_exists = SOV has_capitulated = no
+        SOV = { has_capitulated = no } NOT = { has_war_with = SOV }
+    '''), 'corridor: response diplomacy must require peace and the Soviet path')
+    ok(matches(triggers.get_block('TT_can_request_siberian_corridor'), '''
+        TT_corridor_diplomacy_valid = yes
+        NOT = { has_country_flag = TT_corridor_request_pending }
+        NOT = { has_country_flag = TT_corridor_refused_recently }
+    '''), 'corridor: outstanding requests and refusal cooldown must block new requests')
+    ok(matches(effects.get_block('TT_transfer_siberian_corridor_states'), '''
+        if = {
+            limit = { tag = SOV country_exists = TAN
+                TAN = { TT_corridor_diplomacy_valid = yes } }
+            654 = { transfer_state_to = TAN }
+        }
+    '''), 'corridor: transfer only state 654 after validation, with no cores')
+
+    category = decisions.get_block('TT_tuva_category')
+    decision = category.get_block('TT_request_siberian_corridor') if category else None
+    ok(decision is not None, 'corridor: decision missing')
+    if decision:
+        ok(decision.has_assignment('cost', '50'), 'corridor: request must cost 50 PP')
+        ok(matches(decision.get_block('available'), 'TT_can_request_siberian_corridor = yes'),
+           'corridor: decision must use full request prerequisites')
+        ok(matches(decision.get_block('complete_effect'), '''
+            custom_effect_tooltip = TT_request_siberian_corridor_tt
+            set_country_flag = TT_corridor_request_pending
+            SOV = { country_event = { id = tt_tuva.17 days = 1 } }
+        '''), 'corridor: pending must persist until response, never expire into a newer request')
+
+    candidates = [e for e in events.find_blocks('country_event')
+                  if e.get_assignment('id') == 'tt_tuva.17']
+    ok(len(candidates) == 1, 'corridor: response event missing or duplicated')
+    if len(candidates) != 1:
+        return
+    event = candidates[0]
+    ok(event.get_block('trigger') is None,
+       'corridor: do not discard the response before it can clean pending')
+    for option_name in ('a', 'b'):
+        options = [o for o in event.find_blocks('option')
+                   if o.get_assignment('name') == f'tt_tuva.17.{option_name}']
+        ok(len(options) == 1, f'corridor {option_name}: response option missing')
+        if len(options) != 1:
+            continue
+        option = options[0]
+        ok(all(k == 'name' for k, _, _ in option.assignments) and
+           [b.key for b in option.blocks] == ['ai_chance', 'if', 'else'],
+           f'corridor {option_name}: unguarded response effect')
+        guard = option.get_block('if')
+        ok(guard is not None, f'corridor {option_name}: response guard missing')
+        if guard is None:
+            continue
+        ok(matches(guard.get_block('limit'), '''
+            tag = SOV country_exists = TAN
+            TAN = { has_country_flag = TT_corridor_request_pending
+                TT_corridor_diplomacy_valid = yes }
+        '''), f'corridor {option_name}: recheck pending, diplomacy and ownership at response')
+        ok(matches(option.get_block('else'), '''
+            if = { limit = { country_exists = TAN }
+                TAN = { clr_country_flag = TT_corridor_request_pending } }
+        '''), f'corridor {option_name}: invalid response may only clear pending')
+        if option_name == 'a':
+            ok(guard.has_assignment('TT_transfer_siberian_corridor_states', 'yes'),
+               'corridor: acceptance must execute transfer')
+            ok(matches(guard.get_block('TAN'), 'clr_country_flag = TT_corridor_request_pending'),
+               'corridor: clear pending without premature success rewards')
+            successes = guard.find_blocks('if')
+            ok(len(successes) == 1, 'corridor: ownership success guard missing')
+            if len(successes) == 1:
+                ok(matches(successes[0], '''
+                    limit = { 654 = { is_owned_by = TAN } }
+                    TAN = { set_country_flag = TT_siberian_corridor_granted
+                        add_political_power = 25
+                        news_event = { id = tt_tuva.18 days = 1 } }
+                '''), 'corridor: success rewards and news require actual ownership of 654')
+        else:
+            ok(matches(guard.get_block('TAN'), '''
+                clr_country_flag = TT_corridor_request_pending
+                set_country_flag = { flag = TT_corridor_refused_recently days = 180 }
+                add_political_power = 25
+                news_event = { id = tt_tuva.19 days = 1 }
+            '''), 'corridor: refusal must clear pending and enforce a 180-day cooldown')
+
+
 def run_mutation_tests(verbose: bool = True) -> bool:
     """Run in-memory mutation tests verifying that AST checks catch broken structures.
 
@@ -1051,7 +1178,8 @@ def run_mutation_tests(verbose: bool = True) -> bool:
         global errors
         errors = []
         fn(arg)
-        original = events_txt if fn is check_events else focus_txt
+        original = (corridor_original if fn is check_corridor else
+                    events_txt if fn is check_events else focus_txt)
         caught = arg != original and any(expected_msg_part in e for e in errors)
         sample_msg = next((e for e in errors if expected_msg_part in e), errors[0] if errors else 'No error captured')
         results.append((name, caught, sample_msg))
@@ -1245,6 +1373,37 @@ def run_mutation_tests(verbose: bool = True) -> bool:
             test_mutation(f'Mutation unguarded effect {label}', check_events,
                           mutated, f'{label}: effect outside response guard')
 
+    corridor_original = corridor_sources()
+    errors = []
+    check_corridor(corridor_original)
+    results.append(('Baseline corridor', not errors,
+                    errors[0] if errors else 'Unmodified corridor passes'))
+    corridor_mutations = [
+        (CORRIDOR_PATHS[0], 'NOT = { has_war_with = SOV }', '',
+         'corridor: response diplomacy must require peace'),
+        (CORRIDOR_PATHS[0], 'is_owned_by = SOV', 'is_owned_by = TAN',
+         'corridor: ownership and control'),
+        (CORRIDOR_PATHS[1], 'transfer_state_to = TAN',
+         'transfer_state_to = TAN add_state_core = TAN',
+         'corridor: transfer only state 654'),
+        (CORRIDOR_PATHS[2], 'set_country_flag = TT_corridor_request_pending',
+         'set_country_flag = { flag = TT_corridor_request_pending days = 60 }',
+         'corridor: pending must persist'),
+        (CORRIDOR_PATHS[3], 'name = tt_tuva.17.a',
+         'name = tt_tuva.17.a add_political_power = 25',
+         'corridor a: unguarded response effect'),
+        (CORRIDOR_PATHS[3], 'limit = { 654 = { is_owned_by = TAN } }',
+         'limit = { always = yes }',
+         'corridor: success rewards and news require actual ownership'),
+        (CORRIDOR_PATHS[3], 'flag = TT_corridor_refused_recently\n\t\t\t\t\tdays = 180',
+         'flag = TT_corridor_refused_recently days = 1',
+         'corridor: refusal must clear pending'),
+    ]
+    for index, (path, old, new, message) in enumerate(corridor_mutations, 1):
+        changed = dict(corridor_original)
+        changed[path] = changed[path].replace(old, new, 1)
+        test_mutation(f'Mutation corridor {index}', check_corridor, changed, message)
+
     # Restore globals
     errors = orig_errors
     checks = orig_checks
@@ -1283,6 +1442,7 @@ def main() -> int:
     check_events()
     check_flags()
     check_misc()
+    check_corridor()
     check_mutations()
     print(f'Ran {checks} checks.')
     if errors:

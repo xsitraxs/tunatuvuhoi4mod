@@ -640,3 +640,161 @@ news_event = {
 		name = tt_tuva.16.a
 	}
 }
+
+# ----------------------------------------------------------------------
+#  Moscow's answer to the Siberian corridor request (state 654)
+#  No hard event trigger: a failed trigger would discard the event and
+#  leave TAN stuck with TT_corridor_request_pending. Option limits and
+#  the persistent pending flag cover invalidated requests at response time.
+# ----------------------------------------------------------------------
+country_event = {
+	id = tt_tuva.17
+	title = tt_tuva.17.t
+	desc = tt_tuva.17.desc
+	picture = GFX_report_event_generic_sign_treaty2
+
+	is_triggered_only = yes
+
+	# Option A: grant the Oyrot bridge (no cores)
+	option = {
+		name = tt_tuva.17.a
+
+		ai_chance = {
+			base = 80
+			modifier = {
+				factor = 1.25
+				TAN = { is_in_faction_with = ROOT }
+			}
+			modifier = {
+				factor = 1.25
+				TAN = { is_subject_of = ROOT }
+			}
+			modifier = {
+				factor = 0.5
+				TAN = {
+					NOT = { is_in_faction_with = ROOT }
+					NOT = { is_subject_of = ROOT }
+					num_divisions > 30
+				}
+			}
+			modifier = {
+				factor = 0
+				OR = {
+					NOT = { country_exists = TAN }
+					has_war_with = TAN
+				}
+			}
+		}
+
+		if = {
+			limit = {
+				tag = SOV
+				country_exists = TAN
+				TAN = {
+					has_country_flag = TT_corridor_request_pending
+					TT_corridor_diplomacy_valid = yes
+				}
+			}
+			TT_transfer_siberian_corridor_states = yes
+			TAN = { clr_country_flag = TT_corridor_request_pending }
+			if = {
+				limit = { 654 = { is_owned_by = TAN } }
+				TAN = {
+					set_country_flag = TT_siberian_corridor_granted
+					add_political_power = 25
+					news_event = {
+						id = tt_tuva.18
+						days = 1
+					}
+				}
+			}
+		}
+		else = {
+			# Invalidated request: release the single outstanding request without rewards.
+			if = {
+				limit = { country_exists = TAN }
+				TAN = { clr_country_flag = TT_corridor_request_pending }
+			}
+		}
+	}
+
+	# Option B: refuse; Tuva may ask again later
+	option = {
+		name = tt_tuva.17.b
+
+		ai_chance = {
+			base = 20
+			modifier = {
+				# Prefer closing the request if Tuva is gone or war has begun.
+				factor = 100
+				OR = {
+					NOT = { country_exists = TAN }
+					has_war_with = TAN
+				}
+			}
+		}
+
+		if = {
+			limit = {
+				tag = SOV
+				country_exists = TAN
+				TAN = {
+					has_country_flag = TT_corridor_request_pending
+					TT_corridor_diplomacy_valid = yes
+				}
+			}
+			TAN = {
+				clr_country_flag = TT_corridor_request_pending
+				set_country_flag = {
+					flag = TT_corridor_refused_recently
+					days = 180
+				}
+				add_political_power = 25
+				news_event = {
+					id = tt_tuva.19
+					days = 1
+				}
+			}
+		}
+		else = {
+			if = {
+				limit = { country_exists = TAN }
+				TAN = { clr_country_flag = TT_corridor_request_pending }
+			}
+		}
+	}
+}
+
+# ----------------------------------------------------------------------
+#  News: Moscow grants the Siberian corridor
+# ----------------------------------------------------------------------
+news_event = {
+	id = tt_tuva.18
+	title = tt_tuva.18.t
+	desc = tt_tuva.18.desc
+	picture = GFX_news_event_generic_sign_treaty2
+
+	major = yes
+	is_triggered_only = yes
+
+	option = {
+		name = tt_tuva.18.a
+	}
+}
+
+# ----------------------------------------------------------------------
+#  News: Moscow refuses the Siberian corridor
+# ----------------------------------------------------------------------
+news_event = {
+	id = tt_tuva.19
+	title = tt_tuva.19.t
+	desc = tt_tuva.19.desc
+	picture = GFX_news_event_generic_parliament
+
+	major = yes
+	is_triggered_only = yes
+
+	option = {
+		name = tt_tuva.19.a
+	}
+}
