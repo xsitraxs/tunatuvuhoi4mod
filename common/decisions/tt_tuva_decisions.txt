@@ -395,7 +395,7 @@ TT_tuva_category = {
 			modifier = {
 				factor = 0
 				neutrality > 0.99
-				stability > 0.99
+				has_stability > 0.99
 			}
 		}
 
@@ -405,6 +405,53 @@ TT_tuva_category = {
 				popularity = 0.10
 			}
 			add_stability = 0.02
+		}
+	}
+
+	# ------------------------------------------------------------------
+	#  Request the Siberian land corridor (Oyrot Region / state 654)
+	#  Separate from Central Asian SSR formation: asks Moscow for the
+	#  single bridge state between Tuva and Semipalatinsk.
+	# ------------------------------------------------------------------
+	TT_request_siberian_corridor = {
+		icon = GFX_decision_generic_nationalism
+		cost = 50
+
+		allowed = {
+			original_tag = TAN
+		}
+
+		visible = {
+			has_country_flag = TT_soviet_path
+			has_idea = TT_central_asian_ssr_spirit
+			NOT = { has_country_flag = TT_siberian_corridor_granted }
+		}
+
+		highlight_states = {
+			highlight_state_targets = {
+				state = 654 # Oyrot Region
+			}
+		}
+
+		available = {
+			TT_can_request_siberian_corridor = yes
+		}
+
+		ai_will_do = {
+			base = 40
+		}
+
+		complete_effect = {
+			custom_effect_tooltip = TT_request_siberian_corridor_tt
+			# Do not expire pending: a delayed old response must never consume
+			# a newer request. Only the one outstanding event clears this flag.
+			set_country_flag = TT_corridor_request_pending
+			SOV = {
+				country_event = {
+					id = tt_tuva.17
+					days = 1
+				}
+			}
 		}
 	}
 }

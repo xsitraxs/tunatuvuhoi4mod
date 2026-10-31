@@ -350,10 +350,19 @@
  tt_tuva.16.desc: "Kirin, Jehol and Liaotung have fallen. The Manchurian campaign is over: the conquered lands are integrated into the state, the army gains a lasting new spirit, and the world now speaks of Tuva as a Pacific power."
  tt_tuva.16.a: "From Kyzyl to the Pacific."
 
-# Localised commanders and legacy CAS research compensation
- TT_commander_soyan_choodu: "Soyan Choodu"
- TT_commander_kyrgys_ezir: "Kyrgys Ezir"
- TT_commander_mongush_dash: "Mongush Dash"
- TT_commander_kuzhuget_arslan: "Kuzhuget Arslan"
- TT_commander_sat_mergen: "Sat Mergen"
+# Legacy CAS research compensation
  TT_cas_research_boost: "Close Air Support Research"
+
+ TT_request_siberian_corridor: "Request the Siberian Corridor"
+ TT_request_siberian_corridor_desc: "Ask Moscow to transfer the Oyrot Region so that Tuva and the Central Asian SSR share a continuous land border. Semipalatinsk alone is not enough while Soviet Altai still sits between us."
+ TT_request_siberian_corridor_tt: "Sends a diplomatic request to §Ythe Soviet Union§!. If Moscow agrees, only §YOyrot Region (654)§! is transferred — §Yno cores§! are granted. A refusal does not end the campaign; we may ask again after §Y180§! days."
+ tt_tuva.17.t: "The Siberian Corridor"
+ tt_tuva.17.desc: "Kyzyl asks for a narrow land bridge through the Oyrot Region. Without it the new Central Asian SSR remains cut off from Tuva by Soviet Siberia. The request is modest on the map, but it redraws the Union's internal borders once more."
+ tt_tuva.17.a: "Grant the corridor. Transfer the Oyrot Region."
+ tt_tuva.17.b: "Refuse. Siberia stays undivided."
+ tt_tuva.18.t: "Moscow Opens the Siberian Corridor"
+ tt_tuva.18.desc: "The Kremlin has approved the transfer of the Oyrot Region to Kyzyl. Where Soviet Altai once separated Tuva from Semipalatinsk, a continuous land route now links the Center of Asia to its Central Asian republic."
+ tt_tuva.18.a: "The steppe is joined at last."
+ tt_tuva.19.t: "Moscow Keeps the Altai Bridge"
+ tt_tuva.19.desc: "Moscow has declined to cede the Oyrot Region. The Central Asian SSR remains separated from Tuva by Soviet territory; Kyzyl may renew the request later, but for now the map stays broken in two."
+ tt_tuva.19.a: "We will ask again when the moment is right."
