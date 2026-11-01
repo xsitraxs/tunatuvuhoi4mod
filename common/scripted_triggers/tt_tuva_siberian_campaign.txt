@@ -1,0 +1,99 @@
+##########################################################################
+# TAISHET CAMPAIGN: all triggers below run in TAN country scope.
+##########################################################################
+
+TT_siberian_campaign_active = {
+	tag = TAN
+	has_country_flag = TT_national_path
+	has_completed_focus = TT_the_siberian_gambit
+	country_exists = SOV
+	has_war_with = SOV
+	has_capitulated = no
+	SOV = { has_capitulated = no }
+	NOT = { has_idea = TT_masters_of_siberia }
+}
+
+TT_controls_eastern_transsib = {
+	controls_state = 329 # Tuva must remain secure
+	controls_state = 563
+	controls_state = 564
+	controls_state = 566
+}
+
+TT_controls_transsib_nodes = {
+	controls_state = 329 # Tuva must remain secure
+	controls_state = 563
+	controls_state = 564
+	controls_state = 566
+	controls_state = 568
+	controls_state = 569
+	controls_state = 570
+	controls_state = 578
+}
+
+TT_controls_siberian_outer_line = {
+	controls_state = 329 # Tuva must remain secure
+	controls_state = 40
+	controls_state = 654
+	controls_state = 565
+	controls_state = 567
+	controls_state = 575
+	controls_state = 576
+}
+
+# No foreign-owned or foreign-occupied states may be stolen by the treaty.
+TT_taishet_package_uncontested = {
+	40 = { OR = { is_owned_by = SOV is_owned_by = TAN } OR = { is_controlled_by = SOV is_controlled_by = TAN } }
+	654 = { OR = { is_owned_by = SOV is_owned_by = TAN } OR = { is_controlled_by = SOV is_controlled_by = TAN } }
+	563 = { OR = { is_owned_by = SOV is_owned_by = TAN } OR = { is_controlled_by = SOV is_controlled_by = TAN } }
+	564 = { OR = { is_owned_by = SOV is_owned_by = TAN } OR = { is_controlled_by = SOV is_controlled_by = TAN } }
+	565 = { OR = { is_owned_by = SOV is_owned_by = TAN } OR = { is_controlled_by = SOV is_controlled_by = TAN } }
+	566 = { OR = { is_owned_by = SOV is_owned_by = TAN } OR = { is_controlled_by = SOV is_controlled_by = TAN } }
+	567 = { OR = { is_owned_by = SOV is_owned_by = TAN } OR = { is_controlled_by = SOV is_controlled_by = TAN } }
+	568 = { OR = { is_owned_by = SOV is_owned_by = TAN } OR = { is_controlled_by = SOV is_controlled_by = TAN } }
+	569 = { OR = { is_owned_by = SOV is_owned_by = TAN } OR = { is_controlled_by = SOV is_controlled_by = TAN } }
+	570 = { OR = { is_owned_by = SOV is_owned_by = TAN } OR = { is_controlled_by = SOV is_controlled_by = TAN } }
+	574 = { OR = { is_owned_by = SOV is_owned_by = TAN } OR = { is_controlled_by = SOV is_controlled_by = TAN } }
+	575 = { OR = { is_owned_by = SOV is_owned_by = TAN } OR = { is_controlled_by = SOV is_controlled_by = TAN } }
+	576 = { OR = { is_owned_by = SOV is_owned_by = TAN } OR = { is_controlled_by = SOV is_controlled_by = TAN } }
+	578 = { OR = { is_owned_by = SOV is_owned_by = TAN } OR = { is_controlled_by = SOV is_controlled_by = TAN } }
+}
+
+TT_owns_taishet_package = {
+	40 = { is_owned_by = TAN }
+	654 = { is_owned_by = TAN }
+	563 = { is_owned_by = TAN }
+	564 = { is_owned_by = TAN }
+	565 = { is_owned_by = TAN }
+	566 = { is_owned_by = TAN }
+	567 = { is_owned_by = TAN }
+	568 = { is_owned_by = TAN }
+	569 = { is_owned_by = TAN }
+	570 = { is_owned_by = TAN }
+	574 = { is_owned_by = TAN }
+	575 = { is_owned_by = TAN }
+	576 = { is_owned_by = TAN }
+	578 = { is_owned_by = TAN }
+}
+
+TT_taishet_military_ready = {
+	TT_siberian_campaign_active = yes
+	has_country_flag = TT_eastern_transsib_secured
+	has_country_flag = TT_transsib_holding_started
+	has_country_flag = TT_transsib_nodes_held
+	check_variable = { TT_transsib_hold_days >= 30 }
+	TT_controls_transsib_nodes = yes
+	TT_controls_siberian_outer_line = yes
+	TT_taishet_package_uncontested = yes
+}
+
+TT_can_demand_taishet = {
+	TT_taishet_military_ready = yes
+	NOT = { has_country_flag = TT_taishet_request_pending }
+	NOT = { has_country_flag = TT_taishet_refused_recently }
+}
+
+TT_taishet_response_valid = {
+	TT_taishet_military_ready = yes
+	has_country_flag = TT_taishet_request_pending
+}
