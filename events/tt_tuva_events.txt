@@ -318,117 +318,73 @@ country_event = {
 	title = tt_tuva.10.t
 	desc = tt_tuva.10.desc
 	picture = GFX_report_event_generic_sign_treaty2
-
 	is_triggered_only = yes
-
+	# Deliver pending requests even after a battlefield reversal; response guards
+	# then discard the obsolete request instead of leaving TAN permanently pending.
 	trigger = {
+		tag = SOV
 		country_exists = TAN
 		has_war_with = TAN
-		TAN = {
-			has_capitulated = no
-			controls_state = 329
-			controls_state = 563
-			controls_state = 566
-			controls_state = 568
-			controls_state = 570
-		}
-		NOT = { TAN = { has_idea = TT_masters_of_siberia } }
+		TAN = { has_country_flag = TT_taishet_request_pending }
 	}
-
-	# Option A: Moscow cedes Siberia
 	option = {
 		name = tt_tuva.10.a
-
-		ai_chance = {
-			base = 90
-		}
-
+		ai_chance = { base = 60 }
 		if = {
 			limit = {
+				tag = SOV
 				country_exists = TAN
 				has_war_with = TAN
+				TAN = { TT_taishet_response_valid = yes }
+			}
+			TT_transfer_taishet_package = yes
+			if = {
+				limit = { TAN = { TT_owns_taishet_package = yes } }
+				white_peace = TAN
+				remove_ideas = TT_siberian_counteroffensive
 				TAN = {
-					has_capitulated = no
-					controls_state = 329
-					controls_state = 563
-					controls_state = 566
-					controls_state = 568
-					controls_state = 570
-				}
-				NOT = { TAN = { has_idea = TT_masters_of_siberia } }
-			}
-			every_state = {
-				limit = {
-					is_owned_by = SOV
-					is_controlled_by = TAN
-					OR = {
-						state = 40
-						state = 654
-						state = 563
-						state = 564
-						state = 565
-						state = 566
-						state = 567
-						state = 568
-						state = 569
-						state = 570
+					clr_country_flag = TT_taishet_request_pending
+					if = {
+						limit = { has_idea = TT_siberian_gambit }
+						swap_ideas = { remove_idea = TT_siberian_gambit add_idea = TT_masters_of_siberia }
+					}
+					else = { add_ideas = TT_masters_of_siberia }
+					add_political_power = 150
+					add_stability = 0.10
+					news_event = {
+						id = tt_tuva.11
+						days = 1
 					}
 				}
-				transfer_state_to = TAN
 			}
-
-			white_peace = TAN
-
-			TAN = {
-				if = {
-					limit = { has_idea = TT_siberian_gambit }
-					swap_ideas = {
-						remove_idea = TT_siberian_gambit
-						add_idea = TT_masters_of_siberia
-					}
-				}
-				else = {
-					add_ideas = TT_masters_of_siberia
-				}
-				add_political_power = 150
-				add_stability = 0.10
-				news_event = {
-					id = tt_tuva.11
-					days = 1
-				}
-			}
+			else = { TAN = { clr_country_flag = TT_taishet_request_pending } }
 		}
+		else = { TAN = { clr_country_flag = TT_taishet_request_pending } }
 	}
-
-	# Option B: Fight to the bitter end (primarily for human SOV player)
 	option = {
 		name = tt_tuva.10.b
-
 		ai_chance = {
-			base = 10
+			base = 40
 			modifier = {
 				factor = 0
-				surrender_progress > 0.15
+				OR = { surrender_progress > 0.15 TAN = { controls_state = 574 } }
 			}
 		}
-
 		if = {
 			limit = {
+				tag = SOV
 				country_exists = TAN
 				has_war_with = TAN
-				TAN = {
-					has_capitulated = no
-					controls_state = 329
-					controls_state = 563
-					controls_state = 566
-					controls_state = 568
-					controls_state = 570
-				}
-				NOT = { TAN = { has_idea = TT_masters_of_siberia } }
+				TAN = { TT_taishet_response_valid = yes }
 			}
-			add_stability = -0.10
-			add_war_support = -0.10
+			TAN = {
+				clr_country_flag = TT_taishet_request_pending
+				set_country_flag = { flag = TT_taishet_refused_recently days = 90 }
+			}
+			add_stability = -0.05
+			add_war_support = -0.05
 		}
+		else = { TAN = { clr_country_flag = TT_taishet_request_pending } }
 	}
 }
 
@@ -889,4 +845,15 @@ news_event = {
 	major = yes
 	is_triggered_only = yes
 	option = { name = tt_tuva.22.a }
+}
+
+# Informational event only: escalation itself is applied by the secured-rail decision.
+country_event = {
+	id = tt_tuva.23
+	title = tt_tuva.23.t
+	desc = tt_tuva.23.desc
+	picture = GFX_news_event_generic_army
+	is_triggered_only = yes
+	trigger = { tag = TAN TT_siberian_campaign_active = yes }
+	option = { name = tt_tuva.23.a }
 }

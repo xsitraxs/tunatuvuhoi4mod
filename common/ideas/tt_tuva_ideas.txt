@@ -253,6 +253,19 @@ ideas = {
 			}
 		}
 		
+		# Soviet response only against TAN: no bonuses against Germany or other wars.
+		TT_siberian_counteroffensive = {
+			allowed = { original_tag = SOV }
+			allowed_civil_war = { always = no }
+			removal_cost = -1
+			picture = generic_reserve_divisions
+			targeted_modifier = {
+				tag = TAN
+				attack_bonus_against = 0.10
+				defense_bonus_against = 0.15
+			}
+		}
+
 		TT_masters_of_siberia = {
 			allowed = { original_tag = TAN }
 			allowed_civil_war = { always = yes }

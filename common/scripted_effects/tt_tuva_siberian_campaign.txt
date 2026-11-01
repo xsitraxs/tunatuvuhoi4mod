@@ -1,0 +1,75 @@
+##########################################################################
+# Explicit country scopes; safe to call from on-actions in any global scope.
+##########################################################################
+
+TT_siberian_campaign_daily = {
+	if = {
+		limit = { TT_siberian_campaign_active = yes }
+		if = {
+			limit = { has_country_flag = TT_transsib_holding_started }
+			if = {
+				limit = { TT_controls_transsib_nodes = yes }
+				if = {
+					limit = { check_variable = { TT_transsib_hold_days < 30 } }
+					add_to_variable = { TT_transsib_hold_days = 1 }
+				}
+				if = {
+					limit = { check_variable = { TT_transsib_hold_days >= 30 } }
+					set_country_flag = TT_transsib_nodes_held
+				}
+			}
+			else = {
+				set_variable = { TT_transsib_hold_days = 0 }
+				clr_country_flag = TT_transsib_nodes_held
+			}
+		}
+	}
+	else = {
+		set_variable = { TT_transsib_hold_days = 0 }
+		clr_country_flag = TT_transsib_nodes_held
+		clr_country_flag = TT_transsib_holding_started
+		clr_country_flag = TT_eastern_transsib_secured
+		clr_country_flag = TT_taishet_request_pending
+	}
+}
+
+# Called immediately on control changes as well as checked by the daily pulse.
+TT_reset_broken_transsib_hold = {
+	if = {
+		limit = {
+			has_country_flag = TT_transsib_holding_started
+			NOT = { TT_controls_transsib_nodes = yes }
+		}
+		set_variable = { TT_transsib_hold_days = 0 }
+		clr_country_flag = TT_transsib_nodes_held
+	}
+}
+
+# SOV country scope: cede the entire agreed package, not the occupied subset.
+TT_transfer_taishet_package = {
+	if = {
+		limit = { tag = SOV country_exists = TAN TAN = { TT_taishet_response_valid = yes } }
+		every_state = {
+			limit = {
+				is_owned_by = SOV
+				OR = {
+					state = 40
+					state = 654
+					state = 563
+					state = 564
+					state = 565
+					state = 566
+					state = 567
+					state = 568
+					state = 569
+					state = 570
+					state = 574
+					state = 575
+					state = 576
+					state = 578
+				}
+			}
+			transfer_state_to = TAN
+		}
+	}
+}

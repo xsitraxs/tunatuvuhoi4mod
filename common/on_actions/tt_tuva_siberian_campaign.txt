@@ -1,0 +1,18 @@
+on_actions = {
+	on_daily_TAN = {
+		effect = { TAN = { TT_siberian_campaign_daily = yes } }
+	}
+	on_state_control_changed = {
+		effect = { TAN = { TT_reset_broken_transsib_hold = yes } }
+	}
+	on_daily_SOV = {
+		effect = {
+			SOV = {
+				if = {
+					limit = { has_idea = TT_siberian_counteroffensive NOT = { has_war_with = TAN } }
+					remove_ideas = TT_siberian_counteroffensive
+				}
+			}
+		}
+	}
+}

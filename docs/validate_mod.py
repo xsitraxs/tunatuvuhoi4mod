@@ -184,6 +184,24 @@ NON_LOCALISABLE = {
     'TT_transfer_siberian_corridor_states',
     'TT_war_mandate_diplomacy_valid', 'TT_can_request_war_mandate',
     'TT_war_mandate_granted', 'TT_war_mandate_pending', 'TT_war_mandate_refused',
+    'TT_siberian_campaign_active',
+    'TT_controls_eastern_transsib',
+    'TT_controls_transsib_nodes',
+    'TT_controls_siberian_outer_line',
+    'TT_taishet_package_uncontested',
+    'TT_owns_taishet_package',
+    'TT_taishet_military_ready',
+    'TT_can_demand_taishet',
+    'TT_taishet_response_valid',
+    'TT_siberian_campaign_daily',
+    'TT_reset_broken_transsib_hold',
+    'TT_transfer_taishet_package',
+    'TT_eastern_transsib_secured',
+    'TT_transsib_holding_started',
+    'TT_transsib_nodes_held',
+    'TT_transsib_hold_days',
+    'TT_taishet_request_pending',
+    'TT_taishet_refused_recently',
 }
 
 
@@ -235,7 +253,7 @@ def check_localisation() -> None:
         keys = [k for k in keys if k not in ('l_english', 'l_russian')]
         ok(text.startswith('l_english:' if lang == 'EN' else 'l_russian:'),
            f'{lang}: wrong localisation header')
-        ok(len(keys) == 270, f'{lang}: expected 270 keys, found {len(keys)}')
+        ok(len(keys) == 284, f'{lang}: expected 284 keys, found {len(keys)}')
         ok(len(set(keys)) == len(keys),
            f'{lang}: duplicate keys: {sorted({k for k in keys if keys.count(k) > 1})}')
         data[lang] = set(keys)
@@ -256,7 +274,7 @@ def check_localisation() -> None:
            f'EN/RU key mismatch: EN-only={sorted(data["EN"] - data["RU"])}, '
            f'RU-only={sorted(data["RU"] - data["EN"])}')
         exp = expected_keys()
-        ok(len(exp) == 270, f'script-implied key set has {len(exp)} keys (expected 270)')
+        ok(len(exp) == 284, f'script-implied key set has {len(exp)} keys (expected 284)')
         ok(not (exp - data['EN']), f'missing localisation keys: {sorted(exp - data["EN"])}')
         ok(not (data['EN'] - exp), f'orphan localisation keys: {sorted(data["EN"] - exp)}')
 
@@ -679,15 +697,15 @@ def check_events(custom_events_text: str | None = None) -> None:
         if p != events_file:
             scan(p, p.read_text(encoding='utf-8').split('\n'), False)
 
-    expected_ids = {f'tt_tuva.{n}' for n in range(1, 23)}
+    expected_ids = {f'tt_tuva.{n}' for n in range(1, 24)}
     ok(set(defs) == expected_ids,
-       f'event definitions: expected tt_tuva.1..22, got {sorted(defs)}')
+       f'event definitions: expected tt_tuva.1..23, got {sorted(defs)}')
     news = sorted((k for k, v in defs.items() if v == 'news_event'),
                   key=lambda s: int(s.split('.')[1]))
     country = sorted((k for k, v in defs.items() if v == 'country_event'),
                      key=lambda s: int(s.split('.')[1]))
     ok(len(news) == 14, f'expected 14 news events, found {len(news)}')
-    ok(len(country) == 8, f'expected 8 country events, found {len(country)}')
+    ok(len(country) == 9, f'expected 9 country events, found {len(country)}')
     ok(news == ['tt_tuva.3', 'tt_tuva.4', 'tt_tuva.6', 'tt_tuva.8', 'tt_tuva.9',
                 'tt_tuva.11', 'tt_tuva.13', 'tt_tuva.14', 'tt_tuva.15', 'tt_tuva.16',
                 'tt_tuva.18', 'tt_tuva.19', 'tt_tuva.21', 'tt_tuva.22'],
@@ -803,12 +821,8 @@ def check_events(custom_events_text: str | None = None) -> None:
                 sorted((child.key, signature(child)) for child in node.blocks))
 
     requirements = {
-        'tt_tuva.10': """country_exists = TAN
-            has_war_with = TAN
-            TAN = { has_capitulated = no controls_state = 329
-                controls_state = 563 controls_state = 566
-                controls_state = 568 controls_state = 570 }
-            NOT = { TAN = { has_idea = TT_masters_of_siberia } }""",
+        'tt_tuva.10': """tag = SOV country_exists = TAN has_war_with = TAN
+            TAN = { TT_taishet_response_valid = yes }""",
         'tt_tuva.12': """country_exists = TAN
             NOT = { has_war_with = TAN }
             TAN = { has_country_flag = TT_soviet_path }
@@ -822,8 +836,10 @@ def check_events(custom_events_text: str | None = None) -> None:
             continue
         event = events[0]
         expected = signature(parse_clausewitz(required))
+        receipt = ("tag = SOV country_exists = TAN has_war_with = TAN TAN = { has_country_flag = TT_taishet_request_pending }"
+                   if eid == 'tt_tuva.10' else required)
         trigger = event.get_block('trigger')
-        ok(trigger is not None and signature(trigger) == expected,
+        ok(trigger is not None and signature(trigger) == signature(parse_clausewitz(receipt)),
            f'{eid}: stale initiative receipt guard missing')
         options = event.find_blocks('option')
         ok(len(options) == 2, f'{eid}: expected two diplomatic responses')
@@ -832,7 +848,7 @@ def check_events(custom_events_text: str | None = None) -> None:
             guards = option.find_blocks('if')
             ok(len(guards) == 1, f'{label}: expected one response guard')
             ok(all(k == 'name' for k, _, _ in option.assignments) and
-               all(b.key in ('if', 'ai_chance') for b in option.blocks),
+               all(b.key in (('if', 'else', 'ai_chance') if eid == 'tt_tuva.10' else ('if', 'ai_chance')) for b in option.blocks),
                f'{label}: effect outside response guard')
             if len(guards) == 1:
                 limit = guards[0].get_block('limit')
@@ -840,10 +856,10 @@ def check_events(custom_events_text: str | None = None) -> None:
                    f'{label}: stale initiative response guard missing')
 
     block = text.split('id = tt_tuva.10')[1].split('id = tt_tuva.11')[0]
-    ok(block.index('every_state') < block.index('white_peace = TAN'),
-       'tt_tuva.10.a: every_state must run before white_peace')
-    ok('is_controlled_by = TAN' in block,
-       'tt_tuva.10.a: missing is_controlled_by = TAN in every_state limit')
+    ok(block.index('TT_transfer_taishet_package = yes') < block.index('white_peace = TAN'),
+       'tt_tuva.10.a: agreed package must transfer before peace')
+    ok('TT_owns_taishet_package = yes' in block,
+       'tt_tuva.10.a: peace requires actual ownership of the whole package')
     states12 = [402, 404, 405, 406, 407, 583, 584, 585, 586, 587, 588, 589,
                 590, 732, 742, 823, 830, 831, 832, 881, 882]
     block12 = text.split('id = tt_tuva.12')[1].split('id = tt_tuva.13')[0]
@@ -1327,6 +1343,257 @@ def check_war_mandate(sources: dict[str, str] | None = None) -> None:
            f'war mandate {suffix}: incorrect faction policy, scope, rewards or cooldown')
 
 
+# ------------------------------------------------------- Siberian campaign
+TAISHET_STATES = [40, 654, 563, 564, 565, 566, 567, 568, 569, 570, 574, 575, 576, 578]
+CAMPAIGN_PATHS = {
+    'triggers': 'common/scripted_triggers/tt_tuva_siberian_campaign.txt',
+    'effects': 'common/scripted_effects/tt_tuva_siberian_campaign.txt',
+    'actions': 'common/on_actions/tt_tuva_siberian_campaign.txt',
+    'decisions': 'common/decisions/tt_tuva_decisions.txt',
+    'events': 'events/tt_tuva_events.txt',
+    'ideas': 'common/ideas/tt_tuva_ideas.txt',
+}
+
+
+def campaign_sources() -> dict[str, str]:
+    return {k: (ROOT / p).read_text(encoding='utf-8') for k, p in CAMPAIGN_PATHS.items()}
+
+
+def check_siberian_campaign(overrides: dict[str, str] | None = None) -> None:
+    source = campaign_sources()
+    source.update(overrides or {})
+    trees = {k: parse_clausewitz(v) for k, v in source.items()}
+
+    def sig(node):
+        if node is None:
+            return None
+        return (sorted(node.assignments), sorted(node.values),
+                sorted((b.key, sig(b)) for b in node.blocks))
+
+    def exact(node, text):
+        return sig(node) == sig(parse_clausewitz(text))
+
+    triggers = trees['triggers']
+    required = {
+        'TT_siberian_campaign_active': '''tag = TAN has_country_flag = TT_national_path
+            has_completed_focus = TT_the_siberian_gambit country_exists = SOV
+            has_war_with = SOV has_capitulated = no SOV = { has_capitulated = no }
+            NOT = { has_idea = TT_masters_of_siberia }''',
+        'TT_controls_eastern_transsib': 'controls_state = 329 controls_state = 563 controls_state = 564 controls_state = 566',
+        'TT_controls_transsib_nodes': 'controls_state = 329 controls_state = 563 controls_state = 564 controls_state = 566 controls_state = 568 controls_state = 569 controls_state = 570 controls_state = 578',
+        'TT_controls_siberian_outer_line': 'controls_state = 329 controls_state = 40 controls_state = 654 controls_state = 565 controls_state = 567 controls_state = 575 controls_state = 576',
+        'TT_taishet_military_ready': '''TT_siberian_campaign_active = yes
+            has_country_flag = TT_eastern_transsib_secured has_country_flag = TT_transsib_holding_started
+            has_country_flag = TT_transsib_nodes_held check_variable = { TT_transsib_hold_days >= 30 }
+            TT_controls_transsib_nodes = yes TT_controls_siberian_outer_line = yes
+            TT_taishet_package_uncontested = yes''',
+        'TT_can_demand_taishet': '''TT_taishet_military_ready = yes
+            NOT = { has_country_flag = TT_taishet_request_pending }
+            NOT = { has_country_flag = TT_taishet_refused_recently }''',
+        'TT_taishet_response_valid': 'TT_taishet_military_ready = yes has_country_flag = TT_taishet_request_pending',
+    }
+    for name, text in required.items():
+        ok(exact(triggers.get_block(name), text), f'campaign: prerequisites changed for {name}')
+    ownership = ''.join(f'{i} = {{ OR = {{ is_owned_by = SOV is_owned_by = TAN }} OR = {{ is_controlled_by = SOV is_controlled_by = TAN }} }}' for i in TAISHET_STATES)
+    ok(exact(triggers.get_block('TT_taishet_package_uncontested'), ownership),
+       'campaign: treaty must protect third-party ownership and control in all 14 states')
+    owned = ''.join(f'{i} = {{ is_owned_by = TAN }}' for i in TAISHET_STATES)
+    ok(exact(triggers.get_block('TT_owns_taishet_package'), owned),
+       'campaign: success requires actual ownership of all 14 agreed states')
+
+    transfer = trees['effects'].get_block('TT_transfer_taishet_package')
+    expected_transfer = '''if = {
+        limit = { tag = SOV country_exists = TAN TAN = { TT_taishet_response_valid = yes } }
+        every_state = { limit = { is_owned_by = SOV OR = { ''' + ''.join(f'state = {i} ' for i in TAISHET_STATES) + '''} }
+            transfer_state_to = TAN }
+    }'''
+    ok(exact(transfer, expected_transfer), 'campaign: transfer the exact complete package, not an occupied subset or cores')
+    daily = '''if = {
+        limit = { TT_siberian_campaign_active = yes }
+        if = { limit = { has_country_flag = TT_transsib_holding_started }
+            if = { limit = { TT_controls_transsib_nodes = yes }
+                if = { limit = { check_variable = { TT_transsib_hold_days < 30 } }
+                    add_to_variable = { TT_transsib_hold_days = 1 } }
+                if = { limit = { check_variable = { TT_transsib_hold_days >= 30 } }
+                    set_country_flag = TT_transsib_nodes_held }
+            }
+            else = { set_variable = { TT_transsib_hold_days = 0 } clr_country_flag = TT_transsib_nodes_held }
+        }
+    }
+    else = { set_variable = { TT_transsib_hold_days = 0 } clr_country_flag = TT_transsib_nodes_held
+        clr_country_flag = TT_transsib_holding_started clr_country_flag = TT_eastern_transsib_secured
+        clr_country_flag = TT_taishet_request_pending }'''
+    ok(exact(trees['effects'].get_block('TT_siberian_campaign_daily'), daily),
+       'campaign: continuous control must increment once, reset on loss and clean up after war')
+    reset = '''if = { limit = { has_country_flag = TT_transsib_holding_started
+        NOT = { TT_controls_transsib_nodes = yes } }
+        set_variable = { TT_transsib_hold_days = 0 } clr_country_flag = TT_transsib_nodes_held }'''
+    ok(exact(trees['effects'].get_block('TT_reset_broken_transsib_hold'), reset),
+       'campaign: any control loss must immediately invalidate continuous holding')
+    # Execute the small counter state machine from the parsed script. This is a
+    # logic model, not an engine test: only the commands used by these two effects
+    # are interpreted. Unknown commands fail closed instead of being ignored.
+    def condition(node, model):
+        if node is None:
+            return False
+        values = []
+        for key, op, value in node.assignments:
+            if key == 'TT_siberian_campaign_active':
+                values.append(model['active'] == (value == 'yes'))
+            elif key == 'TT_controls_transsib_nodes':
+                values.append(model['nodes'] == (value == 'yes'))
+            elif key == 'has_country_flag':
+                values.append(value in model['flags'])
+            elif key == 'TT_transsib_hold_days':
+                number = int(value)
+                values.append({'<': model['days'] < number, '>=': model['days'] >= number}.get(op, False))
+            else:
+                return False
+        for child in node.blocks:
+            if child.key == 'NOT':
+                values.append(not condition(child, model))
+            elif child.key == 'check_variable':
+                values.append(condition(child, model))
+            else:
+                return False
+        return all(values)
+
+    def execute(node, model):
+        if node is None:
+            return False
+        for key, op, value in node.assignments:
+            if key == 'set_country_flag':
+                model['flags'].add(value)
+            elif key == 'clr_country_flag':
+                model['flags'].discard(value)
+            else:
+                return False
+        previous = None
+        for child in node.blocks:
+            if child.key == 'limit':
+                continue
+            if child.key == 'if':
+                previous = condition(child.get_block('limit'), model)
+                if previous and not execute(child, model):
+                    return False
+            elif child.key == 'else':
+                if previous is False and not execute(child, model):
+                    return False
+                previous = None
+            elif child.key in ('set_variable', 'add_to_variable'):
+                value = child.get_assignment('TT_transsib_hold_days')
+                if value is None:
+                    return False
+                model['days'] = int(value) if child.key == 'set_variable' else model['days']+int(value)
+            else:
+                return False
+        return True
+
+    model = {'active': True, 'nodes': True, 'days': 0,
+             'flags': {'TT_eastern_transsib_secured', 'TT_transsib_holding_started'}}
+    pulse = trees['effects'].get_block('TT_siberian_campaign_daily')
+    healthy = all(execute(pulse, model) for _ in range(29))
+    ok(healthy and model['days'] == 29 and 'TT_transsib_nodes_held' not in model['flags'],
+       'campaign simulation: 29 days must not qualify')
+    healthy = execute(pulse, model)
+    ok(healthy and model['days'] == 30 and 'TT_transsib_nodes_held' in model['flags'],
+       'campaign simulation: day 30 must qualify')
+    model['nodes'] = False
+    healthy = execute(trees['effects'].get_block('TT_reset_broken_transsib_hold'), model)
+    ok(healthy and model['days'] == 0 and 'TT_transsib_nodes_held' not in model['flags'],
+       'campaign simulation: state loss invalidates an already completed hold immediately')
+    model['nodes'] = True
+    healthy = all(execute(pulse, model) for _ in range(29))
+    ok(healthy and model['days'] == 29 and 'TT_transsib_nodes_held' not in model['flags'],
+       'campaign simulation: recapture must restart the continuous hold from zero')
+    model['active'] = False
+    model['flags'].add('TT_taishet_request_pending')
+    healthy = execute(pulse, model)
+    ok(healthy and model['days'] == 0 and not model['flags'],
+       'campaign simulation: ended war must clear holding, stage and pending state')
+
+    actions = trees['actions'].get_block('on_actions')
+    ok(actions is not None, 'campaign: on-actions missing')
+    if actions:
+        for hook, text in {
+            'on_daily_TAN': 'effect = { TAN = { TT_siberian_campaign_daily = yes } }',
+            'on_state_control_changed': 'effect = { TAN = { TT_reset_broken_transsib_hold = yes } }',
+            'on_daily_SOV': '''effect = { SOV = { if = {
+                limit = { has_idea = TT_siberian_counteroffensive NOT = { has_war_with = TAN } }
+                remove_ideas = TT_siberian_counteroffensive } } }''',
+        }.items():
+            ok(exact(actions.get_block(hook), text), f'campaign: missing or incorrect pulse {hook}')
+
+    decisions = trees['decisions'].get_block('TT_tuva_category')
+    ok(decisions is not None, 'campaign: decisions category missing')
+    if decisions:
+        stage1 = decisions.get_block('TT_secure_eastern_transsib')
+        stage2 = decisions.get_block('TT_hold_transsib_nodes')
+        peace = decisions.get_block('TT_dictate_peace_in_siberia')
+        for node, expected, label in [
+            (stage1, '''TT_siberian_campaign_active = yes TT_controls_eastern_transsib = yes
+                NOT = { has_country_flag = TT_eastern_transsib_secured }''', 'east'),
+            (stage2, '''TT_siberian_campaign_active = yes TT_controls_transsib_nodes = yes
+                NOT = { has_country_flag = TT_transsib_holding_started }''', 'hold'),
+            (peace, '''custom_trigger_tooltip = { tooltip = TT_taishet_campaign_ready_tt TT_taishet_military_ready = yes }
+                custom_trigger_tooltip = { tooltip = TT_taishet_no_pending_tt NOT = { has_country_flag = TT_taishet_request_pending } }
+                custom_trigger_tooltip = { tooltip = TT_taishet_no_cooldown_tt NOT = { has_country_flag = TT_taishet_refused_recently } }''', 'peace'),
+        ]:
+            wrapped = ('custom_trigger_tooltip = { tooltip = ' +
+                       ('TT_eastern_transsib_ready_tt' if label == 'east' else 'TT_transsib_holding_ready_tt') +
+                       ' ' + expected + ' }') if label != 'peace' else expected
+            ok(node is not None and exact(node.get_block('available'), wrapped), f'campaign: {label} decision gates changed')
+        if stage1:
+            effect = stage1.get_block('complete_effect')
+            ok(effect is not None and effect.has_assignment('set_country_flag', 'TT_eastern_transsib_secured') and
+               exact(effect.get_block('SOV'), 'add_timed_idea = { idea = TT_siberian_counteroffensive days = 180 }'),
+               'campaign: eastern breakthrough must trigger a limited Soviet response')
+        if stage2:
+            ok(exact(stage2.get_block('complete_effect'), '''set_country_flag = TT_transsib_holding_started
+                set_variable = { TT_transsib_hold_days = 0 } clr_country_flag = TT_transsib_nodes_held'''),
+               'campaign: holding must start from zero')
+        if peace:
+            effect = peace.get_block('complete_effect')
+            ok(effect is not None and effect.has_assignment('set_country_flag', 'TT_taishet_request_pending'),
+               'campaign: request pending must be persistent')
+            ok(peace.has_assignment('days_re_enable', '1'), 'campaign: only a genuine refusal should impose 90 days')
+            shown = peace.get_block('highlight_states')
+            shown = shown.get_block('highlight_state_targets') if shown else None
+            ok(shown is not None and [int(v) for k, op, v in shown.assignments if k == 'state'] == TAISHET_STATES,
+               'campaign: peace tooltip highlight must match the complete treaty package')
+    ideas = trees['ideas'].get_block('ideas')
+    country = ideas.get_block('country') if ideas else None
+    idea = country.get_block('TT_siberian_counteroffensive') if country else None
+    ok(idea is not None and exact(idea.get_block('targeted_modifier'),
+       'tag = TAN attack_bonus_against = 0.10 defense_bonus_against = 0.15') and idea.get_block('modifier') is None,
+       'campaign: Soviet bonuses must target only TAN, never all wars')
+    event = next((e for e in trees['events'].find_blocks('country_event') if e.has_assignment('id', 'tt_tuva.10')), None)
+    ok(event is not None, 'campaign: peace event missing')
+    if event:
+        for option in event.find_blocks('option'):
+            label = option.get_assignment('name')
+            ok(exact(option.get_block('else'), 'TAN = { clr_country_flag = TT_taishet_request_pending }'),
+               f'campaign: stale response {label} must only discard the request')
+            guard = option.get_block('if')
+            if not guard:
+                continue
+            if label == 'tt_tuva.10.a':
+                award = guard.get_block('if')
+                ok(guard.has_assignment('TT_transfer_taishet_package', 'yes') and award is not None and
+                   exact(award.get_block('limit'), 'TAN = { TT_owns_taishet_package = yes }') and
+                   award.has_assignment('white_peace', 'TAN'), 'campaign: peace/rewards need actual complete ownership')
+            else:
+                tan = guard.get_block('TAN')
+                ok(tan is not None and exact(tan, '''clr_country_flag = TT_taishet_request_pending
+                    set_country_flag = { flag = TT_taishet_refused_recently days = 90 }'''),
+                   'campaign: refusal must clear pending and set a 90-day cooldown')
+                chance = option.get_block('ai_chance')
+                ok(chance is not None and exact(chance, '''base = 40 modifier = {
+                    factor = 0 OR = { surrender_progress > 0.15 TAN = { controls_state = 574 } } }'''),
+                   'campaign: Yakutsk or Soviet surrender pressure must prevent AI refusal')
+
+
+
 def run_mutation_tests(verbose: bool = True) -> bool:
     """Run in-memory mutation tests verifying that AST checks catch broken structures.
 
@@ -1623,6 +1890,48 @@ def run_mutation_tests(verbose: bool = True) -> bool:
                   {'gfx/interface/goals/tt_tuva/the_great_khural.dds': data},
                   'duplicate artwork')
 
+    campaign_original = campaign_sources()
+    errors = []
+    check_siberian_campaign(campaign_original)
+    results.append(('Baseline Siberian campaign', not errors,
+                    errors[0] if errors else 'Fourteen-state treaty and continuous-control campaign pass'))
+    campaign_mutations = [
+        ('missing Tomsk gate', 'triggers', 'controls_state = 578', 'controls_state = 577',
+         'prerequisites changed for TT_controls_transsib_nodes'),
+        ('holding bypass', 'triggers', 'TT_transsib_hold_days >= 30', 'TT_transsib_hold_days >= 1',
+         'prerequisites changed for TT_taishet_military_ready'),
+        ('third-party occupation stolen', 'triggers',
+         'OR = { is_controlled_by = SOV is_controlled_by = TAN }', 'always = yes',
+         'treaty must protect third-party ownership and control'),
+        ('occupied-only jagged treaty', 'effects', 'is_owned_by = SOV',
+         'is_owned_by = SOV is_controlled_by = TAN', 'transfer the exact complete package'),
+        ('holding loss not reset', 'effects', 'set_variable = { TT_transsib_hold_days = 0 }',
+         'set_variable = { TT_transsib_hold_days = 30 }', 'continuous control must increment once'),
+        ('daily pulse missing', 'actions', 'on_daily_TAN', 'on_weekly_TAN',
+         'missing or incorrect pulse on_daily_TAN'),
+        ('state loss pulse missing', 'actions', 'TT_reset_broken_transsib_hold = yes',
+         'TT_reset_broken_transsib_hold = no', 'missing or incorrect pulse on_state_control_changed'),
+        ('start holding without nodes', 'decisions', 'TT_controls_transsib_nodes = yes',
+         'always = yes', 'hold decision gates changed'),
+        ('pending not set', 'decisions', 'set_country_flag = TT_taishet_request_pending',
+         'clr_country_flag = TT_taishet_request_pending', 'request pending must be persistent'),
+        ('peace before actual ownership', 'events', 'TT_owns_taishet_package = yes',
+         'always = yes', 'peace/rewards need actual complete ownership'),
+        ('refusal cooldown bypass', 'events', 'TT_taishet_refused_recently days = 90',
+         'TT_taishet_refused_recently days = 1', 'refusal must clear pending and set a 90-day cooldown'),
+        ('Soviet bonus targets wrong country', 'ideas', 'tag = TAN\n\t\t\t\tattack_bonus_against',
+         'tag = GER\n\t\t\t\tattack_bonus_against', 'Soviet bonuses must target only TAN'),
+        ('Yakutsk leverage removed', 'events', 'controls_state = 574', 'controls_state = 329',
+         'Yakutsk or Soviet surrender pressure must prevent AI refusal'),
+    ]
+    for label, key, before, after, message in campaign_mutations:
+        original = campaign_original[key]
+        if before not in original:
+            results.append((f'Mutation campaign {label}', False, 'Mutation target was not found'))
+            continue
+        test_mutation(f'Mutation campaign {label}', check_siberian_campaign,
+                      {key: original.replace(before, after, 1)}, message)
+
     # Restore globals
     errors = orig_errors
     checks = orig_checks
@@ -1664,6 +1973,7 @@ def main() -> int:
     check_misc()
     check_corridor()
     check_war_mandate()
+    check_siberian_campaign()
     check_mutations()
     print(f'Ran {checks} checks.')
     if errors:
