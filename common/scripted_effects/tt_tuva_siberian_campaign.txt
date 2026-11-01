@@ -1,47 +1,11 @@
 ##########################################################################
-# Explicit country scopes; safe to call from on-actions in any global scope.
+# No daily reset of campaign milestones. Old hold flags/variables are ignored.
 ##########################################################################
 
-TT_siberian_campaign_daily = {
+TT_cleanup_taishet_pending = {
 	if = {
-		limit = { TT_siberian_campaign_active = yes }
-		if = {
-			limit = { has_country_flag = TT_transsib_holding_started }
-			if = {
-				limit = { TT_controls_transsib_nodes = yes }
-				if = {
-					limit = { check_variable = { TT_transsib_hold_days < 30 } }
-					add_to_variable = { TT_transsib_hold_days = 1 }
-				}
-				if = {
-					limit = { check_variable = { TT_transsib_hold_days >= 30 } }
-					set_country_flag = TT_transsib_nodes_held
-				}
-			}
-			else = {
-				set_variable = { TT_transsib_hold_days = 0 }
-				clr_country_flag = TT_transsib_nodes_held
-			}
-		}
-	}
-	else = {
-		set_variable = { TT_transsib_hold_days = 0 }
-		clr_country_flag = TT_transsib_nodes_held
-		clr_country_flag = TT_transsib_holding_started
-		clr_country_flag = TT_eastern_transsib_secured
+		limit = { has_country_flag = TT_taishet_request_pending NOT = { has_war_with = SOV } }
 		clr_country_flag = TT_taishet_request_pending
-	}
-}
-
-# Called immediately on control changes as well as checked by the daily pulse.
-TT_reset_broken_transsib_hold = {
-	if = {
-		limit = {
-			has_country_flag = TT_transsib_holding_started
-			NOT = { TT_controls_transsib_nodes = yes }
-		}
-		set_variable = { TT_transsib_hold_days = 0 }
-		clr_country_flag = TT_transsib_nodes_held
 	}
 }
 

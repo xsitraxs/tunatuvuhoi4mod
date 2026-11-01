@@ -1,9 +1,6 @@
 on_actions = {
 	on_daily_TAN = {
-		effect = { TAN = { TT_siberian_campaign_daily = yes } }
-	}
-	on_state_control_changed = {
-		effect = { TAN = { TT_reset_broken_transsib_hold = yes } }
+		effect = { TAN = { TT_cleanup_taishet_pending = yes } }
 	}
 	on_daily_SOV = {
 		effect = {
