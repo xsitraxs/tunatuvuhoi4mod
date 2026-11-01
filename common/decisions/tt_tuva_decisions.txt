@@ -191,9 +191,11 @@ TT_tuva_category = {
 	TT_secure_eastern_transsib = {
 		icon = GFX_decision_generic_civil_support
 		cost = 25
+		fire_only_once = yes
 		allowed = { original_tag = TAN }
-		visible = { has_completed_focus = TT_the_siberian_gambit NOT = { has_idea = TT_masters_of_siberia } }
+		visible = { has_completed_focus = TT_the_siberian_gambit NOT = { has_idea = TT_masters_of_siberia } NOT = { has_country_flag = TT_eastern_transsib_secured } }
 		available = {
+			NOT = { has_country_flag = TT_eastern_transsib_secured }
 			custom_trigger_tooltip = {
 				tooltip = TT_eastern_transsib_ready_tt
 				TT_siberian_campaign_active = yes
@@ -205,37 +207,12 @@ TT_tuva_category = {
 		ai_will_do = { base = 100 }
 		complete_effect = {
 			set_country_flag = TT_eastern_transsib_secured
+			army_experience = 25
 			SOV = { add_timed_idea = { idea = TT_siberian_counteroffensive days = 180 } }
 			country_event = {
 				id = tt_tuva.23
 				days = 1
 			}
-		}
-	}
-
-	TT_hold_transsib_nodes = {
-		icon = GFX_decision_generic_civil_support
-		cost = 25
-		allowed = { original_tag = TAN }
-		visible = {
-			has_completed_focus = TT_the_siberian_gambit
-			has_country_flag = TT_eastern_transsib_secured
-			NOT = { has_idea = TT_masters_of_siberia }
-		}
-		available = {
-			custom_trigger_tooltip = {
-				tooltip = TT_transsib_holding_ready_tt
-				TT_siberian_campaign_active = yes
-				TT_controls_transsib_nodes = yes
-				NOT = { has_country_flag = TT_transsib_holding_started }
-			}
-		}
-		highlight_states = { highlight_state_targets = { state = 568 state = 569 state = 570 state = 578 } }
-		ai_will_do = { base = 100 }
-		complete_effect = {
-			set_country_flag = TT_transsib_holding_started
-			set_variable = { TT_transsib_hold_days = 0 }
-			clr_country_flag = TT_transsib_nodes_held
 		}
 	}
 
@@ -266,6 +243,7 @@ TT_tuva_category = {
 			state = 578
 		} }
 		available = {
+			SOV = { surrender_progress >= 0.10 }
 			custom_trigger_tooltip = {
 				tooltip = TT_taishet_campaign_ready_tt
 				TT_taishet_military_ready = yes

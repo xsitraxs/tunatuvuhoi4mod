@@ -312,17 +312,17 @@
  TT_requires_liaotung: "We control Liaotung (access to the sea)"
  TT_pacific_fleet_tt: "If we control §YLiaotung§!, §Y2 dockyards§! will be built there."
  TT_masters_of_siberia: "Masters of the North"
- TT_masters_of_siberia_desc: "The railway corridor has been held, its northern approaches secured, and Moscow has recognised the transfer of fourteen Siberian states under the Taishet treaty."
+ TT_masters_of_siberia_desc: "Key Siberian nodes have fallen, Soviet resistance is weakening, and Moscow has recognised a fourteen-state settlement under the Taishet treaty."
  TT_dictate_peace_in_siberia: "Dictate the Taishet Peace"
- TT_dictate_peace_in_siberia_desc: "Stage three: after securing the railway, capture Altai and its northern approaches: Bodaybo, Bratsk, Kirensk and Yeniseisk. Only then demand a contiguous fourteen-state settlement. Peace does not require a fixed total war duration. Controlling Yakutsk additionally prevents the Soviet AI from refusing. A refusal allows another request after 90 days."
- TT_siberian_gambit_decision_tt: "Unlocks a three-stage Siberian campaign: eastern breakthrough, 30 days of uninterrupted control of seven railway nodes, and the northern offensive. The Taishet Peace transfers a fixed fourteen-state package."
+ TT_dictate_peace_in_siberia_desc: "Demand peace at 10% Soviet surrender progress while controlling Tuva and seven Siberian nodes. The eastern raid is optional; the old stages and 30-day counter no longer apply. Holding Yakutsk prevents Soviet AI refusal. A genuine refusal allows another request after 90 days."
+ TT_siberian_gambit_decision_tt: "Unlocks the Taishet Peace: 10% Soviet surrender progress and control of Tuva, Chita, Buryatia, Irkutsk, Krasnoyarsk, Kemerovo, Novosibirsk and Tomsk. No mandatory preparation decisions or holding timer. The treaty transfers a fixed fourteen-state package."
  TT_dictate_peace_in_siberia_tt: "Demand Altai, Oyrot, Chita, Buryatia, Bodaybo, Irkutsk, Bratsk, Krasnoyarsk, Kemerovo, Novosibirsk, Yakutsk, Kirensk, Yeniseisk and Tomsk. The full agreed package is transferred, not an arbitrary occupied subset. Third-party territory is protected. No cores are granted. Await Moscow's response."
 
  TT_central_asian_ssr_tt: "If §Ythe Soviet Union§! exists and we are not at war with it, Moscow will be asked to transfer the Central Asian republics to us."
  TT_manchurian_offensive_tt: "Creates a wargoal for §YKirin, Jehol and Liaotung§! and unlocks the §YManchurian Offensive§! decision."
 
  tt_tuva.10.t: "The Taishet Ultimatum"
- tt_tuva.10.desc: "The eastern Trans-Siberian has been cut and the central nodes held against the counteroffensive. With Altai and the northern approaches lost, Kyzyl demands fourteen states from Altai and Novosibirsk to Transbaikalia and Yakutia. The treaty, not the current front line, will determine the border. Acceptance brings a separate peace; refusal continues the campaign."
+ tt_tuva.10.desc: "Soviet war endurance is faltering, and Tuva holds seven key Siberian nodes. Kyzyl demands fourteen states from Altai to Transbaikalia and Yakutia. The treaty, not the arbitrary front line, will determine the border. Acceptance brings separate peace; refusal continues the war."
  tt_tuva.10.a: "Cede Siberia to save the motherland."
  tt_tuva.10.b: "Not one step back! We will retake Siberia!"
  tt_tuva.11.t: "The Peace of Taishet"
@@ -392,25 +392,22 @@
 
  TT_secure_eastern_transsib: "Sever the Eastern Trans-Siberian"
 
- TT_secure_eastern_transsib_desc: "Stage one: hold Tuva and capture Buryatia, Irkutsk and Chita. Securing the eastern railway triggers a Soviet response: for 180 days the USSR gains +10% attack and +15% defence exclusively against Tuva. This does not end the war."
+ TT_secure_eastern_transsib_desc: "Optional one-time raid: hold Tuva and capture Buryatia, Irkutsk and Chita. Spend 25 political power for 25 army experience. For 180 days the USSR gains +10% attack and +15% defence exclusively against Tuva. This decision is not required for the Taishet Peace and cannot be repeated."
 
- TT_hold_transsib_nodes: "Secure the Central Trans-Siberian"
 
- TT_hold_transsib_nodes_desc: "Stage two: after the eastern breakthrough, also capture Krasnoyarsk, Kemerovo, Novosibirsk and Tomsk. Begin consolidation and continuously control Tuva and all seven railway nodes for 30 days. Losing any resets progress; recapturing them restarts it automatically. Held: [?TT_transsib_hold_days|0]/30 days."
 
  TT_siberian_counteroffensive: "Siberian Counteroffensive"
 
  TT_siberian_counteroffensive_desc: "Moscow commits reserves to restore the Trans-Siberian link. These bonuses apply only against Tuva and end with peace or after 180 days."
 
- TT_taishet_campaign_ready_tt: "Complete the eastern breakthrough and continuously hold Tuva, Chita, Buryatia, Irkutsk, Krasnoyarsk, Kemerovo, Novosibirsk and Tomsk for 30 days. Also control Altai, Oyrot, Bodaybo, Bratsk, Kirensk and Yeniseisk. All 14 treaty states must be owned and controlled exclusively by the USSR or Tuva. Both countries must remain at war and uncapitulated."
+ TT_taishet_campaign_ready_tt: "Soviet surrender progress is at least 10%. Tuva controls Tuva, Chita, Buryatia, Irkutsk, Krasnoyarsk, Kemerovo, Novosibirsk and Tomsk. Both countries remain at war and uncapitulated. No third country owns or controls any of the 14 treaty states. Preparatory decisions and a 30-day wait are not required."
 
  tt_tuva.23.t: "Soviet Reserves on the Trans-Siberian"
 
- tt_tuva.23.desc: "The eastern railway has been severed. Moscow will not surrender Siberia after a single successful raid: Soviet commanders are preparing a counteroffensive. We must seize and hold the central nodes, then secure the northern approaches. Soviet forces gain +10% attack and +15% defence exclusively against Tuva for 180 days."
+ tt_tuva.23.desc: "The eastern Trans-Siberian raid has given our commanders combat experience. Moscow is preparing a response: Soviet forces gain +10% attack and +15% defence exclusively against Tuva for 180 days. This raid is not a peace prerequisite: talks require 10% Soviet surrender progress and control of seven Siberian nodes."
 
- tt_tuva.23.a: "One breakthrough is not enough."
+ tt_tuva.23.a: "Continue the offensive."
 
- TT_eastern_transsib_ready_tt: "National-path Tuva is at war with an uncapitulated USSR. We control Tuva, Chita, Buryatia and Irkutsk. The eastern breakthrough has not yet been secured."
- TT_transsib_holding_ready_tt: "The Siberian campaign is active. We control Tuva and seven railway nodes: Chita, Buryatia, Irkutsk, Krasnoyarsk, Kemerovo, Novosibirsk and Tomsk. Consolidation has not yet started."
+ TT_eastern_transsib_ready_tt: "National-path Tuva is at war with an uncapitulated USSR and controls Tuva, Chita, Buryatia and Irkutsk. This one-time optional raid has not yet been carried out; it is not a peace prerequisite."
  TT_taishet_no_pending_tt: "No Taishet Peace request is awaiting Moscow's response."
  TT_taishet_no_cooldown_tt: "No active 90-day cooldown following Moscow's refusal."
