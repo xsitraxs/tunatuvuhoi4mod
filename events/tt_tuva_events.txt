@@ -317,7 +317,7 @@ country_event = {
 	id = tt_tuva.10
 	title = tt_tuva.10.t
 	desc = tt_tuva.10.desc
-	picture = GFX_report_event_generic_sign_treaty2
+	picture = GFX_tt_tuva_negotiations
 	is_triggered_only = yes
 	# Deliver pending requests even after a battlefield reversal; response guards
 	# then discard the obsolete request instead of leaving TAN permanently pending.
@@ -351,6 +351,7 @@ country_event = {
 					else = { add_ideas = TT_masters_of_siberia }
 					add_political_power = 150
 					add_stability = 0.10
+					country_event = { id = tt_tuva.26 }
 					news_event = {
 						id = tt_tuva.11
 						days = 1
@@ -380,6 +381,7 @@ country_event = {
 			TAN = {
 				clr_country_flag = TT_taishet_request_pending
 				set_country_flag = { flag = TT_taishet_refused_recently days = 90 }
+				country_event = { id = tt_tuva.27 days = 1 }
 			}
 			add_stability = -0.05
 			add_war_support = -0.05
@@ -396,7 +398,7 @@ news_event = {
 	id = tt_tuva.11
 	title = tt_tuva.11.t
 	desc = tt_tuva.11.desc
-	picture = GFX_news_event_generic_sign_treaty1
+	picture = GFX_tt_tuva_treaty_news
 
 	major = yes
 	is_triggered_only = yes
@@ -852,8 +854,50 @@ country_event = {
 	id = tt_tuva.23
 	title = tt_tuva.23.t
 	desc = tt_tuva.23.desc
-	picture = GFX_news_event_generic_army
+	# Country-event artwork: the larger news sprite overlaps the report window.
+	picture = GFX_tt_tuva_irkutsk
 	is_triggered_only = yes
 	trigger = { tag = TAN TT_siberian_campaign_active = yes }
 	option = { name = tt_tuva.23.a }
+}
+
+# Campaign story beats are informational: rewards remain in the original decision/response.
+country_event = {
+	id = tt_tuva.24
+	title = tt_tuva.24.t
+	desc = tt_tuva.24.desc
+	picture = GFX_tt_tuva_irkutsk
+	is_triggered_only = yes
+	trigger = { tag = TAN TT_siberian_campaign_active = yes controls_state = 566 }
+	option = { name = tt_tuva.24.a }
+}
+
+country_event = {
+	id = tt_tuva.25
+	title = tt_tuva.25.t
+	desc = tt_tuva.25.desc
+	picture = GFX_tt_tuva_negotiations
+	is_triggered_only = yes
+	trigger = { tag = TAN has_country_flag = TT_taishet_request_pending has_war_with = SOV }
+	option = { name = tt_tuva.25.a }
+}
+
+country_event = {
+	id = tt_tuva.26
+	title = tt_tuva.26.t
+	desc = tt_tuva.26.desc
+	picture = GFX_tt_tuva_negotiations
+	is_triggered_only = yes
+	trigger = { tag = TAN has_idea = TT_masters_of_siberia TT_owns_taishet_package = yes }
+	option = { name = tt_tuva.26.a }
+}
+
+country_event = {
+	id = tt_tuva.27
+	title = tt_tuva.27.t
+	desc = tt_tuva.27.desc
+	picture = GFX_tt_tuva_negotiations
+	is_triggered_only = yes
+	trigger = { tag = TAN has_country_flag = TT_taishet_refused_recently has_war_with = SOV }
+	option = { name = tt_tuva.27.a }
 }

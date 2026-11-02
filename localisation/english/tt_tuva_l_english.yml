@@ -321,13 +321,13 @@
  TT_central_asian_ssr_tt: "If §Ythe Soviet Union§! exists and we are not at war with it, Moscow will be asked to transfer the Central Asian republics to us."
  TT_manchurian_offensive_tt: "Creates a wargoal for §YKirin, Jehol and Liaotung§! and unlocks the §YManchurian Offensive§! decision."
 
- tt_tuva.10.t: "The Taishet Ultimatum"
- tt_tuva.10.desc: "Soviet war endurance is faltering, and Tuva holds seven key Siberian nodes. Kyzyl demands fourteen states from Altai to Transbaikalia and Yakutia. The treaty, not the arbitrary front line, will determine the border. Acceptance brings separate peace; refusal continues the war."
- tt_tuva.10.a: "Cede Siberia to save the motherland."
- tt_tuva.10.b: "Not one step back! We will retake Siberia!"
- tt_tuva.11.t: "The Peace of Taishet"
- tt_tuva.11.desc: "Following a hard campaign along the Trans-Siberian, Moscow has signed a separate peace with Tuva. The Taishet treaty transfers a fixed fourteen-state package in Southern and Eastern Siberia, including the railway's northern approaches and Yakutia. The settlement follows agreed state boundaries rather than arbitrary troop positions."
- tt_tuva.11.a: "Siberia bows to the horsemen of the steppe."
+ tt_tuva.10.t: "A Dispatch from Kyzyl"
+ tt_tuva.10.desc: "A map of Siberian railways lies on the Kremlin table. Seven key junctions are in Tuvan hands; reports from the east describe overstretched supply lines and dwindling reserves.\n\nKyzyl offers an end to the war in exchange for fourteen regions, from Altai to Transbaikalia and Yakutia. The Tuvan delegates call it the Taishet Treaty. Moscow must choose between a bitter concession and continued war."
+ tt_tuva.10.a: "Sign the treaty. Preserve what remains."
+ tt_tuva.10.b: "Negotiations are over. Continue the war."
+ tt_tuva.11.t: "The Taishet Treaty"
+ tt_tuva.11.desc: "News from Siberia reports an end to the war between the Soviet Union and Tuva. After fighting over the junctions of the Trans-Siberian Railway, Moscow has accepted territorial concessions.\n\nFourteen regions, including lands in Altai, Transbaikalia and Yakutia, pass to Kyzyl. The treaty changes the balance of power in Asia: a small steppe republic now governs vast stretches of Siberia."
+ tt_tuva.11.a: "New borders on the map of Asia."
 
  # ================================================================
  #  EVENTS: CENTRAL ASIAN SSR AND MANCHURIA
@@ -400,14 +400,40 @@
 
  TT_siberian_counteroffensive_desc: "Moscow commits reserves to restore the Trans-Siberian link. These bonuses apply only against Tuva and end with peace or after 180 days."
 
- TT_taishet_campaign_ready_tt: "Soviet surrender progress is at least 10%. Tuva controls Tuva, Chita, Buryatia, Irkutsk, Krasnoyarsk, Kemerovo, Novosibirsk and Tomsk. Both countries remain at war and uncapitulated. No third country owns or controls any of the 14 treaty states. Preparatory decisions and a 30-day wait are not required."
+ TT_taishet_campaign_ready_tt: "The national path and Siberian Gambit are complete. Tuva and the USSR exist, are at war with each other and have not capitulated. The Taishet Peace has not already been concluded."
 
- tt_tuva.23.t: "Soviet Reserves on the Trans-Siberian"
+ tt_tuva.23.t: "The Railway Severed"
 
- tt_tuva.23.desc: "The eastern Trans-Siberian raid has given our commanders combat experience. Moscow is preparing a response: Soviet forces gain +10% attack and +15% defence exclusively against Tuva for 180 days. This raid is not a peace prerequisite: talks require 10% Soviet surrender progress and control of seven Siberian nodes."
+ tt_tuva.23.desc: "Soviet dispatch offices have fallen silent along the eastern Trans-Siberian Railway. Our commanders return from the raid with maps, reports and hard-won experience. Silence on the line does not mean Moscow has accepted its loss.\n\nSoviet commanders are bringing up reserves. For 180 days their forces gain +10% attack and +15% defence against Tuva."
 
- tt_tuva.23.a: "Continue the offensive."
+ tt_tuva.23.a: "Now they know where to find us."
 
  TT_eastern_transsib_ready_tt: "National-path Tuva is at war with an uncapitulated USSR and controls Tuva, Chita, Buryatia and Irkutsk. This one-time optional raid has not yet been carried out; it is not a peace prerequisite."
  TT_taishet_no_pending_tt: "No Taishet Peace request is awaiting Moscow's response."
  TT_taishet_no_cooldown_tt: "No active 90-day cooldown following Moscow's refusal."
+
+ TT_taishet_package_uncontested_tt: "All 14 treaty states are owned and controlled exclusively by the USSR or Tuva, with no third-party ownership or occupation."
+
+ tt_tuva.24.t: "A New Banner over the Angara"
+
+ tt_tuva.24.desc: "A dispatch from Irkutsk has reached Kyzyl. Our banner flies over the city; patrols secure the station, depots and approaches to the crossings. Shots still echo in the streets as residents cautiously emerge beside shuttered shops.\n\nFor our commanders this is a new foothold, not the end of the campaign. While the war continues in the west, holding the railway may prove as difficult as taking it."
+
+ tt_tuva.24.a: "Hold the city. Secure the railway."
+
+ tt_tuva.25.t: "The Delegation to Taishet"
+
+ tt_tuva.25.desc: "Diplomats and officers have departed carrying maps marked with the terms of a possible peace. Their task is to secure recognition of our gains and bring the war with Moscow to an end.\n\nWhile the Soviet side studies the proposal, orders at the front remain unchanged. Sending a delegation does not establish a ceasefire. We still await an answer."
+
+ tt_tuva.25.a: "Hold the line until an answer arrives."
+
+ tt_tuva.26.t: "Signatures beneath a New Border"
+
+ tt_tuva.26.desc: "The final objections have been settled. Signed copies of the Taishet Treaty lie on the table while signal officers transmit orders ending the war. Kyzyl receives the news with relief and disbelief at the scale of the change.\n\nThe fourteen agreed regions now lie under our authority. What follows cannot be won by a cavalry charge: administration, supply and the lives of people on both sides of the former front must be rebuilt."
+
+ tt_tuva.26.a: "The war is over. Another task begins."
+
+ tt_tuva.27.t: "Moscow Says No"
+
+ tt_tuva.27.desc: "The Soviet delegation has refused to sign the proposed treaty. Maps are cleared from the table and the negotiators prepare to leave. Moscow intends to retake the lost junctions by force.\n\nThe war continues. Another request may be sent in 90 days; until then, the fate of the railway will be decided at the front."
+
+ tt_tuva.27.a: "Then our answer must come from the front."

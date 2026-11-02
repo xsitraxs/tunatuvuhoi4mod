@@ -1,0 +1,8 @@
+# Khozhuun administration: category registration, separate from decision membership.
+TT_khozhuun_category = {
+	icon = GFX_decision_category_generic_political_actions
+	priority = 40
+	visible_when_empty = no
+	allowed = { original_tag = TAN }
+	visible = { has_country_flag = TT_national_path }
+}

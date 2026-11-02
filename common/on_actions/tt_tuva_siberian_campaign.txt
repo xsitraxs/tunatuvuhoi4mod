@@ -1,6 +1,20 @@
 on_actions = {
 	on_daily_TAN = {
-		effect = { TAN = { TT_cleanup_taishet_pending = yes } }
+		effect = {
+			TAN = {
+				TT_cleanup_taishet_pending = yes
+				# Mark and deliver in the same daily effect: no lossy delayed notification.
+				if = {
+					limit = {
+						TT_siberian_campaign_active = yes
+						controls_state = 566
+						NOT = { has_country_flag = TT_irkutsk_story_seen }
+					}
+					set_country_flag = TT_irkutsk_story_seen
+					country_event = { id = tt_tuva.24 }
+				}
+			}
+		}
 	}
 	on_daily_SOV = {
 		effect = {

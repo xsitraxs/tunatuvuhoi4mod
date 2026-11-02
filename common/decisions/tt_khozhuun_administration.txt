@@ -1,0 +1,73 @@
+# Adapted from Kilo's supplied module. All decisions are one-shot and peacetime-only.
+# Engine cost charges PP; do not also subtract PP in complete_effect.
+TT_khozhuun_category = {
+	TT_khozhuun_restore_administration = {
+		icon = GFX_decision_generic_civil_support
+		cost = 40
+		allowed = { original_tag = TAN }
+		visible = {
+			has_country_flag = TT_national_path
+			hidden_trigger = { NOT = { has_country_flag = TT_khozhuun_restore_administration_done } }
+		}
+		available = {
+			hidden_trigger = {
+				has_country_flag = TT_national_path
+				NOT = { has_country_flag = TT_khozhuun_restore_administration_done }
+			}
+			has_capitulated = no
+			has_war = no
+			is_subject = no
+		}
+		ai_will_do = { base = 20 }
+		complete_effect = {
+			set_country_flag = TT_khozhuun_restore_administration_done
+			add_stability = 0.04
+		}
+	}
+	TT_khozhuun_train_officials = {
+		icon = GFX_decision_generic_political_discourse
+		cost = 50
+		allowed = { original_tag = TAN }
+		visible = {
+			has_country_flag = TT_national_path
+			hidden_trigger = { NOT = { has_country_flag = TT_khozhuun_train_officials_done } }
+		}
+		available = {
+			hidden_trigger = {
+				has_country_flag = TT_national_path
+				NOT = { has_country_flag = TT_khozhuun_train_officials_done }
+			}
+			has_capitulated = no
+			has_war = no
+			is_subject = no
+		}
+		ai_will_do = { base = 15 }
+		complete_effect = {
+			set_country_flag = TT_khozhuun_train_officials_done
+			add_ideas = TT_khozhuun_officials_cadre
+		}
+	}
+	TT_khozhuun_link_khozhuuns = {
+		icon = GFX_decision_generic_train
+		cost = 60
+		allowed = { original_tag = TAN }
+		visible = {
+			has_country_flag = TT_national_path
+			hidden_trigger = { NOT = { has_country_flag = TT_khozhuun_link_khozhuuns_done } }
+		}
+		available = {
+			hidden_trigger = {
+				has_country_flag = TT_national_path
+				NOT = { has_country_flag = TT_khozhuun_link_khozhuuns_done }
+			}
+			has_capitulated = no
+			has_war = no
+			is_subject = no
+		}
+		ai_will_do = { base = 15 }
+		complete_effect = {
+			set_country_flag = TT_khozhuun_link_khozhuuns_done
+			add_ideas = TT_khozhuun_transport_service
+		}
+	}
+}
