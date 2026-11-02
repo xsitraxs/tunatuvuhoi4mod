@@ -1,0 +1,14 @@
+spriteTypes = {
+	spriteType = {
+		name = "GFX_tt_tuva_irkutsk"
+		texturefile = "gfx/event_pictures/tt_tuva/irkutsk.dds"
+	}
+	spriteType = {
+		name = "GFX_tt_tuva_negotiations"
+		texturefile = "gfx/event_pictures/tt_tuva/negotiations.dds"
+	}
+	spriteType = {
+		name = "GFX_tt_tuva_treaty_news"
+		texturefile = "gfx/event_pictures/tt_tuva/treaty_news.dds"
+	}
+}

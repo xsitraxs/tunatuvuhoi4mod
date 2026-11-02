@@ -69,7 +69,7 @@ TT_owns_taishet_package = {
 TT_taishet_military_ready = {
 	TT_siberian_campaign_active = yes
 	TT_controls_transsib_nodes = yes
-	SOV = { surrender_progress >= 0.10 }
+	SOV = { NOT = { surrender_progress < 0.10 } }
 	TT_taishet_package_uncontested = yes
 }
 

@@ -195,7 +195,10 @@ TT_tuva_category = {
 		allowed = { original_tag = TAN }
 		visible = { has_completed_focus = TT_the_siberian_gambit NOT = { has_idea = TT_masters_of_siberia } NOT = { has_country_flag = TT_eastern_transsib_secured } }
 		available = {
-			NOT = { has_country_flag = TT_eastern_transsib_secured }
+			# Keep the direct one-shot guard without exposing its internal flag name.
+			hidden_trigger = {
+				NOT = { has_country_flag = TT_eastern_transsib_secured }
+			}
 			custom_trigger_tooltip = {
 				tooltip = TT_eastern_transsib_ready_tt
 				TT_siberian_campaign_active = yes
@@ -243,10 +246,22 @@ TT_tuva_category = {
 			state = 578
 		} }
 		available = {
-			SOV = { surrender_progress >= 0.10 }
+			SOV = { NOT = { surrender_progress < 0.10 } }
 			custom_trigger_tooltip = {
 				tooltip = TT_taishet_campaign_ready_tt
-				TT_taishet_military_ready = yes
+				TT_siberian_campaign_active = yes
+			}
+			controls_state = 329
+			controls_state = 563
+			controls_state = 564
+			controls_state = 566
+			controls_state = 568
+			controls_state = 569
+			controls_state = 570
+			controls_state = 578
+			custom_trigger_tooltip = {
+				tooltip = TT_taishet_package_uncontested_tt
+				TT_taishet_package_uncontested = yes
 			}
 			custom_trigger_tooltip = {
 				tooltip = TT_taishet_no_pending_tt
@@ -261,6 +276,7 @@ TT_tuva_category = {
 		complete_effect = {
 			custom_effect_tooltip = TT_dictate_peace_in_siberia_tt
 			set_country_flag = TT_taishet_request_pending
+			country_event = { id = tt_tuva.25 }
 			SOV = {
 				country_event = {
 					id = tt_tuva.10
