@@ -1646,4 +1646,333 @@ focus_tree = {
 			custom_effect_tooltip = TT_siberian_gambit_decision_tt
 		}
 	}
+
+	# OPTIONAL SOVIET WAR BRANCH: no new prerequisites for war or treaty.
+
+	focus = {
+		id = TT_war_staff_maps
+		icon = GFX_TT_focus_the_siberian_gambit
+		prerequisite = { focus = TT_greater_tuva }
+		relative_position_id = TT_greater_tuva
+		x = 4
+		y = 0
+		cost = 3
+		cancel_if_invalid = yes
+		available = {
+			custom_trigger_tooltip = { tooltip = TT_war_preparation_tt TT_war_focus_preparation_ready = yes }
+		}
+		ai_will_do = {
+			factor = 10
+			modifier = {
+				factor = 4
+				OR = { has_completed_focus = TT_the_siberian_gambit has_war_with = SOV }
+			}
+		}
+		search_filters = { FOCUS_FILTER_ARMY_XP }
+		completion_reward = {
+			# Recheck: a peace or loss on the completion tick must not grant wartime rewards.
+			if = {
+				limit = {
+					TT_war_focus_preparation_ready = yes
+				}
+				army_experience = 10
+				add_command_power = 15
+			}
+		}
+	}
+
+	focus = {
+		id = TT_war_border_depots
+		icon = GFX_TT_focus_the_soviet_arsenal
+		prerequisite = { focus = TT_war_staff_maps }
+		relative_position_id = TT_greater_tuva
+		x = 4
+		y = 1
+		cost = 3
+		cancel_if_invalid = yes
+		available = {
+			custom_trigger_tooltip = { tooltip = TT_war_preparation_tt TT_war_focus_preparation_ready = yes }
+		}
+		ai_will_do = {
+			factor = 10
+			modifier = {
+				factor = 4
+				OR = { has_completed_focus = TT_the_siberian_gambit has_war_with = SOV }
+			}
+		}
+		search_filters = { FOCUS_FILTER_MANPOWER }
+		completion_reward = {
+			# Recheck: a peace or loss on the completion tick must not grant wartime rewards.
+			if = {
+				limit = {
+					TT_war_focus_preparation_ready = yes
+				}
+				add_equipment_to_stockpile = { type = infantry_equipment_0 amount = 200 producer = TAN }
+				add_equipment_to_stockpile = { type = support_equipment_1 amount = 20 producer = TAN }
+			}
+		}
+	}
+
+	focus = {
+		id = TT_war_field_reserve
+		icon = GFX_TT_focus_the_peoples_army
+		prerequisite = { focus = TT_war_border_depots }
+		relative_position_id = TT_greater_tuva
+		x = 4
+		y = 2
+		cost = 3
+		cancel_if_invalid = yes
+		available = {
+			custom_trigger_tooltip = { tooltip = TT_war_preparation_tt TT_war_focus_preparation_ready = yes }
+		}
+		ai_will_do = {
+			factor = 10
+			modifier = {
+				factor = 4
+				OR = { has_completed_focus = TT_the_siberian_gambit has_war_with = SOV }
+			}
+		}
+		search_filters = { FOCUS_FILTER_MANPOWER FOCUS_FILTER_WAR_SUPPORT }
+		completion_reward = {
+			# Recheck: a peace or loss on the completion tick must not grant wartime rewards.
+			if = {
+				limit = {
+					TT_war_focus_preparation_ready = yes
+				}
+				add_manpower = 500
+				add_war_support = 0.02
+			}
+		}
+	}
+
+	focus = {
+		id = TT_war_sayan_offensive
+		icon = GFX_TT_focus_mountain_warfare
+		prerequisite = { focus = TT_war_field_reserve }
+		prerequisite = { focus = TT_the_siberian_gambit }
+		relative_position_id = TT_greater_tuva
+		x = 4
+		y = 3
+		cost = 5
+		cancel_if_invalid = yes
+		available = {
+			custom_trigger_tooltip = { tooltip = TT_war_campaign_tt TT_siberian_campaign_active = yes }
+		}
+		ai_will_do = {
+			factor = 10
+			modifier = { factor = 4 TT_siberian_campaign_active = yes }
+		}
+		search_filters = { FOCUS_FILTER_ARMY_XP }
+		completion_reward = {
+			# Recheck: a peace or loss on the completion tick must not grant wartime rewards.
+			if = {
+				limit = {
+					TT_siberian_campaign_active = yes
+				}
+				add_timed_idea = { idea = TT_war_staff_plan days = 90 }
+			}
+		}
+	}
+
+	focus = {
+		id = TT_war_siberian_guides
+		icon = GFX_TT_focus_cavalry_of_the_steppe
+		prerequisite = { focus = TT_war_field_reserve }
+		prerequisite = { focus = TT_the_siberian_gambit }
+		relative_position_id = TT_greater_tuva
+		x = 8
+		y = 3
+		cost = 5
+		cancel_if_invalid = yes
+		available = {
+			custom_trigger_tooltip = { tooltip = TT_war_campaign_tt TT_siberian_campaign_active = yes }
+		}
+		ai_will_do = {
+			factor = 10
+			modifier = { factor = 6 TT_siberian_campaign_active = yes }
+		}
+		search_filters = { FOCUS_FILTER_MANPOWER }
+		completion_reward = {
+			# Recheck: a peace or loss on the completion tick must not grant wartime rewards.
+			if = {
+				limit = {
+					TT_siberian_campaign_active = yes
+				}
+				add_timed_idea = { idea = TT_war_guides days = 90 }
+			}
+		}
+	}
+
+	focus = {
+		id = TT_war_transsib_advance
+		icon = GFX_TT_focus_the_kyzyl_railroad
+		prerequisite = { focus = TT_war_sayan_offensive }
+		relative_position_id = TT_greater_tuva
+		x = 4
+		y = 4
+		cost = 3
+		cancel_if_invalid = no
+		continue_if_invalid = yes
+		# Current control is required at selection, not throughout refurbishment.
+		cancel = { NOT = { TT_siberian_campaign_active = yes } }
+		available = {
+			custom_trigger_tooltip = { tooltip = TT_war_campaign_tt TT_siberian_campaign_active = yes }
+			TT_controls_eastern_transsib = yes
+			563 = { is_owned_by = SOV }
+			564 = { is_owned_by = SOV }
+			566 = { is_owned_by = SOV }
+		}
+		ai_will_do = {
+			factor = 10
+			modifier = { factor = 4 TT_siberian_campaign_active = yes }
+		}
+		search_filters = { FOCUS_FILTER_ARMY_XP }
+		completion_reward = {
+			# Selection proves the Soviet-owned objective was reached. Loss does not undo salvage.
+			# Peace/capitulation still cancels the project and blocks its reward.
+			if = {
+				limit = {
+					TT_siberian_campaign_active = yes
+				}
+				army_experience = 10
+				add_command_power = 10
+			}
+		}
+	}
+
+	focus = {
+		id = TT_war_red_army_salvage
+		icon = GFX_TT_focus_infantry_and_artillery
+		prerequisite = { focus = TT_war_siberian_guides }
+		relative_position_id = TT_greater_tuva
+		x = 8
+		y = 4
+		cost = 3
+		cancel_if_invalid = no
+		continue_if_invalid = yes
+		# Current control is required at selection, not throughout refurbishment.
+		cancel = { NOT = { TT_siberian_campaign_active = yes } }
+		available = {
+			custom_trigger_tooltip = { tooltip = TT_war_campaign_tt TT_siberian_campaign_active = yes }
+			controls_state = 566
+			566 = { is_owned_by = SOV }
+		}
+		ai_will_do = {
+			factor = 10
+			modifier = { factor = 4 TT_siberian_campaign_active = yes }
+		}
+		search_filters = { FOCUS_FILTER_MANPOWER }
+		completion_reward = {
+			# Selection proves the Soviet-owned objective was reached. Loss does not undo salvage.
+			# Peace/capitulation still cancels the project and blocks its reward.
+			if = {
+				limit = {
+					TT_siberian_campaign_active = yes
+				}
+				add_equipment_to_stockpile = { type = infantry_equipment_0 amount = 150 producer = TAN }
+				add_equipment_to_stockpile = { type = support_equipment_1 amount = 15 producer = TAN }
+			}
+		}
+	}
+
+	focus = {
+		id = TT_war_taishet_junction
+		icon = GFX_TT_focus_the_siberian_gambit
+		prerequisite = { focus = TT_war_transsib_advance }
+		relative_position_id = TT_greater_tuva
+		x = 4
+		y = 5
+		cost = 3
+		cancel_if_invalid = no
+		continue_if_invalid = yes
+		# Current control is required at selection, not throughout refurbishment.
+		cancel = { NOT = { TT_siberian_campaign_active = yes } }
+		available = {
+			custom_trigger_tooltip = { tooltip = TT_war_campaign_tt TT_siberian_campaign_active = yes }
+			TT_controls_transsib_nodes = yes
+			563 = { is_owned_by = SOV }
+			564 = { is_owned_by = SOV }
+			566 = { is_owned_by = SOV }
+			568 = { is_owned_by = SOV }
+			569 = { is_owned_by = SOV }
+			570 = { is_owned_by = SOV }
+			578 = { is_owned_by = SOV }
+		}
+		ai_will_do = {
+			factor = 10
+			modifier = { factor = 4 TT_siberian_campaign_active = yes }
+		}
+		search_filters = { FOCUS_FILTER_ARMY_XP FOCUS_FILTER_POLITICAL }
+		completion_reward = {
+			# Selection proves the Soviet-owned objective was reached. Loss does not undo salvage.
+			# Peace/capitulation still cancels the project and blocks its reward.
+			if = {
+				limit = {
+					TT_siberian_campaign_active = yes
+				}
+				add_political_power = 20
+				army_experience = 10
+			}
+		}
+	}
+
+	focus = {
+		id = TT_war_hold_conquests
+		icon = GFX_TT_focus_the_siberian_military_district
+		prerequisite = { focus = TT_war_red_army_salvage }
+		relative_position_id = TT_greater_tuva
+		x = 8
+		y = 5
+		cost = 5
+		cancel_if_invalid = yes
+		available = {
+			custom_trigger_tooltip = { tooltip = TT_war_campaign_tt TT_siberian_campaign_active = yes }
+			TT_controls_eastern_transsib = yes
+		}
+		ai_will_do = {
+			factor = 10
+			modifier = { factor = 4 TT_siberian_campaign_active = yes }
+		}
+		search_filters = { FOCUS_FILTER_MANPOWER }
+		completion_reward = {
+			# Recheck: a peace or loss on the completion tick must not grant wartime rewards.
+			if = {
+				limit = {
+					TT_siberian_campaign_active = yes
+					TT_controls_eastern_transsib = yes
+				}
+				add_timed_idea = { idea = TT_war_front_cohesion days = 90 }
+			}
+		}
+	}
+
+	focus = {
+		id = TT_war_new_siberian_border
+		icon = GFX_TT_focus_greater_tuva
+		prerequisite = { focus = TT_the_siberian_gambit }
+		relative_position_id = TT_greater_tuva
+		x = 0
+		y = 6
+		cost = 5
+		cancel_if_invalid = yes
+		available = {
+			custom_trigger_tooltip = { tooltip = TT_postwar_ready_tt TT_postwar_ready = yes }
+		}
+		ai_will_do = {
+			factor = 10
+			modifier = { factor = 4 TT_postwar_ready = yes }
+		}
+		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_STABILITY FOCUS_FILTER_ARMY_XP }
+		completion_reward = {
+			# Recheck: a peace or loss on the completion tick must not grant wartime rewards.
+			if = {
+				limit = {
+					TT_postwar_ready = yes
+				}
+				add_political_power = 25
+				add_stability = 0.02
+				army_experience = 10
+			}
+		}
+	}
 }

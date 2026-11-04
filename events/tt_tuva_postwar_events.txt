@@ -1,0 +1,134 @@
+add_namespace = tt_postwar
+
+country_event = {
+	id = tt_postwar.1
+	title = tt_postwar.1.t
+	desc = tt_postwar.1.desc
+	picture = GFX_tt_tuva_negotiations
+	is_triggered_only = yes
+	fire_only_once = yes
+	trigger = { tag = TAN has_country_flag = TT_postwar_council_started NOT = { has_country_flag = TT_postwar_route_chosen } }
+	option = {
+		name = tt_postwar.1.a
+		ai_chance = { base = 40 }
+		if = {
+			limit = { NOT = { has_country_flag = TT_postwar_route_chosen } }
+			set_country_flag = TT_postwar_route_chosen
+			set_country_flag = TT_postwar_route_military
+			add_ideas = TT_postwar_military_base
+		}
+	}
+	option = {
+		name = tt_postwar.1.b
+		ai_chance = { base = 30 }
+		if = {
+			limit = { NOT = { has_country_flag = TT_postwar_route_chosen } }
+			set_country_flag = TT_postwar_route_chosen
+			set_country_flag = TT_postwar_route_local
+			add_ideas = TT_postwar_local_base
+		}
+	}
+	option = {
+		name = tt_postwar.1.c
+		ai_chance = { base = 30 }
+		if = {
+			limit = { NOT = { has_country_flag = TT_postwar_route_chosen } }
+			set_country_flag = TT_postwar_route_chosen
+			set_country_flag = TT_postwar_route_modern
+			add_ideas = TT_postwar_modern_base
+		}
+	}
+}
+
+country_event = {
+	id = tt_postwar.2
+	title = tt_postwar.2.t
+	desc = tt_postwar.2.desc
+	picture = GFX_tt_tuva_negotiations
+	is_triggered_only = yes
+	fire_only_once = yes
+	trigger = { tag = TAN has_country_flag = TT_postwar_step2_done }
+	option = {
+		name = tt_postwar.2.a
+		ai_chance = { base = 50 }
+	}
+}
+
+country_event = {
+	id = tt_postwar.3
+	title = tt_postwar.3.t
+	desc = tt_postwar.3.desc
+	picture = GFX_tt_tuva_negotiations
+	is_triggered_only = yes
+	fire_only_once = yes
+	trigger = { tag = SOV country_exists = TAN }
+	option = {
+		name = tt_postwar.3.a
+		ai_chance = { base = 50 }
+		add_political_power = -25
+		add_stability = 0.02
+	}
+	option = {
+		name = tt_postwar.3.b
+		ai_chance = { base = 50 }
+		add_war_support = -0.02
+	}
+}
+
+country_event = {
+	id = tt_postwar.4
+	title = tt_postwar.4.t
+	desc = tt_postwar.4.desc
+	picture = GFX_tt_tuva_negotiations
+	is_triggered_only = yes
+	fire_only_once = yes
+	trigger = { tag = MON country_exists = TAN }
+	option = {
+		name = tt_postwar.4.a
+		trigger = { NOT = { has_war_with = TAN } }
+		ai_chance = { base = 40 }
+		add_political_power = -15
+		add_opinion_modifier = { target = TAN modifier = TT_postwar_neighbour_dialogue }
+	}
+	option = {
+		name = tt_postwar.4.b
+		ai_chance = { base = 60 }
+		add_opinion_modifier = { target = TAN modifier = TT_postwar_neighbour_caution }
+	}
+}
+
+country_event = {
+	id = tt_postwar.5
+	title = tt_postwar.5.t
+	desc = tt_postwar.5.desc
+	picture = GFX_tt_tuva_negotiations
+	is_triggered_only = yes
+	fire_only_once = yes
+	trigger = { tag = CHI country_exists = TAN }
+	option = {
+		name = tt_postwar.5.a
+		ai_chance = { base = 60 }
+		add_opinion_modifier = { target = TAN modifier = TT_postwar_neighbour_caution }
+	}
+	option = {
+		name = tt_postwar.5.b
+		trigger = { NOT = { has_war_with = TAN } }
+		ai_chance = { base = 40 }
+		add_political_power = -15
+		add_opinion_modifier = { target = TAN modifier = TT_postwar_neighbour_dialogue }
+	}
+}
+
+country_event = {
+	id = tt_postwar.6
+	title = tt_postwar.6.t
+	desc = tt_postwar.6.desc
+	picture = GFX_tt_tuva_negotiations
+	is_triggered_only = yes
+	fire_only_once = yes
+	trigger = { tag = TAN has_idea = TT_masters_of_siberia }
+	option = {
+		name = tt_postwar.6.a
+		ai_chance = { base = 50 }
+	}
+}

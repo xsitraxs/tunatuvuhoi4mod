@@ -12,3 +12,7 @@ docs/** export-ignore
 
 *.dds binary
 *.gfx -text
+
+# Development-only Node checks are not part of the mod archive.
+tests/ export-ignore
+tests/** export-ignore

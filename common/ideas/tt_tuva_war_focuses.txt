@@ -1,0 +1,25 @@
+ideas = {
+	country = {
+		TT_war_staff_plan = {
+			allowed = { original_tag = TAN }
+			allowed_civil_war = { always = no }
+			removal_cost = -1
+			picture = generic_armor
+			modifier = { max_planning_factor = 0.05 }
+		}
+		TT_war_guides = {
+			allowed = { original_tag = TAN }
+			allowed_civil_war = { always = no }
+			removal_cost = -1
+			picture = generic_armor
+			modifier = { supply_consumption_factor = -0.03 }
+		}
+		TT_war_front_cohesion = {
+			allowed = { original_tag = TAN }
+			allowed_civil_war = { always = no }
+			removal_cost = -1
+			picture = generic_armor
+			modifier = { army_org_factor = 0.03 }
+		}
+	}
+}

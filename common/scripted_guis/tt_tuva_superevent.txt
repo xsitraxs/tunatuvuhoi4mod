@@ -1,0 +1,15 @@
+scripted_gui = {
+	TT_taishet_superevent = {
+		context_type = player_context
+		window_name = "TT_taishet_superevent_window"
+		visible = {
+			tag = TAN
+			is_ai = no
+			has_country_flag = TT_taishet_superevent_open
+		}
+		effects = {
+			# Presentation only. Never award PP, ideas, stability or land here.
+			TT_taishet_close_click = { clr_country_flag = TT_taishet_superevent_open }
+		}
+	}
+}

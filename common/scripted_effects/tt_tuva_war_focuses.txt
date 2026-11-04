@@ -1,0 +1,10 @@
+# Called daily in TAN scope; global modifiers can affect other simultaneous fronts.
+# Remove within one daily tick after peace, capitulation, victory or SOV disappearance.
+TT_cleanup_war_focus_spirits = {
+	if = {
+		limit = { NOT = { TT_siberian_campaign_active = yes } }
+		remove_ideas = TT_war_staff_plan
+		remove_ideas = TT_war_guides
+		remove_ideas = TT_war_front_cohesion
+	}
+}

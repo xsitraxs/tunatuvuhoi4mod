@@ -1,0 +1,15 @@
+spriteTypes = {
+	spriteType = {
+		name = "GFX_TT_taishet_super_frame"
+		texturefile = "gfx/interface/tt_tuva_superevent/frame.dds"
+	}
+	spriteType = {
+		name = "GFX_TT_taishet_super_image"
+		texturefile = "gfx/interface/tt_tuva_superevent/taishet.dds"
+	}
+	spriteType = {
+		name = "GFX_TT_taishet_super_button"
+		texturefile = "gfx/interface/tt_tuva_superevent/button.dds"
+		noOfFrames = 3
+	}
+}

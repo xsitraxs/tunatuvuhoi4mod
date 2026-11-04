@@ -339,7 +339,7 @@ country_event = {
 			}
 			TT_transfer_taishet_package = yes
 			if = {
-				limit = { TAN = { TT_owns_taishet_package = yes } }
+				limit = { TAN = { TT_taishet_settlement_transferred = yes } }
 				white_peace = TAN
 				remove_ideas = TT_siberian_counteroffensive
 				TAN = {
@@ -351,7 +351,9 @@ country_event = {
 					else = { add_ideas = TT_masters_of_siberia }
 					add_political_power = 150
 					add_stability = 0.10
-					country_event = { id = tt_tuva.26 }
+					# Replaces the personal victory popup, without changing treaty rewards.
+					TT_queue_taishet_superevent = yes
+					TT_postwar_queue_reactions = yes
 					news_event = {
 						id = tt_tuva.11
 						days = 1

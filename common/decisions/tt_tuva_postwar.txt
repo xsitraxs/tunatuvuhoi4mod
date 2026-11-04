@@ -1,0 +1,147 @@
+TT_postwar_category = {
+	TT_postwar_council = {
+		icon = GFX_decision_generic_political_discourse
+		fire_only_once = yes
+		cost = 25
+		allowed = { original_tag = TAN }
+		visible = { hidden_trigger = { NOT = { has_country_flag = TT_postwar_council_started } } }
+		available = {
+			custom_trigger_tooltip = { tooltip = TT_postwar_ready_tt TT_postwar_ready = yes }
+			hidden_trigger = { NOT = { has_country_flag = TT_postwar_council_started } }
+		}
+		ai_will_do = { base = 10 }
+		complete_effect = {
+			set_country_flag = TT_postwar_council_started
+			country_event = { id = tt_postwar.1 }
+		}
+	}
+	TT_postwar_military_step1 = {
+		icon = GFX_decision_generic_civil_support
+		fire_only_once = yes
+		cost = 40
+		allowed = { original_tag = TAN }
+		visible = { hidden_trigger = { has_country_flag = TT_postwar_route_military NOT = { has_country_flag = TT_postwar_step1_done } } }
+		available = {
+			custom_trigger_tooltip = { tooltip = TT_postwar_ready_tt TT_postwar_ready = yes }
+			hidden_trigger = {
+				has_country_flag = TT_postwar_route_military
+				NOT = { has_country_flag = TT_postwar_step1_done }
+			}
+		}
+		ai_will_do = { base = 10 }
+		complete_effect = {
+			set_country_flag = TT_postwar_step1_done
+			set_country_flag = { flag = TT_postwar_step_wait days = 30 }
+			add_stability = 0.02
+		}
+	}
+	TT_postwar_military_step2 = {
+		icon = GFX_decision_generic_civil_support
+		fire_only_once = yes
+		cost = 60
+		allowed = { original_tag = TAN }
+		visible = { hidden_trigger = { has_country_flag = TT_postwar_route_military has_country_flag = TT_postwar_step1_done NOT = { has_country_flag = TT_postwar_step2_done } } }
+		available = {
+			custom_trigger_tooltip = { tooltip = TT_postwar_ready_tt TT_postwar_ready = yes }
+			hidden_trigger = {
+				has_country_flag = TT_postwar_route_military
+				NOT = { has_country_flag = TT_postwar_step2_done }
+				has_country_flag = TT_postwar_step1_done
+				has_idea = TT_postwar_military_base
+			}
+			custom_trigger_tooltip = { tooltip = TT_postwar_wait_tt NOT = { has_country_flag = TT_postwar_step_wait } }
+		}
+		ai_will_do = { base = 10 }
+		complete_effect = {
+			set_country_flag = TT_postwar_step2_done
+			swap_ideas = { remove_idea = TT_postwar_military_base add_idea = TT_postwar_military_settled }
+			country_event = { id = tt_postwar.2 }
+		}
+	}
+	TT_postwar_local_step1 = {
+		icon = GFX_decision_generic_civil_support
+		fire_only_once = yes
+		cost = 40
+		allowed = { original_tag = TAN }
+		visible = { hidden_trigger = { has_country_flag = TT_postwar_route_local NOT = { has_country_flag = TT_postwar_step1_done } } }
+		available = {
+			custom_trigger_tooltip = { tooltip = TT_postwar_ready_tt TT_postwar_ready = yes }
+			hidden_trigger = {
+				has_country_flag = TT_postwar_route_local
+				NOT = { has_country_flag = TT_postwar_step1_done }
+			}
+		}
+		ai_will_do = { base = 10 }
+		complete_effect = {
+			set_country_flag = TT_postwar_step1_done
+			set_country_flag = { flag = TT_postwar_step_wait days = 30 }
+			add_stability = 0.02
+		}
+	}
+	TT_postwar_local_step2 = {
+		icon = GFX_decision_generic_civil_support
+		fire_only_once = yes
+		cost = 60
+		allowed = { original_tag = TAN }
+		visible = { hidden_trigger = { has_country_flag = TT_postwar_route_local has_country_flag = TT_postwar_step1_done NOT = { has_country_flag = TT_postwar_step2_done } } }
+		available = {
+			custom_trigger_tooltip = { tooltip = TT_postwar_ready_tt TT_postwar_ready = yes }
+			hidden_trigger = {
+				has_country_flag = TT_postwar_route_local
+				NOT = { has_country_flag = TT_postwar_step2_done }
+				has_country_flag = TT_postwar_step1_done
+				has_idea = TT_postwar_local_base
+			}
+			custom_trigger_tooltip = { tooltip = TT_postwar_wait_tt NOT = { has_country_flag = TT_postwar_step_wait } }
+		}
+		ai_will_do = { base = 10 }
+		complete_effect = {
+			set_country_flag = TT_postwar_step2_done
+			swap_ideas = { remove_idea = TT_postwar_local_base add_idea = TT_postwar_local_settled }
+			country_event = { id = tt_postwar.2 }
+		}
+	}
+	TT_postwar_modern_step1 = {
+		icon = GFX_decision_generic_civil_support
+		fire_only_once = yes
+		cost = 40
+		allowed = { original_tag = TAN }
+		visible = { hidden_trigger = { has_country_flag = TT_postwar_route_modern NOT = { has_country_flag = TT_postwar_step1_done } } }
+		available = {
+			custom_trigger_tooltip = { tooltip = TT_postwar_ready_tt TT_postwar_ready = yes }
+			hidden_trigger = {
+				has_country_flag = TT_postwar_route_modern
+				NOT = { has_country_flag = TT_postwar_step1_done }
+			}
+		}
+		ai_will_do = { base = 10 }
+		complete_effect = {
+			set_country_flag = TT_postwar_step1_done
+			set_country_flag = { flag = TT_postwar_step_wait days = 30 }
+			add_stability = 0.02
+		}
+	}
+	TT_postwar_modern_step2 = {
+		icon = GFX_decision_generic_civil_support
+		fire_only_once = yes
+		cost = 60
+		allowed = { original_tag = TAN }
+		visible = { hidden_trigger = { has_country_flag = TT_postwar_route_modern has_country_flag = TT_postwar_step1_done NOT = { has_country_flag = TT_postwar_step2_done } } }
+		available = {
+			custom_trigger_tooltip = { tooltip = TT_postwar_ready_tt TT_postwar_ready = yes }
+			hidden_trigger = {
+				has_country_flag = TT_postwar_route_modern
+				NOT = { has_country_flag = TT_postwar_step2_done }
+				has_country_flag = TT_postwar_step1_done
+				has_idea = TT_postwar_modern_base
+			}
+			custom_trigger_tooltip = { tooltip = TT_postwar_wait_tt NOT = { has_country_flag = TT_postwar_step_wait } }
+		}
+		ai_will_do = { base = 10 }
+		complete_effect = {
+			set_country_flag = TT_postwar_step2_done
+			swap_ideas = { remove_idea = TT_postwar_modern_base add_idea = TT_postwar_modern_settled }
+			country_event = { id = tt_postwar.2 }
+		}
+	}
+}

@@ -3,6 +3,15 @@ on_actions = {
 		effect = {
 			TAN = {
 				TT_cleanup_taishet_pending = yes
+				TT_cleanup_war_focus_spirits = yes
+				if = {
+					limit = { has_country_flag = TT_postwar_reactions_pending }
+					TT_postwar_notify_world = yes
+				}
+				if = {
+					limit = { has_country_flag = TT_taishet_superevent_pending }
+					TT_open_taishet_superevent = yes
+				}
 				# Mark and deliver in the same daily effect: no lossy delayed notification.
 				if = {
 					limit = {
