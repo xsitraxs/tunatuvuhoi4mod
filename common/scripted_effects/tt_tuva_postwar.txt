@@ -1,0 +1,26 @@
+# TAN country scope. Queue only from a freshly successful treaty, never from an old save.
+TT_postwar_queue_reactions = {
+	if = {
+		limit = { tag = TAN NOT = { has_country_flag = TT_postwar_world_notified } NOT = { has_country_flag = TT_postwar_reactions_pending } }
+		set_country_flag = { flag = TT_postwar_reactions_pending days = 14 }
+		TT_postwar_notify_world = yes
+	}
+}
+TT_postwar_notify_world = {
+	if = {
+		limit = {
+			tag = TAN
+			has_country_flag = TT_postwar_reactions_pending
+			NOT = { has_country_flag = TT_postwar_world_notified }
+			NOT = { has_war_with = SOV }
+			has_idea = TT_masters_of_siberia
+			TT_owns_taishet_package = yes
+		}
+		set_country_flag = TT_postwar_world_notified
+		clr_country_flag = TT_postwar_reactions_pending
+		if = { limit = { country_exists = SOV } SOV = { country_event = { id = tt_postwar.3 } } }
+		if = { limit = { country_exists = MON } MON = { country_event = { id = tt_postwar.4 } } }
+		if = { limit = { country_exists = CHI } CHI = { country_event = { id = tt_postwar.5 } } }
+		country_event = { id = tt_postwar.6 days = 3 }
+	}
+}

@@ -1,0 +1,14 @@
+sound = {
+	name = "TT_taishet_super_reveal_sample"
+	file = "tt_tuva/taishet_reveal.wav"
+	volume = 0.65
+}
+soundeffect = {
+	name = "TT_taishet_super_reveal"
+	sounds = { sound = "TT_taishet_super_reveal_sample" }
+	loop = no
+	is3d = no
+	max_audible = 1
+	max_audible_behaviour = fail
+	volume = 0.65
+}

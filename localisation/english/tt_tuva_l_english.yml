@@ -312,21 +312,21 @@
  TT_requires_liaotung: "We control Liaotung (access to the sea)"
  TT_pacific_fleet_tt: "If we control §YLiaotung§!, §Y2 dockyards§! will be built there."
  TT_masters_of_siberia: "Masters of the North"
- TT_masters_of_siberia_desc: "Key Siberian nodes have fallen, Soviet resistance is weakening, and Moscow has recognised a fourteen-state settlement under the Taishet treaty."
+ TT_masters_of_siberia_desc: "Key Siberian nodes have fallen. Under the Taishet treaty, Moscow has recognised the transfer of fourteen agreed states and other Soviet states controlled by Tuva."
  TT_dictate_peace_in_siberia: "Dictate the Taishet Peace"
  TT_dictate_peace_in_siberia_desc: "Demand peace at 10% Soviet surrender progress while controlling Tuva and seven Siberian nodes. The eastern raid is optional; the old stages and 30-day counter no longer apply. Holding Yakutsk prevents Soviet AI refusal. A genuine refusal allows another request after 90 days."
- TT_siberian_gambit_decision_tt: "Unlocks the Taishet Peace: 10% Soviet surrender progress and control of Tuva, Chita, Buryatia, Irkutsk, Krasnoyarsk, Kemerovo, Novosibirsk and Tomsk. No mandatory preparation decisions or holding timer. The treaty transfers a fixed fourteen-state package."
- TT_dictate_peace_in_siberia_tt: "Demand Altai, Oyrot, Chita, Buryatia, Bodaybo, Irkutsk, Bratsk, Krasnoyarsk, Kemerovo, Novosibirsk, Yakutsk, Kirensk, Yeniseisk and Tomsk. The full agreed package is transferred, not an arbitrary occupied subset. Third-party territory is protected. No cores are granted. Await Moscow's response."
+ TT_siberian_gambit_decision_tt: "Unlocks the Taishet Peace: 10% Soviet surrender progress and control of Tuva, Chita, Buryatia, Irkutsk, Krasnoyarsk, Kemerovo, Novosibirsk and Tomsk. No mandatory preparation decisions or timer. The settlement grants fourteen agreed states plus other Soviet states controlled by Tuva when Moscow accepts."
+ TT_dictate_peace_in_siberia_tt: "Demand Altai, Oyrot, Chita, Buryatia, Bodaybo, Irkutsk, Bratsk, Krasnoyarsk, Kemerovo, Novosibirsk, Yakutsk, Kirensk, Yeniseisk and Tomsk. In addition, other Soviet-owned states controlled by Tuva when Moscow accepts are transferred. Allied occupations and third-party-owned states are excluded. No cores are granted. Await Moscow’s response."
 
  TT_central_asian_ssr_tt: "If §Ythe Soviet Union§! exists and we are not at war with it, Moscow will be asked to transfer the Central Asian republics to us."
  TT_manchurian_offensive_tt: "Creates a wargoal for §YKirin, Jehol and Liaotung§! and unlocks the §YManchurian Offensive§! decision."
 
  tt_tuva.10.t: "A Dispatch from Kyzyl"
- tt_tuva.10.desc: "A map of Siberian railways lies on the Kremlin table. Seven key junctions are in Tuvan hands; reports from the east describe overstretched supply lines and dwindling reserves.\n\nKyzyl offers an end to the war in exchange for fourteen regions, from Altai to Transbaikalia and Yakutia. The Tuvan delegates call it the Taishet Treaty. Moscow must choose between a bitter concession and continued war."
+ tt_tuva.10.desc: "A map of Siberian railways lies on the Kremlin table. Seven key junctions are in Tuvan hands; reports from the east describe overstretched supply lines and dwindling reserves.\n\nKyzyl offers an end to the war in exchange for fourteen agreed states, from Altai to Transbaikalia and Yakutia, together with other Soviet states controlled by Tuva. The Tuvan delegates call it the Taishet Treaty. Moscow must choose between a bitter concession and continued war."
  tt_tuva.10.a: "Sign the treaty. Preserve what remains."
  tt_tuva.10.b: "Negotiations are over. Continue the war."
  tt_tuva.11.t: "The Taishet Treaty"
- tt_tuva.11.desc: "News from Siberia reports an end to the war between the Soviet Union and Tuva. After fighting over the junctions of the Trans-Siberian Railway, Moscow has accepted territorial concessions.\n\nFourteen regions, including lands in Altai, Transbaikalia and Yakutia, pass to Kyzyl. The treaty changes the balance of power in Asia: a small steppe republic now governs vast stretches of Siberia."
+ tt_tuva.11.desc: "News from Siberia reports an end to the war between the Soviet Union and Tuva. After fighting over the junctions of the Trans-Siberian Railway, Moscow has accepted territorial concessions.\n\nFourteen agreed states, including lands in Altai, Transbaikalia and Yakutia, pass to Kyzyl along with other Soviet states occupied by Tuva. The treaty changes the balance of power in Asia: a small steppe republic now governs vast stretches of Siberia."
  tt_tuva.11.a: "New borders on the map of Asia."
 
  # ================================================================
@@ -428,7 +428,7 @@
 
  tt_tuva.26.t: "Signatures beneath a New Border"
 
- tt_tuva.26.desc: "The final objections have been settled. Signed copies of the Taishet Treaty lie on the table while signal officers transmit orders ending the war. Kyzyl receives the news with relief and disbelief at the scale of the change.\n\nThe fourteen agreed regions now lie under our authority. What follows cannot be won by a cavalry charge: administration, supply and the lives of people on both sides of the former front must be rebuilt."
+ tt_tuva.26.desc: "The final objections have been settled. Signed copies of the Taishet Treaty lie on the table while signal officers transmit orders ending the war. Kyzyl receives the news with relief and disbelief at the scale of the change.\n\nThe fourteen agreed states and other Soviet states under our control now lie under our authority. What follows cannot be won by a cavalry charge: administration, supply and the lives of people on both sides of the former front must be rebuilt."
 
  tt_tuva.26.a: "The war is over. Another task begins."
 

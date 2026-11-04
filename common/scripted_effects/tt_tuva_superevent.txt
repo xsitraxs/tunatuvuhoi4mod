@@ -1,0 +1,33 @@
+# TAN country scope. Called only by the successful treaty branch.
+TT_queue_taishet_superevent = {
+	if = {
+		limit = {
+			tag = TAN
+			is_ai = no
+			NOT = { has_country_flag = TT_taishet_superevent_seen }
+			NOT = { has_country_flag = TT_taishet_superevent_pending }
+		}
+		set_country_flag = { flag = TT_taishet_superevent_pending days = 7 }
+		TT_open_taishet_superevent = yes
+	}
+}
+
+# The daily retry handles a peace effect becoming observable on a later tick.
+# Pending expires automatically after seven game days; retries never refresh it.
+# No pending flag means no retroactive pop-up in an already completed old save.
+TT_open_taishet_superevent = {
+	if = {
+		limit = {
+			tag = TAN
+			is_ai = no
+			has_country_flag = TT_taishet_superevent_pending
+			NOT = { has_country_flag = TT_taishet_superevent_seen }
+			NOT = { has_war_with = SOV }
+			has_idea = TT_masters_of_siberia
+			TT_owns_taishet_package = yes
+		}
+		set_country_flag = TT_taishet_superevent_seen
+		set_country_flag = TT_taishet_superevent_open
+		clr_country_flag = TT_taishet_superevent_pending
+	}
+}

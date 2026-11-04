@@ -1,0 +1,10 @@
+# TAN country scope. Does not alter peace availability or add cores.
+TT_postwar_ready = {
+	tag = TAN
+	has_country_flag = TT_national_path
+	is_subject = no
+	has_capitulated = no
+	has_war = no
+	has_idea = TT_masters_of_siberia
+	TT_owns_taishet_package = yes
+}

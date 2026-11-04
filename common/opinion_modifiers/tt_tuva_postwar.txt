@@ -1,0 +1,4 @@
+opinion_modifiers = {
+	TT_postwar_neighbour_dialogue = { value = 15 months = 12 }
+	TT_postwar_neighbour_caution = { value = -10 months = 12 }
+}

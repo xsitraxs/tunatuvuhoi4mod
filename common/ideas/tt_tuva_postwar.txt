@@ -1,0 +1,59 @@
+ideas = {
+	country = {
+		TT_postwar_military_base = {
+			allowed = { original_tag = TAN }
+			removal_cost = -1
+			picture = generic_political_support
+			modifier = {
+				stability_factor = 0.05
+				political_power_factor = -0.10
+			}
+		}
+		TT_postwar_military_settled = {
+			allowed = { original_tag = TAN }
+			removal_cost = -1
+			picture = generic_political_support
+			modifier = {
+				stability_factor = 0.08
+				political_power_factor = -0.05
+			}
+		}
+		TT_postwar_local_base = {
+			allowed = { original_tag = TAN }
+			removal_cost = -1
+			picture = generic_political_support
+			modifier = {
+				political_power_factor = 0.05
+				industrial_capacity_factory = -0.03
+			}
+		}
+		TT_postwar_local_settled = {
+			allowed = { original_tag = TAN }
+			removal_cost = -1
+			picture = generic_political_support
+			modifier = {
+				political_power_factor = 0.08
+				industrial_capacity_factory = -0.02
+			}
+		}
+		TT_postwar_modern_base = {
+			allowed = { original_tag = TAN }
+			removal_cost = -1
+			picture = generic_political_support
+			modifier = {
+				research_speed_factor = 0.03
+				stability_factor = -0.05
+			}
+		}
+		TT_postwar_modern_settled = {
+			allowed = { original_tag = TAN }
+			removal_cost = -1
+			picture = generic_political_support
+			modifier = {
+				research_speed_factor = 0.04
+				production_speed_infrastructure_factor = 0.10
+				stability_factor = -0.03
+			}
+		}
+	}
+}

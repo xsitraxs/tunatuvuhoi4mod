@@ -83,3 +83,15 @@ TT_taishet_response_valid = {
 	TT_taishet_military_ready = yes
 	has_country_flag = TT_taishet_request_pending
 }
+
+# TAN scope, checked after transfer and before white_peace. No eligible occupation
+# should still be Soviet-owned, or peace would return it to Moscow.
+TT_taishet_settlement_transferred = {
+	TT_owns_taishet_package = yes
+	NOT = {
+		any_state = {
+			is_owned_by = SOV
+			is_controlled_by = TAN
+		}
+	}
+}
