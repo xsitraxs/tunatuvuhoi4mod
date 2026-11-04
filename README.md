@@ -35,7 +35,7 @@
 
 Схема исходных 36 фокусов: [`docs/focus_tree_preview.png`](docs/focus_tree_preview.png).
 Полное дерево из 46 фокусов с иконками: [`docs/focus_tree_preview_46.png`](docs/focus_tree_preview_46.png).
-Новая ветка войны с СССР (ещё 10 фокусов) и её схема: [`docs/soviet_war_focuses.md`](docs/soviet_war_focuses.md).
+Новая ветка войны с СССР (ещё 10 фокусов), её раздельная компоновка и награды: [`docs/soviet_war_focuses.md`](docs/soviet_war_focuses.md).
 Старое изображение дерева новую ветку не показывает.
 
 ### Ветви дерева фокусов

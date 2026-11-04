@@ -108,8 +108,11 @@ test('Soviet war branch owns ten dedicated icons', () => {
     assert.equal(borrowed.length, 0, `${name} is shared with ${borrowed[0] && get(borrowed[0], 'id')}`);
   });
 });
-test('Soviet war branch stands in its own column block', () => {
-  const warIds = new Set(added.map(f => get(f, 'id')));
+test('Soviet war operation stands in its own column block', () => {
+  // The nine-focus wartime operation occupies an isolated block. The postwar
+  // finale is intentionally parked directly below its sole prerequisite,
+  // the Siberian Gambit, so it does not create an orphaned long connector.
+  const warIds = new Set(added.map(f => get(f, 'id')).filter(id => id !== 'TT_war_new_siberian_border'));
   const byColumn = new Map();
   focuses.forEach(f => {
     const x = position(get(f, 'id'))[0];
