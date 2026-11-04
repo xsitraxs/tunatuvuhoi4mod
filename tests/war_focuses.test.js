@@ -93,6 +93,36 @@ test('All prerequisites, relative anchors and icons resolve', () => {
   const gfx = new Set([...read('interface/tt_tuva_focus_icons.gfx').matchAll(/name\s*=\s*"([^"]+)"/g)].map(m => m[1]));
   added.forEach(f => { walk(f, 'focus').forEach(id => assert(all.has(id), id)); assert(all.has(get(f, 'relative_position_id'))); assert(gfx.has(get(f, 'icon'))); });
 });
+test('Soviet war branch owns ten dedicated icons', () => {
+  const gfx = new Map([...read('interface/tt_tuva_focus_icons.gfx')
+    .matchAll(/name\s*=\s*"([^"]+)"\s*\n\s*texturefile\s*=\s*"([^"]+)"/g)].map(m => [m[1], m[2]]));
+  const icons = added.map(f => get(f, 'icon'));
+  assert.equal(new Set(icons).size, 10, 'icons are not distinct');
+  icons.forEach(name => {
+    assert(name.startsWith('GFX_TT_focus_war_'), name);          // own naming for the branch
+    assert(gfx.has(name) && gfx.has(name + '_shine'), name);    // normal and shine sprite
+    const file = gfx.get(name);
+    assert(fs.existsSync(file), file);
+    assert.equal(fs.statSync(file).size, 32428, `${file} is not a 95x85 A8R8G8B8 DDS`);
+    const borrowed = focuses.filter(f => !get(f, 'id').startsWith('TT_war_') && get(f, 'icon') === name);
+    assert.equal(borrowed.length, 0, `${name} is shared with ${borrowed[0] && get(borrowed[0], 'id')}`);
+  });
+});
+test('Soviet war branch stands in its own column block', () => {
+  const warIds = new Set(added.map(f => get(f, 'id')));
+  const byColumn = new Map();
+  focuses.forEach(f => {
+    const x = position(get(f, 'id'))[0];
+    if (!byColumn.has(x)) byColumn.set(x, []);
+    byColumn.get(x).push(get(f, 'id'));
+  });
+  const warColumns = [...byColumn.keys()].filter(x => byColumn.get(x).some(id => warIds.has(id)));
+  assert(warColumns.length >= 2, 'the branch needs its own columns');
+  warColumns.forEach(x => assert(byColumn.get(x).every(id => warIds.has(id)), `column ${x} mixes the branch with the rest of the tree`));
+  const otherColumns = [...byColumn.keys()].filter(x => !warColumns.includes(x));
+  const gap = Math.min(...otherColumns.map(x => Math.min(...warColumns.map(w => Math.abs(w - x)))));
+  assert(gap >= 2, `the branch is only ${gap} column(s) away from another branch`);
+});
 const positions = new Map();
 function position(id, seen = new Set()) {
   assert(!seen.has(id), 'relative-position cycle'); seen.add(id);
