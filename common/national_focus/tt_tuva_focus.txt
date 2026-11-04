@@ -1651,11 +1651,11 @@ focus_tree = {
 
 	focus = {
 		id = TT_war_staff_maps
-		icon = GFX_TT_focus_the_siberian_gambit
+		icon = GFX_TT_focus_war_staff_maps
 		prerequisite = { focus = TT_greater_tuva }
 		relative_position_id = TT_greater_tuva
-		x = 4
-		y = 0
+		x = 6
+		y = 1
 		cost = 3
 		cancel_if_invalid = yes
 		available = {
@@ -1683,10 +1683,10 @@ focus_tree = {
 
 	focus = {
 		id = TT_war_border_depots
-		icon = GFX_TT_focus_the_soviet_arsenal
+		icon = GFX_TT_focus_war_border_depots
 		prerequisite = { focus = TT_war_staff_maps }
-		relative_position_id = TT_greater_tuva
-		x = 4
+		relative_position_id = TT_war_staff_maps
+		x = 0
 		y = 1
 		cost = 3
 		cancel_if_invalid = yes
@@ -1715,11 +1715,11 @@ focus_tree = {
 
 	focus = {
 		id = TT_war_field_reserve
-		icon = GFX_TT_focus_the_peoples_army
+		icon = GFX_TT_focus_war_field_reserve
 		prerequisite = { focus = TT_war_border_depots }
-		relative_position_id = TT_greater_tuva
-		x = 4
-		y = 2
+		relative_position_id = TT_war_border_depots
+		x = 0
+		y = 1
 		cost = 3
 		cancel_if_invalid = yes
 		available = {
@@ -1747,12 +1747,12 @@ focus_tree = {
 
 	focus = {
 		id = TT_war_sayan_offensive
-		icon = GFX_TT_focus_mountain_warfare
+		icon = GFX_TT_focus_war_sayan_offensive
 		prerequisite = { focus = TT_war_field_reserve }
 		prerequisite = { focus = TT_the_siberian_gambit }
-		relative_position_id = TT_greater_tuva
-		x = 4
-		y = 3
+		relative_position_id = TT_war_field_reserve
+		x = 0
+		y = 1
 		cost = 5
 		cancel_if_invalid = yes
 		available = {
@@ -1776,12 +1776,12 @@ focus_tree = {
 
 	focus = {
 		id = TT_war_siberian_guides
-		icon = GFX_TT_focus_cavalry_of_the_steppe
+		icon = GFX_TT_focus_war_siberian_guides
 		prerequisite = { focus = TT_war_field_reserve }
 		prerequisite = { focus = TT_the_siberian_gambit }
-		relative_position_id = TT_greater_tuva
-		x = 8
-		y = 3
+		relative_position_id = TT_war_field_reserve
+		x = 3
+		y = 1
 		cost = 5
 		cancel_if_invalid = yes
 		available = {
@@ -1805,11 +1805,11 @@ focus_tree = {
 
 	focus = {
 		id = TT_war_transsib_advance
-		icon = GFX_TT_focus_the_kyzyl_railroad
+		icon = GFX_TT_focus_war_transsib_advance
 		prerequisite = { focus = TT_war_sayan_offensive }
-		relative_position_id = TT_greater_tuva
-		x = 4
-		y = 4
+		relative_position_id = TT_war_sayan_offensive
+		x = 0
+		y = 1
 		cost = 3
 		cancel_if_invalid = no
 		continue_if_invalid = yes
@@ -1842,11 +1842,11 @@ focus_tree = {
 
 	focus = {
 		id = TT_war_red_army_salvage
-		icon = GFX_TT_focus_infantry_and_artillery
+		icon = GFX_TT_focus_war_red_army_salvage
 		prerequisite = { focus = TT_war_siberian_guides }
-		relative_position_id = TT_greater_tuva
-		x = 8
-		y = 4
+		relative_position_id = TT_war_siberian_guides
+		x = 0
+		y = 1
 		cost = 3
 		cancel_if_invalid = no
 		continue_if_invalid = yes
@@ -1877,11 +1877,11 @@ focus_tree = {
 
 	focus = {
 		id = TT_war_taishet_junction
-		icon = GFX_TT_focus_the_siberian_gambit
+		icon = GFX_TT_focus_war_taishet_junction
 		prerequisite = { focus = TT_war_transsib_advance }
-		relative_position_id = TT_greater_tuva
-		x = 4
-		y = 5
+		relative_position_id = TT_war_transsib_advance
+		x = 0
+		y = 1
 		cost = 3
 		cancel_if_invalid = no
 		continue_if_invalid = yes
@@ -1918,11 +1918,11 @@ focus_tree = {
 
 	focus = {
 		id = TT_war_hold_conquests
-		icon = GFX_TT_focus_the_siberian_military_district
+		icon = GFX_TT_focus_war_hold_conquests
 		prerequisite = { focus = TT_war_red_army_salvage }
-		relative_position_id = TT_greater_tuva
-		x = 8
-		y = 5
+		relative_position_id = TT_war_red_army_salvage
+		x = 0
+		y = 1
 		cost = 5
 		cancel_if_invalid = yes
 		available = {
@@ -1948,10 +1948,10 @@ focus_tree = {
 
 	focus = {
 		id = TT_war_new_siberian_border
-		icon = GFX_TT_focus_greater_tuva
+		icon = GFX_TT_focus_war_new_siberian_border
 		prerequisite = { focus = TT_the_siberian_gambit }
-		relative_position_id = TT_greater_tuva
-		x = 0
+		relative_position_id = TT_the_siberian_gambit
+		x = 6
 		y = 6
 		cost = 5
 		cancel_if_invalid = yes
