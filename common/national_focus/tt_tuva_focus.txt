@@ -1677,6 +1677,7 @@ focus_tree = {
 				}
 				army_experience = 10
 				add_command_power = 15
+				add_timed_idea = { idea = TT_war_preparation_staff days = 180 }
 			}
 		}
 	}
@@ -1709,6 +1710,7 @@ focus_tree = {
 				}
 				add_equipment_to_stockpile = { type = infantry_equipment_0 amount = 200 producer = TAN }
 				add_equipment_to_stockpile = { type = support_equipment_1 amount = 20 producer = TAN }
+				add_timed_idea = { idea = TT_war_preparation_depots days = 180 }
 			}
 		}
 	}
@@ -1741,6 +1743,7 @@ focus_tree = {
 				}
 				add_manpower = 500
 				add_war_support = 0.02
+				add_timed_idea = { idea = TT_war_preparation_reserve days = 180 }
 			}
 		}
 	}

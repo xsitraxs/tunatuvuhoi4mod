@@ -1,7 +1,10 @@
 # TAN country scope. Does not alter peace availability or add cores.
 TT_postwar_ready = {
 	tag = TAN
-	has_country_flag = TT_national_path
+	custom_trigger_tooltip = {
+		tooltip = TT_requires_national_path
+		has_country_flag = TT_national_path
+	}
 	is_subject = no
 	has_capitulated = no
 	has_war = no

@@ -4,7 +4,10 @@
 
 TT_siberian_campaign_active = {
 	tag = TAN
-	has_country_flag = TT_national_path
+	custom_trigger_tooltip = {
+		tooltip = TT_requires_national_path
+		has_country_flag = TT_national_path
+	}
 	has_completed_focus = TT_the_siberian_gambit
 	country_exists = SOV
 	has_war_with = SOV

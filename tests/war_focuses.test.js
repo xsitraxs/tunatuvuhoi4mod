@@ -77,6 +77,8 @@ const available = (id, s) => evalNodes(get(all.get(`TT_war_${id}`), 'available')
 test('46 unique focuses; ten additions', () => { assert.equal(focuses.length, 46); assert.equal(all.size, 46); assert.equal(added.length, 10); });
 const milestoneIds = ['transsib_advance', 'red_army_salvage', 'taishet_junction'];
 const preparationIds = ['staff_maps', 'border_depots', 'field_reserve'];
+const preparationIdeaIds = ['TT_war_preparation_staff', 'TT_war_preparation_depots', 'TT_war_preparation_reserve'];
+const campaignIdeaIds = ['TT_war_staff_plan', 'TT_war_guides', 'TT_war_front_cohesion'];
 test('Preparation 63 days, complete branch 266 days; no repeatable focuses', () => {
   let days = 0;
   added.forEach(f => {
@@ -149,6 +151,12 @@ test('Preparation works before war and during campaign', () => {
   assert(available('staff_maps', state()));
 });
 test('Preparation blocks subjects, surrender, missing USSR, Soviet alliance, victory and wrong path', () => {
+  for (const triggerId of ['TT_war_focus_preparation_ready', 'TT_siberian_campaign_active', 'TT_postwar_ready']) {
+    const pathRequirement = walk(triggers.get(triggerId), 'custom_trigger_tooltip')
+      .find(node => get(node, 'has_country_flag') === 'TT_national_path');
+    assert(pathRequirement, `${triggerId} should use a localized tooltip, not a raw flag name`);
+    assert.equal(get(pathRequirement, 'tooltip'), 'TT_requires_national_path');
+  }
   for (const change of [{ subject: true }, { capitulated: true }, { sovExists: false }, { sameFaction: true },
     { ideas: new Set(['TT_masters_of_siberia']) }, { flags: new Set() }]) assert(!available('staff_maps', state(change)));
 });
@@ -179,16 +187,26 @@ test('Rewards recheck availability except proven-at-selection milestones', () =>
   const avail = get(f, 'available').flatMap(n => n.key === 'custom_trigger_tooltip' ? n.value.filter(n => n.key !== 'tooltip') : [n]);
   assert.deepEqual(get(get(get(f, 'completion_reward'), 'if'), 'limit'), milestoneIds.includes(get(f, 'id').replace('TT_war_', '')) ? [{ key: 'TT_siberian_campaign_active', op: '=', value: 'yes' }] : avail);
 }));
-test('Three timed spirits, exactly ninety days; all references resolve', () => {
-  const timed = added.flatMap(f => walk(f, 'add_timed_idea')); assert.equal(timed.length, 3);
-  timed.forEach(t => { assert.equal(get(t, 'days'), '90'); assert(newIdeas.some(n => n.key === get(t, 'idea'))); });
+test('Preparation spirits last 180 days and campaign spirits ninety; all references resolve', () => {
+  const timed = added.flatMap(f => walk(f, 'add_timed_idea')); assert.equal(timed.length, 6);
+  timed.forEach(t => {
+    const id = get(t, 'idea');
+    const days = preparationIdeaIds.includes(id) ? '180' : '90';
+    assert.equal(get(t, 'days'), days, id);
+    assert(newIdeas.some(n => n.key === id), id);
+  });
+  preparationIdeaIds.forEach(id => assert(timed.some(t => get(t, 'idea') === id), id));
 });
-test('Bounded spirit strengths; no new attack or defence multiplier', () => {
-  const modifiers = newIdeas.flatMap(n => get(n.value, 'modifier'));
-  assert.deepEqual(modifiers.map(n => [n.key, Number(n.value)]), [['max_planning_factor', 0.05], ['supply_consumption_factor', -0.03], ['army_org_factor', 0.03]]);
+test('Prewar and campaign spirit strengths stay modest', () => {
+  const modifiers = ids => ids.flatMap(id => get(newIdeas.find(n => n.key === id)?.value || [], 'modifier'))
+    .map(n => [n.key, Number(n.value)]);
+  assert.deepEqual(modifiers(campaignIdeaIds), [['max_planning_factor', 0.05], ['supply_consumption_factor', -0.03], ['army_org_factor', 0.03]]);
+  assert.deepEqual(modifiers(preparationIdeaIds), [['max_planning_factor', 0.03], ['army_defence_factor', 0.02], ['army_org_factor', 0.02]]);
 });
-test('Cleanup removes every new spirit and is called daily', () => {
-  assert.deepEqual(walk(effects, 'remove_ideas').sort(), newIdeas.map(n => n.key).sort());
+test('Daily cleanup removes campaign spirits but lets timed preparation bonuses expire naturally', () => {
+  const removed = walk(effects, 'remove_ideas').sort();
+  assert.deepEqual(removed, [...campaignIdeaIds].sort());
+  preparationIdeaIds.forEach(id => assert(!removed.includes(id), `${id} should expire by timer`));
   const guard = get(get(get(effects, 'TT_cleanup_war_focus_spirits'), 'if'), 'limit');
   assert.equal(evalNodes(guard, state()), false);
   for (const change of [{ sovWar: false }, { sovExists: false }, { capitulated: true }, { sovCapitulated: true }, { ideas: new Set(['TT_masters_of_siberia']) }]) assert(evalNodes(guard, state(change)));
@@ -212,7 +230,7 @@ test('No new cores, transfers, war declaration, factories, bypasses or peace gat
 });
 test('RU/EN keys match; all new focuses, spirits and tooltips localised with BOM', () => {
   function keys(lang) { const text = read(`localisation/${lang}/tt_war_focuses_l_${lang}.yml`); assert(text.startsWith('\ufeff')); return [...text.matchAll(/^ ([\w.]+):/gm)].map(m => m[1]); }
-  const ru = keys('russian'), en = keys('english'); assert.equal(ru.length, 28); assert.equal(new Set(ru).size, 28); assert.deepEqual(ru, en);
+  const ru = keys('russian'), en = keys('english'); assert.equal(ru.length, 34); assert.equal(new Set(ru).size, 34); assert.deepEqual(ru, en);
   [...added.map(f => get(f, 'id')), ...newIdeas.map(n => n.key)].forEach(id => { assert(ru.includes(id)); assert(ru.includes(id + '_desc')); });
 });
 

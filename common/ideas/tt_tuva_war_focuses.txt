@@ -21,5 +21,27 @@ ideas = {
 			picture = generic_armor
 			modifier = { army_org_factor = 0.03 }
 		}
+		# Modest 180-day bonuses from the optional prewar preparation focuses.
+		TT_war_preparation_staff = {
+			allowed = { original_tag = TAN }
+			allowed_civil_war = { always = no }
+			removal_cost = -1
+			picture = generic_armor
+			modifier = { max_planning_factor = 0.03 }
+		}
+		TT_war_preparation_depots = {
+			allowed = { original_tag = TAN }
+			allowed_civil_war = { always = no }
+			removal_cost = -1
+			picture = generic_armor
+			modifier = { army_defence_factor = 0.02 }
+		}
+		TT_war_preparation_reserve = {
+			allowed = { original_tag = TAN }
+			allowed_civil_war = { always = no }
+			removal_cost = -1
+			picture = generic_armor
+			modifier = { army_org_factor = 0.02 }
+		}
 	}
 }
