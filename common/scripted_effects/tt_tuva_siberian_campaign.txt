@@ -2,10 +2,23 @@
 # No daily reset of campaign milestones. Old hold flags/variables are ignored.
 ##########################################################################
 
-TT_cleanup_taishet_pending = {
+# Clears stale one-shot request flags daily. A response event addressed to a
+# country that no longer exists is dropped by the engine, so it can never
+# consume a newer request: clearing on the recipient's disappearance (or, for
+# the Taishet demand, on the end of the war) is safe and keeps the "an old
+# answer must not eat a newer request" invariant. No timer expirations here.
+TT_cleanup_diplomatic_pending = {
 	if = {
 		limit = { has_country_flag = TT_taishet_request_pending NOT = { has_war_with = SOV } }
 		clr_country_flag = TT_taishet_request_pending
+	}
+	if = {
+		limit = { has_country_flag = TT_corridor_request_pending NOT = { country_exists = SOV } }
+		clr_country_flag = TT_corridor_request_pending
+	}
+	if = {
+		limit = { has_country_flag = TT_war_mandate_pending NOT = { country_exists = SOV } }
+		clr_country_flag = TT_war_mandate_pending
 	}
 }
 

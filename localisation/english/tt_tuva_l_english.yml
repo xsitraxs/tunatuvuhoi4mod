@@ -318,6 +318,11 @@
  TT_siberian_gambit_decision_tt: "Unlocks the Taishet Peace: 10% Soviet surrender progress and control of Tuva, Chita, Buryatia, Irkutsk, Krasnoyarsk, Kemerovo, Novosibirsk and Tomsk. No mandatory preparation decisions or timer. The settlement grants fourteen agreed states plus other Soviet states controlled by Tuva when Moscow accepts."
  TT_dictate_peace_in_siberia_tt: "Demand Altai, Oyrot, Chita, Buryatia, Bodaybo, Irkutsk, Bratsk, Krasnoyarsk, Kemerovo, Novosibirsk, Yakutsk, Kirensk, Yeniseisk and Tomsk. In addition, other Soviet-owned states controlled by Tuva when Moscow accepts are transferred. Allied occupations and third-party-owned states are excluded. No cores are granted. Await Moscow’s response."
 
+ TT_proclaim_siberian_victory: "Proclaim the Siberian Victory"
+ TT_proclaim_siberian_victory_desc: "The war with the Soviet Union is over without the Taishet Treaty, and the fourteen agreed Siberian states are in our hands. Proclaim the victory to open the Siberian Council and decide the fate of the new lands."
+ TT_proclaim_siberian_victory_tt: "Grants the spirit §YMasters of Siberia§! and opens the postwar chapter — the same rewards as the Taishet Treaty, without the wartime demand."
+ TT_taishet_victory_package_tt: "All fourteen agreed Siberian states (Altai, Oyrot, Chita, Buryatia, Bodaybo, Irkutsk, Bratsk, Krasnoyarsk, Kemerovo, Novosibirsk, Yakutsk, Kirensk, Yeniseisk and Tomsk) must be owned by Tuva."
+
  TT_central_asian_ssr_tt: "If §Ythe Soviet Union§! exists and we are not at war with it, Moscow will be asked to transfer the Central Asian republics to us."
  TT_manchurian_offensive_tt: "Creates a wargoal for §YKirin, Jehol and Liaotung§! and unlocks the §YManchurian Offensive§! decision."
 

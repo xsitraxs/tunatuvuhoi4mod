@@ -393,7 +393,10 @@ focus_tree = {
 
 		completion_reward = {
 			create_country_leader = {
-				name = TT_khan_leader_name
+				# Literal name, like the five commanders fixed in 1.1.4: the
+				# legacy leader-creation effects display loc keys literally.
+				# The desc below keeps its loc key (desc resolves loc tags).
+				name = "Алдын-оол Хан"
 				desc = "TT_khan_leader_desc"
 				picture = "GFX_Portrait_Asia_Generic_land_1"
 				expire = "1965.1.1"
