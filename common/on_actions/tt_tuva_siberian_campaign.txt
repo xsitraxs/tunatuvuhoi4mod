@@ -2,7 +2,7 @@ on_actions = {
 	on_daily_TAN = {
 		effect = {
 			TAN = {
-				TT_cleanup_taishet_pending = yes
+				TT_cleanup_diplomatic_pending = yes
 				TT_cleanup_war_focus_spirits = yes
 				if = {
 					limit = { has_country_flag = TT_postwar_reactions_pending }

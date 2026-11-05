@@ -2,7 +2,12 @@
 guiTypes = {
 	containerWindowType = {
 		name = "TT_taishet_superevent_window"
-		position = { x = 0 y = -6000 }
+		# BUGFIX 2026-11-06: position MUST rest on screen. With position y=-6000 the
+		# window stays off-screen whenever the show animation does not run (or runs
+		# toward `position`); scripted-gui visibility does not reliably trigger it.
+		# show_position == position == {0,0}: visible under every animation semantic;
+		# hide_position keeps the slide-away behaviour when the window closes.
+		position = { x = 0 y = 0 }
 		show_position = { x = 0 y = 0 }
 		hide_position = { x = 0 y = -6000 }
 		animation_time = 0.6
@@ -64,10 +69,13 @@ guiTypes = {
 		buttonType = {
 			name = "TT_taishet_close"
 			position = { x = 180 y = 410 }
-			quadTextureSprite = "GFX_TT_taishet_super_button"
+			# spriteType (not quadTextureSprite: that one is for tiled/cornered
+			# sprites) + vanilla clicksound, matching the proven DVE close button.
+			spriteType = "GFX_TT_taishet_super_button"
 			buttonText = "TT_taishet_super_close"
 			buttonFont = "hoi_16mbs"
 			shortcut = "ESCAPE"
+			clicksound = decisions_ui_button
 		}
 	}
 }

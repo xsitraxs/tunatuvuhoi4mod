@@ -26,11 +26,11 @@
 | Политические пути | 2 взаимоисключающих |
 | Армейские доктрины | 3 взаимоисключающие (кавалерия / пехота и артиллерия / танки) |
 | Национальные духи | 42 (включая 3 новых временных духа советской кампании) |
-| Решения | 23: 13 в «Тувинских делах», 3 в «Управлении кожуунами», 7 в послевоенной главе |
+| Решения | 24: 14 в «Тувинских делах» (включая фолбэк победы), 3 в «Управлении кожуунами», 7 в послевоенной главе |
 | События | 33 (14 новостных) |
 | Косметические теги | 3 (`TT_tuvan_khanate`, `TT_tuvan_empire`, `TT_central_asian_ssr`) |
 | Флаги | 18 TGA (82×52, 41×26, 10×7) |
-| Локализация | русская + английская, по 392 ключа |
+| Локализация | русская + английская, по 396 ключа |
 | Thumbnail | кастомный, 512×512 |
 
 Схема исходных 36 фокусов: [`docs/focus_tree_preview.png`](docs/focus_tree_preview.png).
@@ -112,6 +112,14 @@
 Старые флаги закрепления в сохранении игнорируются. 10% — показатель капитуляции
 всего СССР по его победным очкам, не военный счёт Тувы и не доля площади Сибири.
 Может понадобиться дальнейшее наступление, даже если семь узлов уже взяты.
+
+**Если война окончилась без договора** (СССР аннексирован, развалился или мир
+заключён вне пути требования), открывается фолбэк-решение **«Провозгласить
+сибирскую победу»** (`TT_proclaim_siberian_victory`): при владении всеми 14
+регионами и мире оно выдаёт дух `TT_masters_of_siberia`, 150 PP и +10%
+стабильности — те же награды, что и договор, без требования в ходе войны —
+и открывает послевоенную главу и финал дерева. Без него послевоенный контент
+(Сибирский совет, финал «Новая сибирская граница») оставался бы недостижим.
 
 «Перерезать восточный Транссиб» теперь **необязательный однократный рейд**:
 25 PP за 25 армейского опыта. В ответ СССР на 180 дней получает +10% к атаке
@@ -232,7 +240,7 @@
 
    ```txt
    name="Tuva: The Center of Asia"
-   version="1.1.4"
+   version="1.1.5"
    tags={
        "Alternative History"
        "Gameplay"
@@ -299,27 +307,41 @@ tuva_center_of_asia/
 ├── thumbnail.png
 ├── common/
 │   ├── national_focus/tt_tuva_focus.txt
-│   ├── ideas/tt_tuva_ideas.txt
-│   ├── decisions/tt_tuva_decisions.txt
-│   ├── decisions/categories/tt_tuva_categories.txt
+│   ├── ideas/                       (tt_tuva_ideas, war_focuses, postwar, khozhuun)
+│   ├── decisions/                   (tt_tuva, tt_tuva_postwar, tt_khozhuun_administration)
+│   ├── decisions/categories/        (tt_tuva, tt_tuva_postwar, tt_khozhuun)
 │   ├── countries/tt_tuva_cosmetic.txt
-│   ├── on_actions/tt_tuva_on_actions.txt
-│   ├── scripted_triggers/tt_tuva_scripted_triggers.txt
-│   └── scripted_effects/tt_tuva_scripted_effects.txt
-├── events/tt_tuva_events.txt
-├── gfx/flags/
-│   ├── TT_tuvan_khanate*.tga
-│   ├── TT_tuvan_empire*.tga
-│   ├── TT_central_asian_ssr.tga
-│   ├── TT_central_asian_ssr_communism.tga
-│   ├── medium/  (41×26, те же 6 файлов)
-│   └── small/   (10×7, те же 6 файлов)
+│   ├── on_actions/                  (tt_tuva_on_actions, tt_tuva_siberian_campaign)
+│   ├── scripted_triggers/           (tt_tuva, siberian_campaign, war_focuses, postwar)
+│   ├── scripted_effects/            (tt_tuva, siberian_campaign, war_focuses, postwar, superevent)
+│   ├── scripted_guis/tt_tuva_superevent.txt
+│   └── opinion_modifiers/tt_tuva_postwar.txt
+├── events/
+│   ├── tt_tuva_events.txt
+│   └── tt_tuva_postwar_events.txt
+├── interface/
+│   ├── tt_tuva_focus_icons.gfx
+│   ├── tt_tuva_event_pictures.gfx
+│   ├── tt_tuva_superevent.gfx
+│   └── tt_tuva_superevent.gui
+├── gfx/
+│   ├── flags/                       (6 TGA + medium/ + small/)
+│   ├── interface/goals/tt_tuva/     (46 DDS-иконок фокусов)
+│   ├── interface/tt_tuva_superevent/ (frame, taishet, button)
+│   └── event_pictures/tt_tuva/      (irkutsk, negotiations, treaty_news)
+├── sound/
+│   ├── tt_tuva_superevent.asset
+│   └── tt_tuva/taishet_reveal.wav
 ├── localisation/
-│   ├── english/tt_tuva_l_english.yml
-│   └── russian/tt_tuva_l_russian.yml
+│   ├── english/  (tt_tuva_l, tt_postwar_l, tt_war_focuses_l, tt_khozhuun_l, tt_superevent_l)
+│   └── russian/  (те же 5 файлов)
+├── tests/                           <- не входит в экспорт мода
+│   ├── war_focuses.test.js
+│   └── integrity.test.js
 └── docs/                           <- не входит в экспорт мода
     ├── focus_tree_preview.png
-    └── focus_icons_preview.png
+    ├── focus_icons_preview.png
+    └── release_checklist.md
 ```
 
 - Мод **не перезаписывает** ванильные файлы: все файлы новые.
@@ -386,6 +408,16 @@ Python-скрипты генерации и автоматических про�
 Игровые скрипты Clausewitz, DDS, исходные изображения и документация сохранены.
 Исторические записи ниже описывают проверки, существовавшие в прошлых версиях.
 
+Актуальные автоматические проверки (запускать из корня репозитория, выполняются и в CI):
+
+```txt
+node tests/war_focuses.test.js   # структура и инварианты ветки войны с СССР
+node tests/integrity.test.js     # RU/EN-паритет и BOM, резолюция событий/идей/GFX,
+                                 # whitelist имён техники, «манифест» 14 регионов,
+                                 # зачистка pending-флагов, версии дескрипторов
+```
+
+Перед публикацией версии пройти [docs/release_checklist.md](docs/release_checklist.md).
 Актуальный план ручной проверки Тайшетского мира: [docs/taishet_campaign.md](docs/taishet_campaign.md).
 Внутриигровой прогон текущего исправления пока не выполнен.
 
@@ -393,6 +425,20 @@ Python-скрипты генерации и автоматических про�
 
 **В разработке — исправление Тайшетского мира**
 
+- Фолбэк-решение «Провозгласить сибирскую победу»: если война с СССР окончилась без
+  договора (аннексия/развал СССР или иной мир), владение 14 регионами в мире выдаёт
+  дух `TT_masters_of_siberia` и открывает послевоенную главу и финал дерева.
+- Ежедневная зачистка `TT_cleanup_diplomatic_pending` снимает висящие флаги запросов
+  коридора и мандата, если адресат (СССР) перестал существовать: потерявшееся событие
+  больше не блокирует решения навсегда. Инвариант «старый ответ не съедает новый
+  запрос» сохранён — таймеров истечения по-прежнему нет.
+- Имя хана в `TT_the_second_khanate` задано явной строкой «Алдын-оол Хан», как и имена
+  пяти командиров в 1.1.4: эффекты создания лидеров показывают ключи локализации буквально.
+- Послевоенные духи получили `allowed_civil_war`; удалены пустые `complete_effect`/`remove_effect`.
+- Инфраструктура: добавлены `tests/integrity.test.js` (паритет RU/EN+BOM, резолюция
+  событий/идей/GFX, whitelist имён техники, равенство «манифеста» 14 регионов во всех
+  местах скрипта, согласованность версий дескрипторов) и CI `.github/workflows/tests.yml`;
+  чек-лист релиза — `docs/release_checklist.md`.
 - Ветка войны с СССР вынесена в отдельный блок справа от «Экспансии»: собственные колонки,
   пустой промежуток от остального дерева, ровный шаг внутри блока. Прежние 36 фокусов не тронуты,
   зависимости, сроки, награды и условия прежние.
@@ -405,7 +451,7 @@ Python-скрипты генерации и автоматических про�
 - Мир переведён на 10% прогресса капитуляции СССР и семь сибирских узлов.
   Удалены удержание 30 дней и обязательность промежуточных действий.
 - Сохранены фиксированная граница, защита третьих стран и повторные проверки при ответе.
-- 281 ключ на язык, 23 события, 13 решений и 31 дух.
+- Состояние ветки на текущий момент: 396 ключей на язык, 33 события, 24 решения и 42 духа.
 
 **1.1.4**
 

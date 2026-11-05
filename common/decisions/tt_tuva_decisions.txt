@@ -102,11 +102,6 @@ TT_tuva_category = {
 			production_speed_buildings_factor = 0.10
 		}
 
-		complete_effect = {
-		}
-
-		remove_effect = {
-		}
 	}
 
 	# ------------------------------------------------------------------
@@ -138,11 +133,6 @@ TT_tuva_category = {
 			stability_factor = 0.05
 		}
 
-		complete_effect = {
-		}
-
-		remove_effect = {
-		}
 	}
 
 	# ------------------------------------------------------------------
@@ -283,6 +273,78 @@ TT_tuva_category = {
 					days = 1
 				}
 			}
+		}
+	}
+
+	# ------------------------------------------------------------------
+	#  Fallback: proclaim the Siberian victory when the war ended without
+	#  the Taishet treaty (the USSR was annexed/collapsed, or the war ended
+	#  outside the demand path). Mirrors tt_tuva.10 rewards minus the
+	#  treaty-specific news; unlocks the postwar chapter and finale.
+	# ------------------------------------------------------------------
+	TT_proclaim_siberian_victory = {
+		icon = GFX_decision_generic_nationalism
+		cost = 0
+		fire_only_once = yes
+
+		allowed = { original_tag = TAN }
+
+		visible = {
+			has_completed_focus = TT_the_siberian_gambit
+			NOT = { has_idea = TT_masters_of_siberia }
+			has_war = no
+		}
+
+		highlight_states = {
+			highlight_state_targets = {
+				state = 40
+				state = 654
+				state = 563
+				state = 564
+				state = 565
+				state = 566
+				state = 567
+				state = 568
+				state = 569
+				state = 570
+				state = 574
+				state = 575
+				state = 576
+				state = 578
+			}
+		}
+
+		available = {
+			has_war = no
+			has_capitulated = no
+			is_subject = no
+			hidden_trigger = {
+				has_completed_focus = TT_the_siberian_gambit
+				NOT = { has_idea = TT_masters_of_siberia }
+			}
+			custom_trigger_tooltip = {
+				tooltip = TT_taishet_victory_package_tt
+				TT_owns_taishet_package = yes
+			}
+		}
+
+		ai_will_do = { base = 100 }
+
+		complete_effect = {
+			custom_effect_tooltip = TT_proclaim_siberian_victory_tt
+			if = {
+				limit = { has_idea = TT_siberian_gambit }
+				swap_ideas = { remove_idea = TT_siberian_gambit add_idea = TT_masters_of_siberia }
+			}
+			else = {
+				add_ideas = TT_masters_of_siberia
+			}
+			add_political_power = 150
+			add_stability = 0.10
+			# Same celebration/reaction hooks as the treaty, without the
+			# treaty-specific news event tt_tuva.11.
+			TT_queue_taishet_superevent = yes
+			TT_postwar_queue_reactions = yes
 		}
 	}
 

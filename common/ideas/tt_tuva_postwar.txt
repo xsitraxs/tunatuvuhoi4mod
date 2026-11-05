@@ -2,6 +2,7 @@ ideas = {
 	country = {
 		TT_postwar_military_base = {
 			allowed = { original_tag = TAN }
+			allowed_civil_war = { always = yes }
 			removal_cost = -1
 			picture = generic_political_support
 			modifier = {
@@ -11,6 +12,7 @@ ideas = {
 		}
 		TT_postwar_military_settled = {
 			allowed = { original_tag = TAN }
+			allowed_civil_war = { always = yes }
 			removal_cost = -1
 			picture = generic_political_support
 			modifier = {
@@ -20,6 +22,7 @@ ideas = {
 		}
 		TT_postwar_local_base = {
 			allowed = { original_tag = TAN }
+			allowed_civil_war = { always = yes }
 			removal_cost = -1
 			picture = generic_political_support
 			modifier = {
@@ -29,6 +32,7 @@ ideas = {
 		}
 		TT_postwar_local_settled = {
 			allowed = { original_tag = TAN }
+			allowed_civil_war = { always = yes }
 			removal_cost = -1
 			picture = generic_political_support
 			modifier = {
@@ -38,6 +42,7 @@ ideas = {
 		}
 		TT_postwar_modern_base = {
 			allowed = { original_tag = TAN }
+			allowed_civil_war = { always = yes }
 			removal_cost = -1
 			picture = generic_political_support
 			modifier = {
@@ -47,6 +52,7 @@ ideas = {
 		}
 		TT_postwar_modern_settled = {
 			allowed = { original_tag = TAN }
+			allowed_civil_war = { always = yes }
 			removal_cost = -1
 			picture = generic_political_support
 			modifier = {
