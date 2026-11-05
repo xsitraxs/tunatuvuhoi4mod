@@ -355,7 +355,7 @@
  tt_tuva.16.desc: "Kirin, Jehol and Liaotung have fallen. The Manchurian campaign is over: the conquered lands are integrated into the state, the army gains a lasting new spirit, and the world now speaks of Tuva as a Pacific power."
  tt_tuva.16.a: "From Kyzyl to the Pacific."
 
-# Legacy CAS research compensation
+ # Legacy CAS research compensation
  TT_cas_research_boost: "Close Air Support Research"
 
  TT_request_siberian_corridor: "Request the Siberian Corridor"

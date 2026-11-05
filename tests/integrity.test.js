@@ -202,6 +202,37 @@ test('Superevent show_sound resolves, and the close button follows the proven pa
   assert(sgui.includes('TT_taishet_close_click'), 'scripted_gui must bind TT_taishet_close_click');
 });
 
+// ---------- binary assets and GUI references ----------
+test('Every spriteType/quadTextureSprite referenced in .gui resolves to a .gfx sprite', () => {
+  for (const { f, src } of all.filter(x => x.f.startsWith('interface/') && x.f.endsWith('.gui')))
+    for (const m of src.matchAll(/\b(?:spriteType|quadTextureSprite)\s*=\s*"?([A-Za-z0-9_\.]+)"?/g))
+      assert(definedGfx.has(m[1]) || vanillaGfx.test(m[1]), `${f} references unknown ${m[1]}`);
+});
+test('GUI text keys exist in localisation', () => {
+  for (const { f, src } of all.filter(x => x.f.startsWith('interface/') && x.f.endsWith('.gui')))
+    for (const m of src.matchAll(/\btext\s*=\s*"([A-Za-z0-9_\.]+)"/g))
+      if (m[1].startsWith('TT_')) assert(enAll.has(m[1]), `${f} references unlocalised ${m[1]}`);
+});
+test('Binary assets are engine-safe: DDS magic and PCM16 WAV', () => {
+  for (const t of new Set(modTextures)) {
+    if (!t.endsWith('.dds') || !fs.existsSync(t)) continue; // vanilla helpers: covered above
+    const d = fs.readFileSync(t);
+    assert.equal(d.subarray(0, 4).toString('latin1'), 'DDS ', `${t} is not a DDS file`);
+  }
+  const assets = fs.readdirSync('sound').filter(f => f.endsWith('.asset'))
+    .map(f => read(`sound/${f}`)).join('\n');
+  for (const m of assets.matchAll(/file = "([^"]+\.wav)"/g)) {
+    const p = `sound/${m[1]}`;
+    assert.ok(fs.existsSync(p), `missing sound file ${p}`);
+    const d = fs.readFileSync(p);
+    assert.equal(d.subarray(0, 4).toString('latin1'), 'RIFF', `${p} is not RIFF`);
+    assert.equal(d.subarray(8, 12).toString('latin1'), 'WAVE', `${p} is not WAVE`);
+    const tag = d.readUInt16LE(20), bits = d.readUInt16LE(34);
+    assert.equal(tag, 1, `${p} must be PCM (tag=${tag}); IEEE float is not engine-safe`);
+    assert.equal(bits, 16, `${p} must be 16-bit`);
+  }
+});
+
 // ---------- descriptors ----------
 test('Both mod descriptors agree on the version, and README quotes it', () => {
   const v = p => read(p).match(/version="([^"]+)"/)[1];
