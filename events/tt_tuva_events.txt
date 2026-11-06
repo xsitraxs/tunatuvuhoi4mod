@@ -655,7 +655,7 @@ country_event = {
 					TT_corridor_diplomacy_valid = yes
 				}
 			}
-			TT_transfer_siberian_corridor_states = yes
+			TT_transfer_siberian_corridor_state = yes
 			TAN = { clr_country_flag = TT_corridor_request_pending }
 			if = {
 				limit = { 654 = { is_owned_by = TAN } }

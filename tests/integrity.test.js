@@ -172,6 +172,14 @@ test('Fallback victory decision grants the victory spirit and queues the celebra
   assert(body.includes('TT_postwar_queue_reactions = yes'));
   assert(body.includes('TT_owns_taishet_package = yes'));
 });
+test('Moscow pressure pulse: window trigger, 60-day cooldown, three events wired', () => {
+  assert(read('common/scripted_triggers/tt_tuva_siberian_campaign.txt').includes('TT_pressure_window = {'));
+  const on = read('common/on_actions/tt_tuva_siberian_campaign.txt');
+  assert(on.includes('TT_pressure_window = yes'));
+  assert(on.includes('flag = TT_pressure_cooldown days = 60'));
+  for (const id of ['tt_tuva.28', 'tt_tuva.29', 'tt_tuva.30'])
+    assert(on.includes(`id = ${id}`), id);
+});
 
 // ---------- superevent window (2026-11-06 display bugfix) ----------
 test('Superevent window rests on screen; show_position agrees with position', () => {

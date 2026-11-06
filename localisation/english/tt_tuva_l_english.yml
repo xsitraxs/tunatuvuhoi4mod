@@ -442,3 +442,34 @@
  tt_tuva.27.desc: "The Soviet delegation has refused to sign the proposed treaty. Maps are cleared from the table and the negotiators prepare to leave. Moscow intends to retake the lost junctions by force.\n\nThe war continues. Another request may be sent in 90 days; until then, the fate of the railway will be decided at the front."
 
  tt_tuva.27.a: "Then our answer must come from the front."
+
+ tt_tuva.28.t: "A Provocation on the Eastern Border"
+
+ tt_tuva.28.desc: "A Soviet patrol crossed the border line and opened fire on our outpost. Moscow calmly insists that 'there was no incident.'\n\nThe bet is on our restraint: a hard answer could set the already hot border ablaze."
+
+ tt_tuva.28.a: "Hold our temper. Let the diplomats handle it."
+
+ tt_tuva.28.b: "Hit back, and make it count."
+
+ TT_pressure_border_risk_tt: "Risk: 55% — the people rally (+3% war support); 45% — the government looks weak (-3% stability)."
+
+ tt_tuva.29.t: "An Ultimatum from Moscow"
+
+ tt_tuva.29.desc: "Moscow demands we halt our military preparations and pull troops back from the eastern border. The ultimatum expires in two weeks.\n\nTo obey would waste everything we have gained; to refuse risks open escalation."
+
+ tt_tuva.29.a: "Give in to the demands."
+
+ tt_tuva.29.b: "Reject the ultimatum."
+
+ TT_pressure_ultimatum_risk_tt: "Risk: 50% — the nation rallies (+5% war support, +50 political power); 50% — the elite panics (-5% stability, -25 political power)."
+
+ tt_tuva.30.t: "The NKVD Network"
+
+ tt_tuva.30.desc: "An agent network has been uncovered in Kyzyl: radio sets, ciphers, lists of our officers. Moscow officially 'has nothing to do with it.'\n\nThe scandal can be buried — or turned into a public trial."
+
+ tt_tuva.30.a: "Expel the agents quietly."
+
+ tt_tuva.30.b: "Put them on public trial."
+
+ TT_pressure_nkvd_risk_tt: "Risk: 55% — the trial lifts the nation's spirit (+4% war support, +25 political power); 45% — the spy scare frightens society (-4% stability)."
+

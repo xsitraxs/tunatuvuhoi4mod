@@ -1,4 +1,4 @@
-##########################################################################
+﻿##########################################################################
 #  TUVA: THE CENTER OF ASIA
 #  National focus tree for Tannu Tuva (TAN)
 #  Hearts of Iron IV 1.19.4
@@ -33,7 +33,7 @@ focus_tree = {
 		icon = GFX_TT_focus_center_of_asia
 		x = 10
 		y = 0
-		cost = 5
+		cost = 14
 
 		ai_will_do = {
 			factor = 100
@@ -59,7 +59,7 @@ focus_tree = {
 		relative_position_id = TT_center_of_asia
 		x = -6
 		y = 1
-		cost = 10
+		cost = 21
 
 		ai_will_do = {
 			factor = 50
@@ -82,7 +82,7 @@ focus_tree = {
 		relative_position_id = TT_the_great_khural
 		x = -2
 		y = 1
-		cost = 10
+		cost = 14
 
 		ai_will_do = {
 			factor = 20
@@ -113,7 +113,7 @@ focus_tree = {
 		relative_position_id = TT_red_yurt
 		x = 0
 		y = 1
-		cost = 10
+		cost = 14
 
 		ai_will_do = {
 			factor = 20
@@ -150,7 +150,7 @@ focus_tree = {
 		relative_position_id = TT_the_soviet_arsenal
 		x = 0
 		y = 1
-		cost = 10
+		cost = 14
 
 		ai_will_do = {
 			factor = 20
@@ -191,7 +191,7 @@ focus_tree = {
 		relative_position_id = TT_the_siberian_military_district
 		x = 0
 		y = 1
-		cost = 10
+		cost = 14
 
 		ai_will_do = {
 			factor = 20
@@ -232,7 +232,7 @@ focus_tree = {
 		relative_position_id = TT_the_red_banner_over_asia
 		x = 0
 		y = 1
-		cost = 10
+		cost = 14
 
 		ai_will_do = {
 			factor = 20
@@ -296,7 +296,7 @@ focus_tree = {
 		relative_position_id = TT_form_central_asian_ssr
 		x = 0
 		y = 1
-		cost = 10
+		cost = 21
 
 		ai_will_do = {
 			factor = 20
@@ -346,7 +346,7 @@ focus_tree = {
 		relative_position_id = TT_the_great_khural
 		x = 2
 		y = 1
-		cost = 10
+		cost = 14
 
 		ai_will_do = {
 			factor = 20
@@ -383,7 +383,7 @@ focus_tree = {
 		relative_position_id = TT_tuvan_renaissance
 		x = 0
 		y = 1
-		cost = 10
+		cost = 14
 
 		ai_will_do = {
 			factor = 20
@@ -442,7 +442,7 @@ focus_tree = {
 		relative_position_id = TT_the_second_khanate
 		x = 0
 		y = 1
-		cost = 10
+		cost = 14
 
 		ai_will_do = {
 			factor = 20
@@ -481,7 +481,7 @@ focus_tree = {
 		relative_position_id = TT_the_great_khan
 		x = 0
 		y = 1
-		cost = 10
+		cost = 21
 
 		ai_will_do = {
 			factor = 20
@@ -545,7 +545,7 @@ focus_tree = {
 		relative_position_id = TT_center_of_asia
 		x = 0
 		y = 1
-		cost = 10
+		cost = 21
 
 		ai_will_do = {
 			factor = 100
@@ -576,7 +576,7 @@ focus_tree = {
 		relative_position_id = TT_first_five_year_plan
 		x = 0
 		y = 1
-		cost = 10
+		cost = 14
 
 		ai_will_do = {
 			factor = 100
@@ -612,7 +612,7 @@ focus_tree = {
 		relative_position_id = TT_collective_herds
 		x = 0
 		y = 1
-		cost = 10
+		cost = 14
 
 		ai_will_do = {
 			factor = 100
@@ -647,7 +647,7 @@ focus_tree = {
 		relative_position_id = TT_kyzyl_industries
 		x = 0
 		y = 1
-		cost = 10
+		cost = 14
 
 		ai_will_do = {
 			factor = 100
@@ -680,7 +680,7 @@ focus_tree = {
 		relative_position_id = TT_mineral_prospecting
 		x = 0
 		y = 1
-		cost = 10
+		cost = 14
 
 		ai_will_do = {
 			factor = 100
@@ -731,7 +731,7 @@ focus_tree = {
 		relative_position_id = TT_the_kyzyl_railroad
 		x = 0
 		y = 1
-		cost = 10
+		cost = 14
 
 		ai_will_do = {
 			factor = 100
@@ -778,7 +778,7 @@ focus_tree = {
 		relative_position_id = TT_the_yenisei_dam
 		x = 0
 		y = 1
-		cost = 10
+		cost = 21
 
 		ai_will_do = {
 			factor = 100
@@ -827,7 +827,7 @@ focus_tree = {
 		relative_position_id = TT_center_of_asia
 		x = 6
 		y = 1
-		cost = 10
+		cost = 21
 
 		ai_will_do = {
 			factor = 100
@@ -860,7 +860,7 @@ focus_tree = {
 		relative_position_id = TT_the_peoples_army
 		x = -3
 		y = 1
-		cost = 10
+		cost = 14
 
 		ai_will_do = {
 			factor = 100
@@ -892,7 +892,7 @@ focus_tree = {
 		relative_position_id = TT_the_peoples_army
 		x = -3
 		y = 2
-		cost = 10
+		cost = 14
 
 		ai_will_do = {
 			factor = 100
@@ -937,7 +937,7 @@ focus_tree = {
 		relative_position_id = TT_soviet_advisors
 		x = 0
 		y = 1
-		cost = 10
+		cost = 14
 
 		ai_will_do = {
 			factor = 100
@@ -963,7 +963,7 @@ focus_tree = {
 		relative_position_id = TT_the_peoples_army
 		x = 0
 		y = 2
-		cost = 10
+		cost = 14
 
 		ai_will_do = {
 			factor = 100
@@ -1034,7 +1034,7 @@ focus_tree = {
 		relative_position_id = TT_mountain_warfare
 		x = 0
 		y = 1
-		cost = 10
+		cost = 21
 
 		ai_will_do = {
 			factor = 100
@@ -1071,7 +1071,7 @@ focus_tree = {
 		relative_position_id = TT_the_peoples_army
 		x = 0
 		y = 1
-		cost = 10
+		cost = 14
 
 		ai_will_do = {
 			factor = 50
@@ -1127,7 +1127,7 @@ focus_tree = {
 		relative_position_id = TT_the_peoples_army
 		x = 3
 		y = 1
-		cost = 10
+		cost = 14
 
 		ai_will_do = {
 			factor = 50
@@ -1186,7 +1186,7 @@ focus_tree = {
 		relative_position_id = TT_the_tuvan_air_force
 		x = 0
 		y = 1
-		cost = 10
+		cost = 14
 
 		ai_will_do = {
 			factor = 100
@@ -1327,7 +1327,7 @@ focus_tree = {
 		relative_position_id = TT_wings_of_the_steppe
 		x = 0
 		y = 1
-		cost = 10
+		cost = 21
 
 		ai_will_do = {
 			factor = 100
@@ -1405,7 +1405,7 @@ focus_tree = {
 		relative_position_id = TT_the_peoples_army
 		x = 3
 		y = 2
-		cost = 10
+		cost = 14
 
 		ai_will_do = {
 			factor = 100
@@ -1426,7 +1426,7 @@ focus_tree = {
 		relative_position_id = TT_the_yenisei_flotilla
 		x = 0
 		y = 1
-		cost = 10
+		cost = 14
 
 		ai_will_do = {
 			factor = 100
@@ -1452,7 +1452,7 @@ focus_tree = {
 		relative_position_id = TT_kyzyl_naval_school
 		x = 0
 		y = 1
-		cost = 10
+		cost = 21
 
 		available = {
 			custom_trigger_tooltip = {
@@ -1496,7 +1496,7 @@ focus_tree = {
 		relative_position_id = TT_center_of_asia
 		x = 14
 		y = 1
-		cost = 10
+		cost = 21
 
 		available = {
 			custom_trigger_tooltip = {
@@ -1531,7 +1531,7 @@ focus_tree = {
 		relative_position_id = TT_claims_on_the_steppe
 		x = 0
 		y = 1
-		cost = 10
+		cost = 14
 
 		available = {
 			has_capitulated = no
@@ -1578,7 +1578,7 @@ focus_tree = {
 		relative_position_id = TT_the_mongolian_question
 		x = 0
 		y = 1
-		cost = 10
+		cost = 14
 
 		available = {
 			custom_trigger_tooltip = {
@@ -1612,7 +1612,7 @@ focus_tree = {
 		relative_position_id = TT_greater_tuva
 		x = 0
 		y = 1
-		cost = 10
+		cost = 14
 
 		available = {
 			custom_trigger_tooltip = {
@@ -1659,7 +1659,7 @@ focus_tree = {
 		relative_position_id = TT_greater_tuva
 		x = 4
 		y = 2
-		cost = 3
+		cost = 5
 		cancel_if_invalid = yes
 		available = {
 			custom_trigger_tooltip = { tooltip = TT_war_preparation_tt TT_war_focus_preparation_ready = yes }
@@ -1691,7 +1691,7 @@ focus_tree = {
 		relative_position_id = TT_war_staff_maps
 		x = 0
 		y = 1
-		cost = 3
+		cost = 5
 		cancel_if_invalid = yes
 		available = {
 			custom_trigger_tooltip = { tooltip = TT_war_preparation_tt TT_war_focus_preparation_ready = yes }
@@ -1723,7 +1723,7 @@ focus_tree = {
 		relative_position_id = TT_war_border_depots
 		x = 0
 		y = 1
-		cost = 3
+		cost = 5
 		cancel_if_invalid = yes
 		available = {
 			custom_trigger_tooltip = { tooltip = TT_war_preparation_tt TT_war_focus_preparation_ready = yes }
@@ -1756,7 +1756,7 @@ focus_tree = {
 		relative_position_id = TT_war_field_reserve
 		x = -2
 		y = 1
-		cost = 5
+		cost = 7
 		cancel_if_invalid = yes
 		available = {
 			custom_trigger_tooltip = { tooltip = TT_war_campaign_tt TT_siberian_campaign_active = yes }
@@ -1785,7 +1785,7 @@ focus_tree = {
 		relative_position_id = TT_war_field_reserve
 		x = 2
 		y = 1
-		cost = 5
+		cost = 7
 		cancel_if_invalid = yes
 		available = {
 			custom_trigger_tooltip = { tooltip = TT_war_campaign_tt TT_siberian_campaign_active = yes }
@@ -1813,7 +1813,7 @@ focus_tree = {
 		relative_position_id = TT_war_sayan_offensive
 		x = 0
 		y = 1
-		cost = 3
+		cost = 5
 		cancel_if_invalid = no
 		continue_if_invalid = yes
 		# Current control is required at selection, not throughout refurbishment.
@@ -1850,7 +1850,7 @@ focus_tree = {
 		relative_position_id = TT_war_siberian_guides
 		x = 0
 		y = 1
-		cost = 3
+		cost = 5
 		cancel_if_invalid = no
 		continue_if_invalid = yes
 		# Current control is required at selection, not throughout refurbishment.
@@ -1885,7 +1885,7 @@ focus_tree = {
 		relative_position_id = TT_war_transsib_advance
 		x = 0
 		y = 1
-		cost = 3
+		cost = 5
 		cancel_if_invalid = no
 		continue_if_invalid = yes
 		# Current control is required at selection, not throughout refurbishment.
@@ -1926,7 +1926,7 @@ focus_tree = {
 		relative_position_id = TT_war_red_army_salvage
 		x = 0
 		y = 1
-		cost = 5
+		cost = 7
 		cancel_if_invalid = yes
 		available = {
 			custom_trigger_tooltip = { tooltip = TT_war_campaign_tt TT_siberian_campaign_active = yes }
@@ -1956,7 +1956,7 @@ focus_tree = {
 		relative_position_id = TT_the_siberian_gambit
 		x = 0
 		y = 1
-		cost = 5
+		cost = 7
 		cancel_if_invalid = yes
 		available = {
 			custom_trigger_tooltip = { tooltip = TT_postwar_ready_tt TT_postwar_ready = yes }
