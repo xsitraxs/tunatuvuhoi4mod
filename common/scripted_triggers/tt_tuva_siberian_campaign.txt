@@ -73,11 +73,9 @@ TT_taishet_military_ready = {
 	TT_taishet_package_uncontested = yes
 }
 
-TT_can_demand_taishet = {
-	TT_taishet_military_ready = yes
-	NOT = { has_country_flag = TT_taishet_request_pending }
-	NOT = { has_country_flag = TT_taishet_refused_recently }
-}
+# NOTE 2026-11-06: the former TT_can_demand_taishet composite was deleted as
+# dead code (never called); TT_dictate_peace_in_siberia inlines the same gates
+# with per-condition tooltips on purpose (player-facing breakdown).
 
 TT_taishet_response_valid = {
 	TT_taishet_military_ready = yes
@@ -94,4 +92,14 @@ TT_taishet_settlement_transferred = {
 			is_controlled_by = TAN
 		}
 	}
+}
+
+# Moscow pressure window: the whole national-path arc until the victory spirit.
+# Gates the daily pulse that fires events tt_tuva.28-30 (pressure events).
+TT_pressure_window = {
+	tag = TAN
+	has_country_flag = TT_national_path
+	NOT = { has_idea = TT_masters_of_siberia }
+	country_exists = SOV
+	has_capitulated = no
 }

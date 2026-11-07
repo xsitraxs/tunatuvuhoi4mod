@@ -2,7 +2,7 @@
 # TUVA: THE CENTER OF ASIA - called from SOV, grants ownership but no cores
 ##########################################################################
 
-TT_transfer_siberian_corridor_states = {
+TT_transfer_siberian_corridor_state = {
 	if = {
 		limit = {
 			tag = SOV

@@ -77,17 +77,17 @@ const available = (id, s) => evalNodes(get(all.get(`TT_war_${id}`), 'available')
 test('46 unique focuses; ten additions', () => { assert.equal(focuses.length, 46); assert.equal(all.size, 46); assert.equal(added.length, 10); });
 const milestoneIds = ['transsib_advance', 'red_army_salvage', 'taishet_junction'];
 const preparationIds = ['staff_maps', 'border_depots', 'field_reserve'];
-test('Preparation 63 days, complete branch 266 days; no repeatable focuses', () => {
+test('Preparation 15 days, complete branch 58 days; no repeatable focuses', () => {
   let days = 0;
   added.forEach(f => {
     const id = get(f, 'id').replace('TT_war_', '');
-    assert.equal(get(f, 'cost'), preparationIds.includes(id) || milestoneIds.includes(id) ? '3' : '5');
-    days += Number(get(f, 'cost')) * 7;
+    assert.equal(get(f, 'cost'), preparationIds.includes(id) || milestoneIds.includes(id) ? '5' : '7');
+    days += Number(get(f, 'cost'));
     assert.notEqual(get(f, 'repeatable'), 'yes');
     assert.equal(get(f, 'cancel_if_invalid'), milestoneIds.includes(id) ? 'no' : 'yes');
   });
-  assert.equal(days, 266);
-  assert.equal(preparationIds.reduce((sum, id) => sum + Number(get(all.get('TT_war_' + id), 'cost')) * 7, 0), 63);
+  assert.equal(days, 58);
+  assert.equal(preparationIds.reduce((sum, id) => sum + Number(get(all.get('TT_war_' + id), 'cost')), 0), 15);
 });
 test('All prerequisites, relative anchors and icons resolve', () => {
   const gfx = new Set([...read('interface/tt_tuva_focus_icons.gfx').matchAll(/name\s*=\s*"([^"]+)"/g)].map(m => m[1]));

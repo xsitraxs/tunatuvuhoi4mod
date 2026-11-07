@@ -22,6 +22,20 @@ on_actions = {
 					set_country_flag = TT_irkutsk_story_seen
 					country_event = { id = tt_tuva.24 }
 				}
+				# Moscow pressure pulse: roughly one event every two months of the
+				# national-path arc (60-day cooldown; events carry their own risk).
+				if = {
+					limit = {
+						TT_pressure_window = yes
+						NOT = { has_country_flag = TT_pressure_cooldown }
+					}
+					set_country_flag = { flag = TT_pressure_cooldown days = 60 }
+					random_list = {
+						55 = { country_event = { id = tt_tuva.28 } }
+						30 = { country_event = { id = tt_tuva.29 } }
+						15 = { country_event = { id = tt_tuva.30 } }
+					}
+				}
 			}
 		}
 	}

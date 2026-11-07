@@ -1,0 +1,93 @@
+##########################################################################
+# MOSCOW PRESSURE: reactive Soviet pressure during the national-path arc.
+# Fired by the daily pulse in common/on_actions/tt_tuva_siberian_campaign.txt
+# (TT_pressure_window, 60-day cooldown). Presentation and trade-offs only:
+# no land, no cores, no diplomatic tokens.
+##########################################################################
+
+# Border provocation.
+country_event = {
+	id = tt_tuva.28
+	title = tt_tuva.28.t
+	desc = tt_tuva.28.desc
+	picture = GFX_news_event_generic_army
+	is_triggered_only = yes
+	trigger = { tag = TAN TT_pressure_window = yes }
+
+	option = {
+		name = tt_tuva.28.a
+		ai_chance = { base = 60 }
+		add_political_power = -25
+		add_stability = 0.01
+	}
+	option = {
+		name = tt_tuva.28.b
+		ai_chance = { base = 40 }
+		custom_effect_tooltip = TT_pressure_border_risk_tt
+		random_list = {
+			55 = { add_war_support = 0.03 }
+			45 = { add_stability = -0.03 }
+		}
+	}
+}
+
+# Ultimatum from Moscow.
+country_event = {
+	id = tt_tuva.29
+	title = tt_tuva.29.t
+	desc = tt_tuva.29.desc
+	picture = GFX_tt_tuva_negotiations
+	is_triggered_only = yes
+	trigger = { tag = TAN TT_pressure_window = yes }
+
+	option = {
+		name = tt_tuva.29.a
+		ai_chance = { base = 55 }
+		add_political_power = -75
+		add_war_support = -0.03
+	}
+	option = {
+		name = tt_tuva.29.b
+		ai_chance = { base = 45 }
+		custom_effect_tooltip = TT_pressure_ultimatum_risk_tt
+		random_list = {
+			50 = {
+				add_war_support = 0.05
+				add_political_power = 50
+			}
+			50 = {
+				add_stability = -0.05
+				add_political_power = -25
+			}
+		}
+	}
+}
+
+# NKVD network uncovered.
+country_event = {
+	id = tt_tuva.30
+	title = tt_tuva.30.t
+	desc = tt_tuva.30.desc
+	picture = GFX_report_event_generic_communist_congress
+	is_triggered_only = yes
+	trigger = { tag = TAN TT_pressure_window = yes }
+
+	option = {
+		name = tt_tuva.30.a
+		ai_chance = { base = 60 }
+		add_political_power = -25
+		add_stability = 0.01
+	}
+	option = {
+		name = tt_tuva.30.b
+		ai_chance = { base = 40 }
+		custom_effect_tooltip = TT_pressure_nkvd_risk_tt
+		random_list = {
+			55 = {
+				add_war_support = 0.04
+				add_political_power = 25
+			}
+			45 = { add_stability = -0.04 }
+		}
+	}
+}
