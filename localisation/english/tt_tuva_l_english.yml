@@ -32,7 +32,7 @@
  TT_the_battle_for_manchuria_desc: "The red banner does not stop at the Amur. Kirin, Jehol and Liaotung are claimed for the revolution; a wargoal against Manchukuo - or its Japanese masters - will open the road to the Pacific."
 
  TT_tuvan_renaissance: "The Tuvan Renaissance"
- TT_tuvan_renaissance_desc: "Enough of being a footnote in Moscow's ledgers. Tuvan language, Tuvan songs, Tuvan history. The nation awakens, and it will no longer be a puppet."
+ TT_tuvan_renaissance_desc: "Enough of being a footnote in Moscow's ledgers. Tuvan language, Tuvan songs, Tuvan history — and Tuvan factories built with Tuvan gold. The nation awakens, and it will no longer be a puppet."
 
  TT_the_second_khanate: "The Second Khanate"
  TT_the_second_khanate_desc: "The descendants of the old khans are called home from exile. The people demand a Khan, and Kyzyl answers. The Second Khanate is proclaimed."
@@ -64,8 +64,8 @@
  TT_the_golden_hoard: "The Golden Hoard"
  TT_the_golden_hoard_desc: "The old khan's treasury was never found. Now Tuvan gold fills the state bank, and gold buys guns, factories and friends."
 
- TT_the_peoples_army: "The People's Army"
- TT_the_peoples_army_desc: "The Tuvan People's Revolutionary Army was founded in 1921. Now it becomes a real army, with schools, staffs and discipline."
+ TT_the_ground_forces: "Ground Forces of Tuva"
+ TT_the_ground_forces_desc: "Heir to the 1921 People's Revolutionary Army: modern ground forces. Schools, staffs, discipline."
 
  TT_cavalry_of_the_steppe: "Cavalry of the Steppe"
  TT_cavalry_of_the_steppe_desc: "The horse is the soul of the steppe. Tuvan cavalry will ride where no truck can follow."
@@ -127,10 +127,10 @@
  TT_national_awakening_desc: "The nation remembers who it is."
 
  TT_khanate: "The Second Tuvan Khanate"
- TT_khanate_desc: "The Khan has returned to Kyzyl."
+ TT_khanate_desc: "The Khan has returned to Kyzyl — and the steppe builds its own factories."
 
  TT_great_khan: "Legacy of the Great Khan"
- TT_great_khan_desc: "The tribes of the steppe answer the call."
+ TT_great_khan_desc: "The tribes of the steppe answer the call, and build their own state."
 
  TT_steppe_empire: "The Empire of the Steppe"
  TT_steppe_empire_desc: "An empire forged on horseback and steel."
@@ -162,8 +162,8 @@
  TT_steppe_claims: "Claims on the Steppe"
  TT_steppe_claims_desc: "The old borders are an insult to the steppe."
 
- TT_peoples_army: "The People's Army"
- TT_peoples_army_desc: "An army of the people, for the people."
+ TT_ground_forces: "Ground Forces"
+ TT_ground_forces_desc: "A single, professional Tuvan ground force."
 
  TT_steppe_cavalry: "Cavalry of the Steppe"
  TT_steppe_cavalry_desc: "The horse is the soul of the steppe."
@@ -299,6 +299,7 @@
  TT_khan_leader_desc: "A descendant of the old khans, raised in Kyzyl and sworn to restore the empire of the steppe."
  TT_requires_national_path: "The Tuvan national path is chosen"
  TT_requires_left_comintern: "Tuva has left the Comintern"
+ TT_requires_mongolia_war_over: "The war with Mongolia is over"
 
  TT_industry_boost: "Industrial Research"
  TT_industry_boost_2: "Industrial Research"
@@ -308,7 +309,7 @@
  TT_armor_boost: "Armour Research"
  TT_air_doctrine_boost: "Air Doctrine Research"
  TT_naval_doctrine_boost: "Naval Doctrine Research"
- TT_war_declaration_tt: "The Khanate spirit removes the §YWorld Tension§! threshold for justifying war goals: the Khan may declare wars at any time, including against the §YSoviet Union§!."
+ TT_war_declaration_tt: "Removes the §YWorld Tension§! threshold for war goals"
  TT_requires_liaotung: "We control Liaotung (access to the sea)"
  TT_pacific_fleet_tt: "If we control §YLiaotung§!, §Y2 dockyards§! will be built there."
  TT_masters_of_siberia: "Masters of the North"

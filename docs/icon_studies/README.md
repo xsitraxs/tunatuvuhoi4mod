@@ -26,7 +26,7 @@
 | `TT_the_kyzyl_railroad` | `the_kyzyl_railroad_source.png` |
 | `TT_the_yenisei_dam` | `the_yenisei_dam_source.png` |
 | `TT_the_golden_hoard` | `the_golden_hoard_source.png` |
-| `TT_the_peoples_army` | `the_peoples_army_source.png` |
+| `TT_the_ground_forces` | `the_ground_forces_source.png` |
 | `TT_cavalry_of_the_steppe` | `cavalry_source.png` |
 | `TT_soviet_advisors` | `soviet_advisors_source.png` |
 | `TT_mountain_warfare` | `mountain_warfare_source.png` |

@@ -646,16 +646,16 @@ spriteTypes = {
 		}
 	}
 	spriteType = {
-		name = "GFX_TT_focus_the_peoples_army"
-		texturefile = "gfx/interface/goals/tt_tuva/the_peoples_army.dds"
+		name = "GFX_TT_focus_the_ground_forces"
+		texturefile = "gfx/interface/goals/tt_tuva/the_ground_forces.dds"
 	}
 	spriteType = {
-		name = "GFX_TT_focus_the_peoples_army_shine"
-		texturefile = "gfx/interface/goals/tt_tuva/the_peoples_army.dds"
+		name = "GFX_TT_focus_the_ground_forces_shine"
+		texturefile = "gfx/interface/goals/tt_tuva/the_ground_forces.dds"
 		effectFile = "gfx/FX/buttonstate.lua"
 		legacy_lazy_load = no
 		animation = {
-			animationmaskfile = "gfx/interface/goals/tt_tuva/the_peoples_army.dds"
+			animationmaskfile = "gfx/interface/goals/tt_tuva/the_ground_forces.dds"
 			animationtexturefile = "gfx/interface/goals/shine_overlay.dds"
 			animationrotation = -90.0
 			animationlooping = no
@@ -667,7 +667,7 @@ spriteTypes = {
 			animationtexturescale = { x = 1.0 y = 1.0 }
 		}
 		animation = {
-			animationmaskfile = "gfx/interface/goals/tt_tuva/the_peoples_army.dds"
+			animationmaskfile = "gfx/interface/goals/tt_tuva/the_ground_forces.dds"
 			animationtexturefile = "gfx/interface/goals/shine_overlay.dds"
 			animationrotation = 90.0
 			animationlooping = no
