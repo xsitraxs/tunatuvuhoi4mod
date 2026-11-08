@@ -356,7 +356,7 @@ focus_tree = {
 			}
 		}
 
-		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_WAR_SUPPORT }
+		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_WAR_SUPPORT FOCUS_FILTER_INDUSTRY }
 
 		completion_reward = {
 			add_ideas = TT_national_awakening
@@ -364,6 +364,20 @@ focus_tree = {
 			add_popularity = {
 				ideology = neutrality
 				popularity = 0.30
+			}
+			# The national path gets no Soviet gifts: Kyzyl builds its own
+			# industry with Tuvan gold instead — the mirror of the Soviet
+			# branch's arsenal, in the same guarded pattern.
+			if = {
+				limit = { controls_state = 329 }
+				329 = {
+					add_extra_state_shared_building_slots = 2
+					add_building_construction = {
+						type = industrial_complex
+						level = 1
+						instant_build = yes
+					}
+				}
 			}
 			# Independence starts with the national path, not the later khanate.
 			# Faction war-declaration rules otherwise still apply to minor TAN.
@@ -821,8 +835,8 @@ focus_tree = {
 	# ==================================================================
 
 	focus = {
-		id = TT_the_peoples_army
-		icon = GFX_TT_focus_the_peoples_army
+		id = TT_the_ground_forces
+		icon = GFX_TT_focus_the_ground_forces
 		prerequisite = { focus = TT_center_of_asia }
 		relative_position_id = TT_center_of_asia
 		x = 6
@@ -836,7 +850,7 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_ARMY_XP FOCUS_FILTER_WAR_SUPPORT }
 
 		completion_reward = {
-			add_ideas = TT_peoples_army
+			add_ideas = TT_ground_forces
 			army_experience = 25
 			add_war_support = 0.05
 			create_corps_commander = {
@@ -855,9 +869,9 @@ focus_tree = {
 	focus = {
 		id = TT_cavalry_of_the_steppe
 		icon = GFX_TT_focus_cavalry_of_the_steppe
-		prerequisite = { focus = TT_the_peoples_army }
+		prerequisite = { focus = TT_the_ground_forces }
 		mutually_exclusive = { focus = TT_infantry_and_artillery focus = TT_tanks_of_the_steppe }
-		relative_position_id = TT_the_peoples_army
+		relative_position_id = TT_the_ground_forces
 		x = -3
 		y = 1
 		cost = 14
@@ -888,8 +902,9 @@ focus_tree = {
 	focus = {
 		id = TT_soviet_advisors
 		icon = GFX_TT_focus_soviet_advisors
+		# Ground branch: requires any of the three army doctrines.
 		prerequisite = { focus = TT_cavalry_of_the_steppe focus = TT_infantry_and_artillery focus = TT_tanks_of_the_steppe }
-		relative_position_id = TT_the_peoples_army
+		relative_position_id = TT_the_ground_forces
 		x = -3
 		y = 2
 		cost = 14
@@ -959,10 +974,11 @@ focus_tree = {
 	focus = {
 		id = TT_the_tuvan_air_force
 		icon = GFX_TT_focus_the_tuvan_air_force
-		prerequisite = { focus = TT_cavalry_of_the_steppe focus = TT_infantry_and_artillery focus = TT_tanks_of_the_steppe }
-		relative_position_id = TT_the_peoples_army
-		x = 0
-		y = 2
+		# Air branch: an independent root straight from TT_center_of_asia.
+		prerequisite = { focus = TT_center_of_asia }
+		relative_position_id = TT_center_of_asia
+		x = 11
+		y = 1
 		cost = 14
 
 		ai_will_do = {
@@ -1066,9 +1082,9 @@ focus_tree = {
 	focus = {
 		id = TT_infantry_and_artillery
 		icon = GFX_TT_focus_infantry_and_artillery
-		prerequisite = { focus = TT_the_peoples_army }
+		prerequisite = { focus = TT_the_ground_forces }
 		mutually_exclusive = { focus = TT_cavalry_of_the_steppe focus = TT_tanks_of_the_steppe }
-		relative_position_id = TT_the_peoples_army
+		relative_position_id = TT_the_ground_forces
 		x = 0
 		y = 1
 		cost = 14
@@ -1122,9 +1138,9 @@ focus_tree = {
 	focus = {
 		id = TT_tanks_of_the_steppe
 		icon = GFX_TT_focus_tanks_of_the_steppe
-		prerequisite = { focus = TT_the_peoples_army }
+		prerequisite = { focus = TT_the_ground_forces }
 		mutually_exclusive = { focus = TT_cavalry_of_the_steppe focus = TT_infantry_and_artillery }
-		relative_position_id = TT_the_peoples_army
+		relative_position_id = TT_the_ground_forces
 		x = 3
 		y = 1
 		cost = 14
@@ -1401,10 +1417,11 @@ focus_tree = {
 	focus = {
 		id = TT_the_yenisei_flotilla
 		icon = GFX_TT_focus_the_yenisei_flotilla
-		prerequisite = { focus = TT_cavalry_of_the_steppe focus = TT_infantry_and_artillery focus = TT_tanks_of_the_steppe }
-		relative_position_id = TT_the_peoples_army
-		x = 3
-		y = 2
+		# Navy branch: an independent root straight from TT_center_of_asia.
+		prerequisite = { focus = TT_center_of_asia }
+		relative_position_id = TT_center_of_asia
+		x = 15
+		y = 1
 		cost = 14
 
 		ai_will_do = {
@@ -1494,7 +1511,7 @@ focus_tree = {
 		icon = GFX_TT_focus_claims_on_the_steppe
 		prerequisite = { focus = TT_center_of_asia }
 		relative_position_id = TT_center_of_asia
-		x = 14
+		x = 18
 		y = 1
 		cost = 21
 
@@ -1585,6 +1602,10 @@ focus_tree = {
 				tooltip = TT_requires_national_path
 				has_country_flag = TT_national_path
 			}
+			custom_trigger_tooltip = {
+				tooltip = TT_requires_mongolia_war_over
+				TT_mongolia_war_over = yes
+			}
 		}
 
 		ai_will_do = {
@@ -1624,6 +1645,10 @@ focus_tree = {
 				NOT = { is_in_faction_with = SOV }
 			}
 			country_exists = SOV
+			custom_trigger_tooltip = {
+				tooltip = TT_requires_mongolia_war_over
+				TT_mongolia_war_over = yes
+			}
 		}
 
 		ai_will_do = {
@@ -1663,6 +1688,10 @@ focus_tree = {
 		cancel_if_invalid = yes
 		available = {
 			custom_trigger_tooltip = { tooltip = TT_war_preparation_tt TT_war_focus_preparation_ready = yes }
+			custom_trigger_tooltip = {
+				tooltip = TT_requires_mongolia_war_over
+				TT_mongolia_war_over = yes
+			}
 		}
 		ai_will_do = {
 			factor = 10
@@ -1673,10 +1702,11 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_ARMY_XP }
 		completion_reward = {
-			# Recheck: a peace or loss on the completion tick must not grant wartime rewards.
+			# Recheck: war with Mongolia, peace or loss on the completion tick must not grant wartime rewards.
 			if = {
 				limit = {
 					TT_war_focus_preparation_ready = yes
+					TT_mongolia_war_over = yes
 				}
 				army_experience = 10
 				add_command_power = 15
@@ -1695,6 +1725,10 @@ focus_tree = {
 		cancel_if_invalid = yes
 		available = {
 			custom_trigger_tooltip = { tooltip = TT_war_preparation_tt TT_war_focus_preparation_ready = yes }
+			custom_trigger_tooltip = {
+				tooltip = TT_requires_mongolia_war_over
+				TT_mongolia_war_over = yes
+			}
 		}
 		ai_will_do = {
 			factor = 10
@@ -1705,10 +1739,11 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_MANPOWER }
 		completion_reward = {
-			# Recheck: a peace or loss on the completion tick must not grant wartime rewards.
+			# Recheck: war with Mongolia, peace or loss on the completion tick must not grant wartime rewards.
 			if = {
 				limit = {
 					TT_war_focus_preparation_ready = yes
+					TT_mongolia_war_over = yes
 				}
 				add_equipment_to_stockpile = { type = infantry_equipment_0 amount = 200 producer = TAN }
 				add_equipment_to_stockpile = { type = support_equipment_1 amount = 20 producer = TAN }
@@ -1727,6 +1762,10 @@ focus_tree = {
 		cancel_if_invalid = yes
 		available = {
 			custom_trigger_tooltip = { tooltip = TT_war_preparation_tt TT_war_focus_preparation_ready = yes }
+			custom_trigger_tooltip = {
+				tooltip = TT_requires_mongolia_war_over
+				TT_mongolia_war_over = yes
+			}
 		}
 		ai_will_do = {
 			factor = 10
@@ -1737,10 +1776,11 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_MANPOWER FOCUS_FILTER_WAR_SUPPORT }
 		completion_reward = {
-			# Recheck: a peace or loss on the completion tick must not grant wartime rewards.
+			# Recheck: war with Mongolia, peace or loss on the completion tick must not grant wartime rewards.
 			if = {
 				limit = {
 					TT_war_focus_preparation_ready = yes
+					TT_mongolia_war_over = yes
 				}
 				add_manpower = 500
 				add_war_support = 0.02
@@ -1760,6 +1800,10 @@ focus_tree = {
 		cancel_if_invalid = yes
 		available = {
 			custom_trigger_tooltip = { tooltip = TT_war_campaign_tt TT_siberian_campaign_active = yes }
+			custom_trigger_tooltip = {
+				tooltip = TT_requires_mongolia_war_over
+				TT_mongolia_war_over = yes
+			}
 		}
 		ai_will_do = {
 			factor = 10
@@ -1767,10 +1811,11 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_ARMY_XP }
 		completion_reward = {
-			# Recheck: a peace or loss on the completion tick must not grant wartime rewards.
+			# Recheck: war with Mongolia, peace or loss on the completion tick must not grant wartime rewards.
 			if = {
 				limit = {
 					TT_siberian_campaign_active = yes
+					TT_mongolia_war_over = yes
 				}
 				add_timed_idea = { idea = TT_war_staff_plan days = 90 }
 			}
@@ -1789,6 +1834,10 @@ focus_tree = {
 		cancel_if_invalid = yes
 		available = {
 			custom_trigger_tooltip = { tooltip = TT_war_campaign_tt TT_siberian_campaign_active = yes }
+			custom_trigger_tooltip = {
+				tooltip = TT_requires_mongolia_war_over
+				TT_mongolia_war_over = yes
+			}
 		}
 		ai_will_do = {
 			factor = 10
@@ -1796,10 +1845,11 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_MANPOWER }
 		completion_reward = {
-			# Recheck: a peace or loss on the completion tick must not grant wartime rewards.
+			# Recheck: war with Mongolia, peace or loss on the completion tick must not grant wartime rewards.
 			if = {
 				limit = {
 					TT_siberian_campaign_active = yes
+					TT_mongolia_war_over = yes
 				}
 				add_timed_idea = { idea = TT_war_guides days = 90 }
 			}
@@ -1824,6 +1874,10 @@ focus_tree = {
 			563 = { is_owned_by = SOV }
 			564 = { is_owned_by = SOV }
 			566 = { is_owned_by = SOV }
+			custom_trigger_tooltip = {
+				tooltip = TT_requires_mongolia_war_over
+				TT_mongolia_war_over = yes
+			}
 		}
 		ai_will_do = {
 			factor = 10
@@ -1859,6 +1913,10 @@ focus_tree = {
 			custom_trigger_tooltip = { tooltip = TT_war_campaign_tt TT_siberian_campaign_active = yes }
 			controls_state = 566
 			566 = { is_owned_by = SOV }
+			custom_trigger_tooltip = {
+				tooltip = TT_requires_mongolia_war_over
+				TT_mongolia_war_over = yes
+			}
 		}
 		ai_will_do = {
 			factor = 10
@@ -1900,6 +1958,10 @@ focus_tree = {
 			569 = { is_owned_by = SOV }
 			570 = { is_owned_by = SOV }
 			578 = { is_owned_by = SOV }
+			custom_trigger_tooltip = {
+				tooltip = TT_requires_mongolia_war_over
+				TT_mongolia_war_over = yes
+			}
 		}
 		ai_will_do = {
 			factor = 10
@@ -1931,6 +1993,10 @@ focus_tree = {
 		available = {
 			custom_trigger_tooltip = { tooltip = TT_war_campaign_tt TT_siberian_campaign_active = yes }
 			TT_controls_eastern_transsib = yes
+			custom_trigger_tooltip = {
+				tooltip = TT_requires_mongolia_war_over
+				TT_mongolia_war_over = yes
+			}
 		}
 		ai_will_do = {
 			factor = 10
@@ -1938,11 +2004,12 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_MANPOWER }
 		completion_reward = {
-			# Recheck: a peace or loss on the completion tick must not grant wartime rewards.
+			# Recheck: war with Mongolia, peace or loss on the completion tick must not grant wartime rewards.
 			if = {
 				limit = {
 					TT_siberian_campaign_active = yes
 					TT_controls_eastern_transsib = yes
+					TT_mongolia_war_over = yes
 				}
 				add_timed_idea = { idea = TT_war_front_cohesion days = 90 }
 			}
@@ -1960,6 +2027,10 @@ focus_tree = {
 		cancel_if_invalid = yes
 		available = {
 			custom_trigger_tooltip = { tooltip = TT_postwar_ready_tt TT_postwar_ready = yes }
+			custom_trigger_tooltip = {
+				tooltip = TT_requires_mongolia_war_over
+				TT_mongolia_war_over = yes
+			}
 		}
 		ai_will_do = {
 			factor = 10
@@ -1967,10 +2038,11 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_STABILITY FOCUS_FILTER_ARMY_XP }
 		completion_reward = {
-			# Recheck: a peace or loss on the completion tick must not grant wartime rewards.
+			# Recheck: war with Mongolia, peace or loss on the completion tick must not grant wartime rewards.
 			if = {
 				limit = {
 					TT_postwar_ready = yes
+					TT_mongolia_war_over = yes
 				}
 				add_political_power = 25
 				add_stability = 0.02

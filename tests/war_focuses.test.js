@@ -34,7 +34,7 @@ const tree = get(parse(read('common/national_focus/tt_tuva_focus.txt')), 'focus_
 const focuses = tree.filter(n => n.key === 'focus').map(n => n.value);
 const all = new Map(focuses.map(f => [get(f, 'id'), f]));
 const added = focuses.filter(f => get(f, 'id').startsWith('TT_war_'));
-const triggerFiles = ['tt_tuva_war_focuses', 'tt_tuva_siberian_campaign', 'tt_tuva_postwar'];
+const triggerFiles = ['tt_tuva_war_focuses', 'tt_tuva_siberian_campaign', 'tt_tuva_postwar', 'tt_tuva_mongolia'];
 const triggers = new Map(triggerFiles.flatMap(f => parse(read(`common/scripted_triggers/${f}.txt`))).map(n => [n.key, n.value]));
 const newIdeas = get(get(parse(read('common/ideas/tt_tuva_war_focuses.txt')), 'ideas'), 'country');
 const effects = parse(read('common/scripted_effects/tt_tuva_war_focuses.txt'));
@@ -54,7 +54,7 @@ function evalNodes(nodes, state) {
       case 'has_country_flag': return state.flags.has(n.value);
       case 'has_completed_focus': return state.completed.has(n.value);
       case 'country_exists': return state.sovExists;
-      case 'has_war_with': return state.sovWar;
+      case 'has_war_with': return n.value === 'MON' ? !!state.mongoWar : state.sovWar;
       case 'has_war': return boolean(state.anyWar);
       case 'has_capitulated': return boolean(state.sovScope ? state.sovCapitulated : state.capitulated);
       case 'is_subject': return boolean(state.subject);
@@ -69,7 +69,7 @@ function evalNodes(nodes, state) {
 const packageIds = ['40','654','563','564','565','566','567','568','569','570','574','575','576','578'];
 function state(overrides = {}) {
   return { flags: new Set(['TT_national_path']), completed: new Set(['TT_the_siberian_gambit']), sovExists: true,
-    sovWar: true, anyWar: true, capitulated: false, sovCapitulated: false, subject: false, sameFaction: false,
+    sovWar: true, anyWar: true, mongoWar: false, capitulated: false, sovCapitulated: false, subject: false, sameFaction: false,
     ideas: new Set(), control: new Set(['329', ...packageIds]),
     owned: overrides.ideas?.has('TT_masters_of_siberia') ? new Set(packageIds) : new Set(), sovOwned: overrides.ideas?.has('TT_masters_of_siberia') ? new Set() : new Set(packageIds), ...overrides };
 }
@@ -268,6 +268,45 @@ test('AI weights respond to war and postwar state; filters match supplies/manpow
   assert.equal(weight('new_siberian_border', state({ sovWar: false, anyWar: false, ideas: new Set(['TT_masters_of_siberia']) })), 40);
   for (const id of ['border_depots','red_army_salvage','field_reserve']) assert(get(all.get('TT_war_' + id), 'search_filters').some(n => n.key === 'FOCUS_FILTER_MANPOWER'));
   assert(get(all.get('TT_war_field_reserve'), 'search_filters').some(n => n.key === 'FOCUS_FILTER_WAR_SUPPORT'));
+});
+
+test('Mongolia ultimatum locks every focus downstream of it until the war ends', () => {
+  const downstream = ['TT_greater_tuva', 'TT_the_siberian_gambit', ...added.map(f => get(f, 'id'))];
+  for (const id of downstream) {
+    const tooltips = walk(get(all.get(id), 'available'), 'custom_trigger_tooltip').map(t => get(t, 'tooltip'));
+    assert(tooltips.includes('TT_requires_mongolia_war_over'), `${id} lacks the Mongolia ultimatum lock`);
+    const flat = JSON.stringify(get(all.get(id), 'available'));
+    assert(flat.includes('TT_mongolia_war_over'), id);
+  }
+});
+test('Mongolia war lock blocks every downstream focus on its own green board', () => {
+  const base = { sovWar: false, anyWar: false, completed: new Set(['TT_the_siberian_gambit']) };
+  const campaign = { ...base, sovWar: true, anyWar: true };
+  const victory = { ...base, ideas: new Set(['TT_masters_of_siberia']) };
+  const boards = new Map([
+    ['TT_greater_tuva', base],
+    ['TT_the_siberian_gambit', base],
+    ['staff_maps', base], ['border_depots', base], ['field_reserve', base],
+    ['sayan_offensive', campaign], ['siberian_guides', campaign],
+    ['transsib_advance', campaign], ['red_army_salvage', campaign],
+    ['taishet_junction', campaign], ['hold_conquests', campaign],
+    ['new_siberian_border', victory],
+  ]);
+  assert.equal(boards.size, 12);
+  for (const [id, board] of boards) {
+    const focus = all.get(id.startsWith('TT_') ? id : 'TT_war_' + id);
+    assert(evalNodes(get(focus, 'available'), state({ ...board, mongoWar: false })), `${id} should open without the Mongolia war`);
+    assert(!evalNodes(get(focus, 'available'), state({ ...board, mongoWar: true })), `${id} must stay locked during the Mongolia war`);
+  }
+});
+test('Milestones stay locked at selection but their reduced reward gate is unchanged', () => {
+  const green = { sovWar: false, anyWar: false, completed: new Set(['TT_the_siberian_gambit']) };
+  for (const id of milestoneIds) {
+    assert(!evalNodes(get(all.get('TT_war_' + id), 'available'), state({ ...green, mongoWar: true })), id);
+    const focus = all.get('TT_war_' + id);
+    const rewardGuard = get(get(get(focus, 'completion_reward'), 'if'), 'limit');
+    assert.deepEqual(rewardGuard, [{ key: 'TT_siberian_campaign_active', op: '=', value: 'yes' }], id); // unchanged reduced gate
+  }
 });
 
 console.log(`${checks} grouped checks passed. Model does not emulate HOI4 timing, saves or UI rendering.`);

@@ -41,9 +41,13 @@ ideas = {
 				war_support_factor = 0.10
 				stability_factor = 0.05
 				neutrality_drift = 0.03
+				production_speed_buildings_factor = 0.10
 			}
 		}
 
+		# Khanate spirits stay doctrine-neutral (the combat branch is the
+		# player's separate choice) and self-reliant: the industry they bring
+		# is Tuvan-built — no Soviet gifts after the break with the Comintern.
 		TT_khanate = {
 			allowed = { original_tag = TAN }
 			allowed_civil_war = { always = yes }
@@ -54,9 +58,11 @@ ideas = {
 				war_support_factor = 0.20
 				stability_factor = 0.05
 				political_power_factor = 0.15
-				cavalry_attack_factor = 0.10
+				army_attack_factor = 0.05
 				neutrality_drift = 0.05
 				generate_wargoal_tension = -0.5
+				production_speed_buildings_factor = 0.10
+				industrial_capacity_factory = 0.05
 			}
 		}
 
@@ -70,11 +76,13 @@ ideas = {
 				war_support_factor = 0.25
 				stability_factor = 0.05
 				political_power_factor = 0.15
-				cavalry_attack_factor = 0.25
-				cavalry_defence_factor = 0.15
+				army_attack_factor = 0.10
+				army_defence_factor = 0.05
 				army_org_factor = 0.05
 				neutrality_drift = 0.05
 				generate_wargoal_tension = -0.5
+				production_speed_buildings_factor = 0.10
+				industrial_capacity_factory = 0.10
 			}
 		}
 
@@ -88,13 +96,14 @@ ideas = {
 				war_support_factor = 0.35
 				stability_factor = 0.05
 				political_power_factor = 0.25
-				cavalry_attack_factor = 0.25
-				cavalry_defence_factor = 0.15
 				army_org_factor = 0.05
-				army_attack_factor = 0.10
-				army_defence_factor = 0.10
+				army_attack_factor = 0.20
+				army_defence_factor = 0.15
 				neutrality_drift = 0.08
 				generate_wargoal_tension = -0.5
+				production_speed_buildings_factor = 0.10
+				industrial_capacity_factory = 0.10
+				research_speed_factor = 0.05
 			}
 		}
 
@@ -287,11 +296,11 @@ ideas = {
 		#  Military chain
 		# ------------------------------------------------------------------
 
-		TT_peoples_army = {
+		TT_ground_forces = {
 			allowed = { original_tag = TAN }
 			allowed_civil_war = { always = yes }
 			removal_cost = -1
-			picture = generic_communist_army
+			picture = generic_armor
 
 			modifier = {
 				army_org_factor = 0.05

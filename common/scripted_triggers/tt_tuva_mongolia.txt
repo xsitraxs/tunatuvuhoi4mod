@@ -1,0 +1,11 @@
+##########################################################################
+# SECOND KHANATE: Mongolian ultimatum - TAN scope.
+##########################################################################
+
+# The Second Khanate cannot march onward while the Mongolia war is still on.
+# Satisfied by any peace, capitulation or outright defection of MON; false
+# only while the war with MON is actually running.
+TT_mongolia_war_over = {
+	tag = TAN
+	NOT = { has_war_with = MON }
+}
